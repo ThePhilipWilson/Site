@@ -50,6 +50,11 @@ nav.site-nav .badge{padding:4px 10px;background:var(--peach);color:var(--olive-d
 .cover .stamp:hover{transform:rotate(-2deg) translate(-2px,-2px);box-shadow:10px 10px 0 var(--peach)}
 .cover .stamp .blink{font-family:'VT323',monospace;color:var(--peach);animation:blink 1s steps(2) infinite;font-size:24px}
 .cover .photo-stack{position:relative;height:340px}
+
+/* COMING SOON stamp — pre-launch only */
+.coming-soon-stamp{position:absolute;right:32px;top:96px;background:var(--peach-deep);color:var(--cream);padding:14px 24px;border:3px solid var(--cream);outline:3px solid var(--peach-deep);font-family:'Bungee',sans-serif;text-align:center;transform:rotate(-8deg);box-shadow:6px 6px 0 var(--olive-darker);z-index:5;letter-spacing:.04em;text-transform:uppercase;line-height:1;pointer-events:none}
+.coming-soon-stamp .l1,.coming-soon-stamp .l2{display:block;font-size:32px}
+.coming-soon-stamp .l3{display:block;font-size:11px;margin-top:8px;font-family:'VT323',monospace;letter-spacing:.16em}
 .cover .polaroid{position:absolute;background:var(--cream);padding:14px 14px 32px;box-shadow:6px 6px 0 var(--olive-darker);width:200px;border:2px solid var(--olive-darker)}
 .cover .polaroid .frame{height:200px;display:flex;align-items:center;justify-content:center}
 .cover .polaroid .caption{font-family:Caveat,cursive;font-size:18px;text-align:center;margin-top:8px;color:var(--olive-darker)}
@@ -266,6 +271,9 @@ footer.site-footer a{color:var(--mustard);text-decoration:none;margin-left:18px}
   .cover .stamp{font-size:15px;padding:12px 18px;gap:10px}
   .cover .stamp .blink{font-size:18px}
   .cover .photo-stack{height:300px;margin-top:8px}
+  .coming-soon-stamp{right:auto;left:50%;top:auto;bottom:-12px;transform:translateX(-50%) rotate(-4deg);padding:10px 18px}
+  .coming-soon-stamp .l1,.coming-soon-stamp .l2{font-size:24px}
+  .coming-soon-stamp .l3{font-size:10px;margin-top:6px}
   .cover .polaroid{width:140px;padding:10px 10px 24px}
   .cover .polaroid .frame{height:140px}
   .cover .polaroid .caption{font-size:14px;margin-top:6px}
