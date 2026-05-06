@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
+.DS_Store
+*.log
+.vscode/
+
+# Claude Code project tooling — never publish
+.claude/
+
+# Local working copies / scratch — never publish
+.tmp-*/
+*.tmp
+

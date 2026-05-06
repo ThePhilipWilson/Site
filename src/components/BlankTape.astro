@@ -1,0 +1,17 @@
+---
+import Cassette from './Cassette.astro';
+// Empty-state for the writing section: a single unrecorded cassette.
+---
+<div class="cassettes">
+  <Cassette
+    pos={1}
+    side="A"
+    number="00"
+    length={0}
+    date="UNRECORDED"
+    title="Blank tape · ready to record"
+    tape="NORMAL"
+    minutes={0}
+    blank={true}
+  />
+</div>

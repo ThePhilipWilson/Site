@@ -1,0 +1,178 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Logo from '../components/Logo.astro';
+import ReelSymbol from '../components/ReelSymbol.astro';
+import Cabinet from '../components/Cabinet.astro';
+import LabCard from '../components/LabCard.astro';
+import NoSignal from '../components/NoSignal.astro';
+import Cassette from '../components/Cassette.astro';
+import BlankTape from '../components/BlankTape.astro';
+import { site } from '../lib/site.ts';
+
+// Collections (filter drafts, sort newest first)
+const lab = (await getCollection('lab', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const writing = (await getCollection('writing', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const monthShort = (d: Date) =>
+  d.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }).toUpperCase();
+const yearOf = (d: Date) => d.getFullYear();
+---
+<Layout>
+  <ReelSymbol />
+
+  <!-- COVER -->
+  <header class="cover">
+    <div class="meta-strip">
+      <span>VOL.&nbsp;{site.issue.volume.toString().padStart(2, '0')} — ISSUE&nbsp;{String(site.issue.number).padStart(2, '0')}</span>
+      <span>{site.issue.season}</span>
+      <span>UK · £FREE</span>
+    </div>
+    <div class="wrap">
+      <div>
+        <h1>
+          <span class="p">PHILIP</span> <span class="y">A</span> <span class="o">WILSON</span>
+        </h1>
+        <p class="sub">{site.tagline}</p>
+        <a class="stamp" href="#lab">
+          <span class="blink">▶</span> Press start &nbsp;→&nbsp; enter the lab
+        </a>
+      </div>
+      <div class="photo-stack">
+        <div class="polaroid p1">
+          <div class="frame"><Logo width="80%" /></div>
+          <div class="caption">the workshop</div>
+        </div>
+        <div class="polaroid p2">
+          <div class="frame"></div>
+          <div class="caption">a procedural city</div>
+        </div>
+        <div class="polaroid p3">
+          <div class="frame"><Logo width="60%" /></div>
+          <div class="caption">est. 2017</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- LAB -->
+  <section class="spread lab" id="lab">
+    <div class="wrap">
+      <div class="head">
+        <div class="head-id">
+          <span class="kicker">// SECTION 01 — THE LAB<span class="cur"></span></span>
+          <span class="num">01</span>
+        </div>
+        <h2>The Lab</h2>
+        <p class="note">
+          {lab.length > 0
+            ? `↳ ${lab.length} ${lab.length === 1 ? 'title' : 'titles'} in current rotation. all browser-playable.`
+            : '↳ no transmissions yet. first cartridge incoming.'}
+        </p>
+      </div>
+
+      <Cabinet
+        marqueeLeft={lab.length > 0
+          ? `★ NOW PLAYING — ${lab.length} ${lab.length === 1 ? 'TITLE' : 'TITLES'}`
+          : '★ NO INPUT — STAND BY'}
+        marqueeRight={lab.length > 0 ? 'INSERT COIN' : 'NO SIGNAL'}
+        prompt={lab.length > 0 ? 'ls -lh ~/lab' : 'sleep ∞'}
+        footCenter={lab.length > 0 ? '★ pull-out centrefold ★' : '★ first transmission incoming ★'}
+        footRight={site.issue.version}
+      >
+        {lab.length === 0 ? (
+          <NoSignal />
+        ) : (
+          <div class="lab-grid">
+            {lab.map((entry, i) => (
+              <LabCard
+                index={i + 1}
+                number={String(i + 1).padStart(2, '0')}
+                year={yearOf(entry.data.date)}
+                title={entry.data.title}
+                description={entry.data.description}
+                type={entry.data.type}
+                stars={entry.data.stars}
+                href={entry.data.demo ?? `/lab/${entry.id}`}
+              />
+            ))}
+          </div>
+        )}
+      </Cabinet>
+    </div>
+  </section>
+
+  <!-- WRITING -->
+  <section class="spread writing" id="writing">
+    <div class="wrap">
+      <div class="head">
+        <div class="head-id">
+          <span class="kicker">// SECTION 02 — WRITING<span class="cur"></span></span>
+          <span class="num">02</span>
+        </div>
+        <h2>Writing</h2>
+        <p class="note">
+          {writing.length > 0
+            ? '↳ post-mortems, working theories, lightly opinionated.'
+            : '↳ blank tape in the deck. first recording soon.'}
+        </p>
+      </div>
+
+      {writing.length === 0 ? (
+        <BlankTape />
+      ) : (
+        <div class="cassettes">
+          {writing.map((entry, i) => (
+            <Cassette
+              pos={i + 1}
+              side={entry.data.side}
+              number={String(i + 1).padStart(2, '0')}
+              length={entry.data.minutes * 10}
+              date={monthShort(entry.data.date)}
+              title={entry.data.title}
+              tape={entry.data.tape}
+              minutes={entry.data.minutes}
+              href={`/writing/${entry.id}`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="spread about" id="about">
+    <div class="wrap">
+      <div class="head">
+        <div class="head-id">
+          <span class="kicker">// SECTION 03 — ABOUT<span class="cur"></span></span>
+          <span class="num">03</span>
+        </div>
+        <h2>About</h2>
+        <p class="note">↳ the person behind it.</p>
+      </div>
+      <div class="about-grid">
+        <div class="blurb">
+          {site.bio.map((p) => <p>{p}</p>)}
+        </div>
+        <div class="contact-card">
+          <h3>↳ get in touch</h3>
+          {site.links.map((l) => (
+            <div class="row">
+              <span class="k">{l.key}</span>
+              <span class="v"><a href={l.href}>{l.label}</a></span>
+            </div>
+          ))}
+          {site.status && (
+            <div class="row">
+              <span class="k">STATUS</span>
+              <span class="v" style="color:var(--peach-deep)">● {site.status.label}</span>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

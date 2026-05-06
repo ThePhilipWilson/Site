@@ -1,0 +1,19 @@
+---
+// Empty-state for the lab section. Renders inside the CRT slot when no projects exist.
+interface Props {
+  message?: string;
+  substring?: string;
+}
+const {
+  message = 'No signal',
+  substring = 'Stand by — first transmission incoming',
+} = Astro.props;
+---
+<div class="no-signal">
+  <div class="smpte-bars" aria-hidden="true">
+    <span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span>
+  </div>
+  <p class="signal-text">▶ {message}</p>
+  <p class="standby">{substring} <span class="blink">_</span></p>
+</div>

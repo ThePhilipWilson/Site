@@ -1,0 +1,64 @@
+---
+// Arcade cabinet wrapper for the lab section. Slot in the screen content.
+interface Props {
+  marqueeLeft?: string;
+  marqueeRight?: string;
+  plateLabel?: string;
+  prompt?: string;
+  modelLabel?: string;
+  footLeft?: string;
+  footCenter?: string;
+  footRight?: string;
+}
+const {
+  marqueeLeft = '★ NOW PLAYING',
+  marqueeRight = 'INSERT COIN',
+  plateLabel = '★ PLATE 01 — SOFTWARE ISSUE ★',
+  prompt = 'ls -lh ~/lab',
+  footLeft = '▲ 1UP · CREDIT: 01',
+  footCenter = '★ centrefold ★',
+  footRight = 'v.2026.04',
+} = Astro.props;
+---
+<div class="cabinet">
+  <div class="plate-tag">{plateLabel}</div>
+  <span class="cabinet-side-grille l"></span>
+  <span class="cabinet-side-grille r"></span>
+
+  <div class="marquee-bar">
+    <div class="left">
+      <span class="bulb-row"><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span></span>
+      <span>{marqueeLeft}</span>
+    </div>
+    <div class="right">
+      <span>1 PLAYER</span>
+      <span style="color:var(--peach)">★</span>
+      <span>{marqueeRight}</span>
+    </div>
+  </div>
+
+  <div class="bezel">
+    <div class="crt">
+      <p class="crt-prompt"><span class="arrow">&gt;</span> {prompt} &nbsp; <span class="cur"></span></p>
+      <slot />
+    </div>
+    <div class="bezel-screws-bot"><span></span><span></span></div>
+  </div>
+
+  <div class="controls">
+    <div class="group"><span class="led"></span><span class="label">PWR</span></div>
+    <div class="group"><span class="label">VOL</span><span class="knob"></span></div>
+    <div class="group"><span class="label">CH</span><div class="channel"><button type="button">−</button><button type="button">+</button></div></div>
+    <div class="group">
+      <span class="label">P1</span>
+      <span class="stick"></span>
+      <div class="btn-group"><span class="b"></span><span class="b"></span><span class="b"></span></div>
+    </div>
+  </div>
+
+  <div class="cabinet-foot">
+    <span>{footLeft}</span>
+    <span>{footCenter}</span>
+    <span>{footRight}</span>
+  </div>
+</div>

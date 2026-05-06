@@ -1,0 +1,74 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('lab', ({ data }) => !data.draft);
+  return entries.map((entry) => ({
+    params: { id: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const dateLabel = entry.data.date
+  .toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })
+  .toUpperCase();
+const stars = '★ '.repeat(Math.max(1, Math.min(5, entry.data.stars))).trim();
+---
+<Layout title={`${entry.data.title} · Philip A Wilson`} description={entry.data.description}>
+  <article class="entry lab-entry">
+    <a class="back" href="/#lab">← back to the lab</a>
+
+    <header class="entry-head">
+      <span class="kicker">// LAB · {dateLabel}<span class="cur"></span></span>
+      <h1>{entry.data.title}</h1>
+      <p class="lede">{entry.data.description}</p>
+      <div class="meta-row">
+        <span class="chip">{entry.data.type}</span>
+        <span class="chip">{stars}</span>
+        {entry.data.demo && <a class="chip primary" href={entry.data.demo}>▶ live demo</a>}
+        {entry.data.repo && <a class="chip" href={entry.data.repo}>source ↗</a>}
+      </div>
+    </header>
+
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+
+  <style>
+    .entry{max-width:780px;margin:0 auto;padding:64px 32px 96px;color:var(--olive-darker)}
+    .back{font-family:'VT323',monospace;font-size:14px;color:var(--peach-deep);text-decoration:none;letter-spacing:.04em;text-transform:uppercase;border-bottom:1.5px solid var(--peach-deep);padding-bottom:1px}
+    .back:hover{color:var(--olive-darker);border-color:var(--olive-darker)}
+    .entry-head{margin:32px 0 48px;padding-bottom:32px;border-bottom:2px solid var(--olive-darker)}
+    .kicker{font-family:'VT323',monospace;font-size:15px;letter-spacing:.14em;color:var(--peach-deep);text-transform:uppercase;display:inline-block;margin-bottom:12px}
+    .kicker .cur{display:inline-block;width:6px;height:12px;background:currentColor;vertical-align:-1px;animation:blink 1s steps(2) infinite;margin-left:4px}
+    .entry-head h1{font-family:'Bungee',sans-serif;font-size:clamp(36px,6vw,64px);line-height:.95;margin:0 0 16px;color:var(--olive-darker);text-transform:uppercase;letter-spacing:-.01em;word-break:keep-all;hyphens:none}
+    .entry-head .lede{font-family:Caveat,cursive;font-weight:700;font-size:24px;line-height:1.3;color:var(--olive);max-width:42ch;margin:0 0 20px}
+    .meta-row{display:flex;gap:8px;flex-wrap:wrap}
+    .chip{font-family:'VT323',monospace;font-size:14px;background:var(--olive-darker);color:var(--mustard);padding:4px 10px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;border:1.5px solid var(--olive-darker)}
+    a.chip:hover{background:var(--peach-deep);border-color:var(--peach-deep)}
+    .chip.primary{background:var(--peach);color:var(--olive-darker);border-color:var(--olive-darker)}
+    .chip.primary:hover{background:var(--mustard)}
+    .prose{font-family:'Space Grotesk',sans-serif;font-size:17px;line-height:1.65;color:var(--olive-darker)}
+    .prose :global(h2){font-family:'Bungee',sans-serif;font-size:28px;margin:48px 0 16px;text-transform:uppercase;letter-spacing:-.005em}
+    .prose :global(h3){font-family:'Bungee',sans-serif;font-size:20px;margin:32px 0 12px;text-transform:uppercase;letter-spacing:-.005em}
+    .prose :global(p){margin:0 0 18px}
+    .prose :global(a){color:var(--peach-deep);text-decoration:none;border-bottom:1.5px solid var(--peach-deep);font-weight:600}
+    .prose :global(a:hover){color:var(--olive-darker);border-color:var(--olive-darker)}
+    .prose :global(code){font-family:'VT323',monospace;font-size:18px;background:var(--cream);padding:1px 6px;border:1.5px solid var(--olive-darker)}
+    .prose :global(pre){font-family:'VT323',monospace;background:var(--olive-darker);color:var(--phosphor);padding:18px 22px;border:2px solid var(--olive-darker);box-shadow:5px 5px 0 var(--peach-deep);overflow-x:auto;font-size:16px;line-height:1.5}
+    .prose :global(pre code){background:none;border:none;padding:0;color:inherit;font-size:inherit}
+    .prose :global(blockquote){border-left:3px solid var(--peach-deep);margin:18px 0;padding:4px 0 4px 18px;font-family:Caveat,cursive;font-weight:700;font-size:22px;color:var(--olive)}
+    .prose :global(ul),.prose :global(ol){margin:0 0 18px;padding-left:24px}
+    .prose :global(li){margin-bottom:6px}
+    .prose :global(img){max-width:100%;border:2px solid var(--olive-darker);box-shadow:5px 5px 0 var(--olive-darker);margin:24px 0}
+    @media (max-width:640px){
+      .entry{padding:40px 20px 64px}
+      .entry-head{margin:24px 0 32px;padding-bottom:24px}
+    }
+  </style>
+</Layout>

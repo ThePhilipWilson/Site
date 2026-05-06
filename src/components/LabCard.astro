@@ -1,0 +1,24 @@
+---
+interface Props {
+  index: number; // 1-based position in the grid; drives title-colour tint
+  number: string; // e.g. "01"
+  year: number;
+  title: string;
+  description: string;
+  type: string; // canvas | webgl | audio | etc
+  stars: number; // 1-5
+  href?: string;
+}
+const { index, number, year, title, description, type, stars, href } = Astro.props;
+const Tag = href ? 'a' : 'div';
+const tint = index % 6;
+---
+<Tag class="lab-card" data-tint={tint} href={href}>
+  <span class="num">// {number} · {year}</span>
+  <span class="title">{title}</span>
+  <span class="desc">{description}</span>
+  <span class="meta">
+    <span>{type}</span>
+    <span>{'★ '.repeat(Math.max(1, Math.min(5, stars))).trim()}</span>
+  </span>
+</Tag>

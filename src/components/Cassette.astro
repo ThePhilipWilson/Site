@@ -1,0 +1,66 @@
+---
+import Logo from './Logo.astro';
+
+interface Props {
+  pos: number;     // 1-based position in the grid; drives rotation
+  side: 'A' | 'B';
+  number: string;  // 01, 02, 03 etc
+  length: number;  // C-XX number, derived from minutes (x10)
+  date: string;    // formatted "APR 2026" etc
+  title: string;
+  tape: 'NORMAL' | 'CHROME' | 'METAL';
+  minutes: number;
+  href?: string;
+  blank?: boolean;
+}
+const { pos, side, number, length, date, title, tape, minutes, href, blank = false } = Astro.props;
+const Tag: 'a' | 'div' = href ? 'a' : 'div';
+
+// Stripe pattern cycles through three styles by position
+const stripePatterns = ['rainbow', 'solid', 'alt'] as const;
+const stripe = blank ? 'blank' : stripePatterns[(pos - 1) % stripePatterns.length];
+---
+<Tag
+  class="cassette"
+  data-pos={pos}
+  data-stripe={stripe}
+  {...(blank ? { 'data-blank': 'true' } : {})}
+  href={href}
+>
+  <span class="screw tl"></span><span class="screw tr"></span>
+  <span class="screw bl"></span><span class="screw br"></span>
+
+  <div class="label">
+    <div class="stripes"><span></span><span></span><span></span><span></span></div>
+    <div class="label-meta">
+      <span class="side">SIDE {side} · {number}</span>
+      <span class="length">{length}</span>
+    </div>
+    <div class="label-title">
+      <span class="index">— INDEX · {date} —</span>
+      <h3>{title}</h3>
+    </div>
+    <div class="reel-window">
+      <svg><use href="#reel"/></svg>
+      <span class="tape-line"></span>
+      <svg><use href="#reel"/></svg>
+    </div>
+    <div class="label-foot">
+      <span class="brand">P.A.W. SOUNDS</span>
+      <span class="arrow">▶</span>
+      <span class="type">C-{String(minutes).padStart(2, '0')} · {tape}</span>
+    </div>
+  </div>
+
+  <div class="mechanism">
+    <span class="center-screw"></span>
+    <span class="pad"></span>
+    <span class="felt"></span>
+    <span class="pad lg"></span>
+    <span class="gap"></span>
+    <span class="pad lg"></span>
+    <span class="felt"></span>
+    <span class="pad"></span>
+    <span class="center-screw"></span>
+  </div>
+</Tag>
