@@ -28,10 +28,12 @@ html,body{margin:0;padding:0;background:var(--olive-darker);color:var(--olive-da
    is the actual scroll container picks it up. Disabled for reduced-motion. */
 html,body{scroll-snap-type:y mandatory;scroll-behavior:smooth}
 .cover,.spread{scroll-snap-align:start;scroll-snap-stop:always;min-height:100vh;display:flex;flex-direction:column;justify-content:safe start}
-/* About is the last section AND contains the footer. Size to content so the
-   footer ends the page cleanly, and zero the section's bottom padding so the
-   footer sits flush with the section's bottom edge (no blue gap below it). */
-.spread.about{min-height:auto;padding-bottom:0}
+/* About is the last section AND contains the footer. Keep it 100vh like the
+   others so it feels like a page, zero the bottom padding so the footer sits
+   flush with the section's bottom edge, and push the footer to the bottom
+   with margin-top:auto. */
+.spread.about{padding-bottom:0}
+.spread.about > footer.site-footer{margin-top:auto;width:calc(100% + 64px);margin-left:-32px;margin-right:-32px}
 @media (prefers-reduced-motion:reduce){
   html,body{scroll-snap-type:none;scroll-behavior:auto}
   .cover,.spread{scroll-snap-align:none}
