@@ -68,6 +68,13 @@ const yearOf = (d: Date) => d.getFullYear();
   <!-- LAB -->
   <section class="spread lab" id="lab">
     <div class="wrap">
+      {site.comingSoon && (
+        <div class="demo-stamp" aria-label="Demo cabinet notice">
+          <span class="l1">Demo</span>
+          <span class="l2">Cabinet</span>
+          <span class="l3">★ no real titles yet ★</span>
+        </div>
+      )}
       <div class="head">
         <div class="head-id">
           <span class="kicker">// SECTION 01 — THE LAB<span class="cur"></span></span>
@@ -115,6 +122,13 @@ const yearOf = (d: Date) => d.getFullYear();
   <!-- WRITING -->
   <section class="spread writing" id="writing">
     <div class="wrap">
+      {site.comingSoon && (
+        <div class="demo-stamp" aria-label="Demo tapes notice">
+          <span class="l1">Demo</span>
+          <span class="l2">Tapes</span>
+          <span class="l3">★ no real writing yet ★</span>
+        </div>
+      )}
       <div class="head">
         <div class="head-id">
           <span class="kicker">// SECTION 02 — WRITING<span class="cur"></span></span>
@@ -131,21 +145,36 @@ const yearOf = (d: Date) => d.getFullYear();
       {writing.length === 0 ? (
         <BlankTape />
       ) : (
-        <div class="cassettes">
-          {writing.map((entry, i) => (
-            <Cassette
-              pos={i + 1}
-              side={entry.data.side}
-              number={String(i + 1).padStart(2, '0')}
-              length={entry.data.minutes * 10}
-              date={monthShort(entry.data.date)}
-              title={entry.data.title}
-              tape={entry.data.tape}
-              minutes={entry.data.minutes}
-              href={`/writing/${entry.id}`}
-            />
-          ))}
-        </div>
+        <>
+          {writing.length > 1 && (
+            <div class="deck-controls" role="group" aria-label="Tape deck controls">
+              <button class="deck-btn rew" id="rew" type="button" aria-label="Previous tape">
+                <span class="glyph">|◀◀</span><span>Rew</span>
+              </button>
+              <span class="counter">
+                <span>Track </span><span class="now" id="counter-now">01</span>
+                <span class="total"> / {String(writing.length).padStart(2, '0')}</span>
+              </span>
+              <button class="deck-btn ff" id="ff" type="button" aria-label="Next tape">
+                <span>FF</span><span class="glyph">▶▶|</span>
+              </button>
+            </div>
+          )}
+          <div class="deck-stack" id="stack" tabindex="0" aria-label="Cassette pile">
+            {writing.map((entry, i) => (
+              <Cassette
+                index={i}
+                number={String(i + 1).padStart(2, '0')}
+                side={entry.data.side}
+                minutes={entry.data.minutes}
+                date={monthShort(entry.data.date)}
+                title={entry.data.title}
+                tape={entry.data.tape}
+                href={`/writing/${entry.id}`}
+              />
+            ))}
+          </div>
+        </>
       )}
     </div>
   </section>
@@ -185,3 +214,106 @@ const yearOf = (d: Date) => d.getFullYear();
     <Footer />
   </section>
 </Layout>
+
+<script>
+  // Cassette pile: shuffle / drag / keyboard. Mounts only when the deck is
+  // present (writing has 2+ entries).
+  const stack = document.getElementById('stack');
+  const counterNow = document.getElementById('counter-now');
+  const rew = document.getElementById('rew');
+  const ff  = document.getElementById('ff');
+  if (stack && counterNow && rew && ff) {
+    const tapes = [...stack.querySelectorAll<HTMLElement>('.cassette')];
+    const VISIBLE = 8;
+    let activeIdx = 0;
+
+    // Front-loaded horizontal fan: pos 0 is the centred front tape; subsequent
+    // poses trail off to the right with progressively smaller X steps and
+    // irregular Y / rotation so the pile looks hand-thrown rather than neat.
+    const POSE: [number, number, number][] = [
+      [   0,    0,    0   ],
+      [ 270,  -14,  -1.8  ],
+      [ 360,   10,   2.4  ],
+      [ 425,  -32,   0.8  ],
+      [ 475,    6,  -3.4  ],
+      [ 515,  -48,   1.6  ],
+      [ 545,  -22,  -2.6  ],
+      [ 570,  -68,   3.2  ],
+    ];
+
+    function update() {
+      tapes.forEach((tape, i) => {
+        const pos = (i - activeIdx + tapes.length) % tapes.length;
+        const visible = pos < VISIBLE;
+        const idx = Math.min(pos, VISIBLE - 1);
+        const [x, y, r] = POSE[idx];
+        tape.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) rotate(${r}deg)`;
+        tape.style.transformOrigin = 'left center';
+        tape.style.opacity = visible ? '1' : '0';
+        tape.style.pointerEvents = visible ? 'auto' : 'none';
+        tape.style.zIndex = String(visible ? (100 - pos) : 0);
+        tape.classList.toggle('is-active', pos === 0);
+      });
+      counterNow.textContent = String(activeIdx + 1).padStart(2, '0');
+    }
+    const next = () => { activeIdx = (activeIdx + 1) % tapes.length; update(); };
+    const prev = () => { activeIdx = (activeIdx - 1 + tapes.length) % tapes.length; update(); };
+
+    ff.addEventListener('click', next);
+    rew.addEventListener('click', prev);
+    stack.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft' ){ e.preventDefault(); prev(); }
+      if (e.key === 'ArrowRight'){ e.preventDefault(); next(); }
+    });
+
+    // Drag the front tape sideways; past the threshold it triggers the swap.
+    // Drag LEFT → next (tape sweeps off left). Drag RIGHT → previous.
+    const DRAG_THRESHOLD = 80;
+    let drag: { startX: number; dx: number; tape: HTMLElement } | null = null;
+    let lastDragDx = 0;
+    const frontTape = () => tapes[activeIdx];
+
+    stack.addEventListener('pointerdown', (e) => {
+      const tape = (e.target as HTMLElement | null)?.closest<HTMLElement>('.cassette');
+      if (!tape || tape !== frontTape()) return;
+      if (e.button !== 0 && e.pointerType === 'mouse') return;
+      drag = { startX: e.clientX, dx: 0, tape };
+      lastDragDx = 0;
+      tape.setPointerCapture(e.pointerId);
+      tape.classList.add('is-dragging');
+    });
+    stack.addEventListener('pointermove', (e) => {
+      if (!drag) return;
+      drag.dx = e.clientX - drag.startX;
+      const rot = Math.max(-6, Math.min(6, drag.dx * 0.04));
+      drag.tape.style.transform = `translate(calc(-50% + ${drag.dx}px), -50%) rotate(${rot}deg)`;
+    });
+    const release = (e: PointerEvent) => {
+      if (!drag) return;
+      const { dx, tape } = drag;
+      tape.classList.remove('is-dragging');
+      try { tape.releasePointerCapture(e.pointerId); } catch {}
+      drag = null;
+      lastDragDx = dx;
+      if (dx < -DRAG_THRESHOLD) { next(); return; }
+      if (dx >  DRAG_THRESHOLD) { prev(); return; }
+      update();
+    };
+    stack.addEventListener('pointerup',     release);
+    stack.addEventListener('pointercancel', release);
+
+    // Front tape: real navigation unless the click follows a drag.
+    // Other tapes: clicking brings them forward instead of navigating.
+    tapes.forEach((t, i) => t.addEventListener('click', (e) => {
+      const wasDrag = Math.abs(lastDragDx) > 4;
+      lastDragDx = 0;
+      if (wasDrag) { e.preventDefault(); return; }
+      if (i === activeIdx) return; // let the link navigate
+      e.preventDefault();
+      activeIdx = i;
+      update();
+    }));
+
+    update();
+  }
+</script>

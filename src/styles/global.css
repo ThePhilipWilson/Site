@@ -20,6 +20,9 @@
    Body bg matches the footer (olive-darker) so any space below the last section
    looks like the footer extends to the viewport bottom. */
 html,body{margin:0;padding:0;background:var(--olive-darker);color:var(--olive-darker);font-family:'Space Grotesk',system-ui,sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:clip}
+/* Browser-default visited link colour (purple/blue) is gross. Inherit from
+   parent by default, then component-level rules below pin specific colours. */
+a:visited{color:inherit}
 ::selection{background:var(--mustard);color:var(--olive-darker)}
 @keyframes blink{50%{opacity:0}}
 
@@ -51,7 +54,7 @@ nav.site-nav{position:sticky;top:0;z-index:100;background:var(--olive-darker);co
 nav.site-nav .mark{display:flex;gap:10px;align-items:center}
 nav.site-nav .mark svg{width:22px;height:22px;color:var(--mustard)}
 nav.site-nav .links{display:flex;gap:20px}
-nav.site-nav .links a{color:var(--cream);text-decoration:none;opacity:.8;transition:color .2s}
+nav.site-nav .links a,nav.site-nav .links a:visited{color:var(--cream);text-decoration:none;opacity:.8;transition:color .2s}
 nav.site-nav .links a:hover{color:var(--mustard);opacity:1}
 nav.site-nav .badge{padding:4px 10px;background:var(--peach);color:var(--olive-darker);font-size:11px;font-family:'VT323',monospace;letter-spacing:.04em;text-transform:none}
 
@@ -180,65 +183,141 @@ nav.site-nav .badge{padding:4px 10px;background:var(--peach);color:var(--olive-d
 .no-signal .standby{font-family:'VT323',monospace;font-size:20px;color:var(--mustard);letter-spacing:.16em;text-transform:uppercase;margin:0}
 .no-signal .standby .blink{animation:blink 1s steps(2) infinite;color:var(--peach)}
 
-/* WRITING — CASSETTES */
+/* WRITING — CASSETTE PILE
+   Tapes are absolutely-positioned inside .deck-stack and arranged into a
+   horizontal fan by inline transforms set in JS. Default centred transform
+   below covers the static / no-JS / empty case so a single tape still sits
+   nicely. */
+:root{--plastic:#1a1814;--plastic-deep:#0a0805;--cream-deep:#E5DCC4;--label:#F4EDDF}
 .spread.writing{background:var(--mustard)}
-.cassettes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;margin-top:24px}
-.cassette{position:relative;display:flex;flex-direction:column;background:#1a1814;border:2px solid #050504;border-radius:8px;padding:18px 16px 6px;text-decoration:none;color:var(--olive-darker);box-shadow:7px 7px 0 var(--olive-darker);transition:transform .15s,box-shadow .15s;min-height:300px}
-.cassette[data-pos="1"]{transform:rotate(-1.2deg)}
-.cassette[data-pos="2"]{transform:rotate(.5deg)}
-.cassette[data-pos="3"]{transform:rotate(-.6deg)}
-.cassette[data-pos="0"]{transform:rotate(.8deg)}
-.cassette:hover{transform:rotate(0) translate(-2px,-2px);box-shadow:10px 10px 0 var(--olive-darker)}
 
-.cassette .screw{position:absolute;width:11px;height:11px;border-radius:50%;background:#3a342a;border:1.5px solid #050504;z-index:3}
+/* Demo stamp — pre-launch placeholder notice. Used inside .wrap of any section
+   that's currently showing seeded / sample content. Same family as the cover's
+   coming-soon-stamp but tilted the opposite way. Per-section colour variants
+   below. */
+.demo-stamp{position:absolute;right:-8px;top:-32px;padding:14px 24px;font-family:'Bungee',sans-serif;text-align:center;transform:rotate(6deg);z-index:6;letter-spacing:.04em;text-transform:uppercase;line-height:1;pointer-events:none}
+.demo-stamp .l1,.demo-stamp .l2{display:block;font-size:28px}
+.demo-stamp .l3{display:block;font-size:11px;margin-top:8px;font-family:'VT323',monospace;letter-spacing:.16em}
+/* Writing (mustard background) — dark stamp with peach accent. */
+.spread.writing .demo-stamp{background:var(--olive-darker);color:var(--mustard);border:3px solid var(--mustard);outline:3px solid var(--olive-darker);box-shadow:6px 6px 0 var(--peach-deep)}
+.spread.writing .demo-stamp .l3{color:var(--peach)}
+/* Lab (olive-darker background) — bright stamp pops against the dark cabinet. */
+.spread.lab .demo-stamp{background:var(--peach-deep);color:var(--cream);border:3px solid var(--cream);outline:3px solid var(--peach-deep);box-shadow:6px 6px 0 var(--mustard);top:8px}
+.spread.lab .demo-stamp .l3{color:var(--mustard)}
+
+/* Deck controls (Rew / counter / FF) */
+.deck-controls{max-width:1100px;margin:0 auto 28px;display:flex;align-items:center;justify-content:center;gap:18px;position:relative;z-index:200}
+.deck-btn{display:flex;align-items:center;gap:10px;background:var(--olive-darker);color:var(--mustard);font-family:'Bungee',sans-serif;letter-spacing:.06em;text-transform:uppercase;font-size:13px;padding:10px 18px;border:2px solid var(--olive-darker);box-shadow:5px 5px 0 var(--peach-deep);cursor:pointer;font-weight:400}
+.deck-btn:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--peach-deep)}
+.deck-btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--peach-deep)}
+.deck-btn .glyph{font-family:'VT323',monospace;font-size:22px;line-height:1;color:var(--peach)}
+.counter{font-family:'VT323',monospace;font-size:22px;letter-spacing:.16em;background:var(--olive-darker);color:var(--mustard);padding:8px 18px;border:2px solid var(--olive-darker);text-transform:uppercase;min-width:240px;text-align:center}
+.counter .now{color:var(--peach)}
+.counter .total{opacity:.6}
+
+/* The pile container — overflow visible so the tail of the fan can peek
+   past the right edge naturally. */
+.deck-stack{position:relative;width:min(1280px, 96vw);height:520px;margin:0 auto;overflow:visible;background:repeating-linear-gradient(45deg,rgba(42,39,34,.04) 0 12px,transparent 12px 24px)}
+
+/* CASSETTE — rounded rectangle silhouette with a raised trapezoid relief at
+   the bottom and a tape window between the reels. clip-path eats borders
+   and box-shadows, so trim/shadow are drawn with filter:drop-shadow stacks. */
+.cassette{
+  position:absolute;top:50%;left:50%;
+  width:min(560px, 46%);
+  aspect-ratio:5/3;
+  --casing:var(--plastic);--casing-trim:var(--plastic-deep);--shadow:var(--olive-darker);
+  background:var(--casing);
+  padding:14px 18px;
+  text-decoration:none;color:var(--olive-darker);
+  display:flex;flex-direction:column;
+  /* Centred default — JS overrides per-tape in carousel mode. */
+  transform:translate(-50%,-50%);
+  clip-path:polygon(
+    1.8% 0, 98.2% 0, 99.4% 0.6%, 100% 2.5%,
+    100% 97.5%, 99.4% 99.4%, 98.2% 100%,
+    1.8% 100%, 0.6% 99.4%, 0 97.5%,
+    0 2.5%, 0.6% 0.6%
+  );
+  filter:
+    drop-shadow(0 1.5px 0 var(--casing-trim))
+    drop-shadow(1.5px 0 0 var(--casing-trim))
+    drop-shadow(-1.5px 0 0 var(--casing-trim))
+    drop-shadow(0 -1.5px 0 var(--casing-trim))
+    drop-shadow(8px 8px 0 var(--shadow));
+  transition:transform .45s cubic-bezier(.34,1.25,.64,1),opacity .25s ease,filter .2s ease;
+  will-change:transform,opacity;
+  touch-action:none;
+}
+.cassette.is-active{cursor:grab}
+.cassette.is-dragging{cursor:grabbing;transition:none}
+
+/* Casing variants */
+.cassette[data-casing="dark"]    {--casing:#1a1814;--casing-trim:#0a0805}
+.cassette[data-casing="cream"]   {--casing:#E5DCC4;--casing-trim:#2A2722}
+.cassette[data-casing="mint"]    {--casing:#7DC4A4;--casing-trim:#2A2722}
+.cassette[data-casing="peach"]   {--casing:#9F5F33;--casing-trim:#2A2722}
+.cassette[data-casing="blue"]    {--casing:#9BCFD6;--casing-trim:#2A2722}
+.cassette[data-casing="mustard"] {--casing:#B58D2E;--casing-trim:#2A2722}
+.cassette[data-casing="cream"] .mechanism .drive-hole,
+.cassette[data-casing="mint"]  .mechanism .drive-hole,
+.cassette[data-casing="blue"]  .mechanism .drive-hole{background:#2A2722;border-color:#0a0805}
+.cassette[data-casing="cream"] .mechanism .guide,
+.cassette[data-casing="mint"]  .mechanism .guide,
+.cassette[data-casing="blue"]  .mechanism .guide{background:#2A2722}
+.cassette[data-casing="cream"] .mechanism .felt,
+.cassette[data-casing="mint"]  .mechanism .felt,
+.cassette[data-casing="blue"]  .mechanism .felt{background:#5a4a32}
+
+.cassette .screw{position:absolute;width:11px;height:11px;border-radius:50%;background:#3a342a;border:1.5px solid var(--plastic-deep);z-index:5}
 .cassette .screw::before,.cassette .screw::after{content:"";position:absolute;background:#0a0805}
 .cassette .screw::before{left:50%;top:1px;bottom:1px;width:1.5px;transform:translateX(-50%) rotate(45deg)}
 .cassette .screw::after{top:50%;left:1px;right:1px;height:1.5px;transform:translateY(-50%) rotate(45deg)}
 .cassette .screw.tl{top:6px;left:6px}
 .cassette .screw.tr{top:6px;right:6px}
-.cassette .screw.bl{bottom:46px;left:6px}
-.cassette .screw.br{bottom:46px;right:6px}
+.cassette .screw.bl{bottom:6px;left:6px;top:auto}
+.cassette .screw.br{bottom:6px;right:6px;top:auto}
+.cassette .mechanism > .screw.cb{position:absolute;top:-7px;left:50%;transform:translateX(-50%);bottom:auto}
 
-.cassette .label{background:var(--cream);border:1.5px solid #050504;flex:1;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.cassette .label{flex:0 0 70%;background:var(--label);border:1.5px solid var(--plastic-deep);border-radius:3px;position:relative;display:flex;flex-direction:column;overflow:hidden}
+.cassette .label-top{flex:0 0 38%;display:grid;grid-template-columns:auto 1fr auto;align-items:center;padding:10px 14px;gap:14px;background:var(--label);position:relative;z-index:2}
+.cassette .side-tab{display:flex;align-items:baseline;gap:4px;font-family:'Bungee',sans-serif;letter-spacing:.04em;line-height:1}
+.cassette .side-tab .word{font-size:9px;color:var(--olive-darker);opacity:.6;text-transform:uppercase;letter-spacing:.16em}
+.cassette .side-tab .letter{font-size:34px;color:var(--olive-darker)}
+.cassette .title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;line-height:1.15;letter-spacing:-.01em;color:var(--olive-darker);margin:0;text-align:center;padding:0 4px}
+.cassette[data-blank] .title{font-family:'VT323',monospace;font-weight:400;opacity:.6;letter-spacing:.06em;text-transform:uppercase}
+.cassette .length-num{font-family:'Bungee',sans-serif;font-size:34px;line-height:1;color:var(--olive-darker);letter-spacing:.02em}
 
-.cassette .stripes{display:flex;height:18px;border-bottom:1.5px solid var(--olive-darker)}
-.cassette .stripes span{flex:1;height:100%}
-.cassette[data-stripe="rainbow"] .stripes span:nth-child(1){background:var(--peach-deep)}
-.cassette[data-stripe="rainbow"] .stripes span:nth-child(2){background:var(--mustard)}
-.cassette[data-stripe="rainbow"] .stripes span:nth-child(3){background:var(--mint)}
-.cassette[data-stripe="rainbow"] .stripes span:nth-child(4){background:var(--blue)}
-.cassette[data-stripe="solid"] .stripes span{background:var(--peach)}
-.cassette[data-stripe="alt"] .stripes span:nth-child(odd){background:var(--mustard)}
-.cassette[data-stripe="alt"] .stripes span:nth-child(even){background:var(--mint)}
-.cassette[data-stripe="blank"] .stripes span{background:repeating-linear-gradient(45deg,var(--olive-darker) 0 4px,var(--cream) 4px 8px)}
+.cassette .stripe-band{flex:0 0 36%;position:relative;display:flex;border-top:1.5px solid var(--plastic-deep);border-bottom:1.5px solid var(--plastic-deep)}
+.cassette .stripe-band > span{flex:1;height:100%}
+.cassette[data-stripe="rainbow"] .stripe-band > span:nth-child(1){background:var(--peach-deep)}
+.cassette[data-stripe="rainbow"] .stripe-band > span:nth-child(2){background:var(--mustard)}
+.cassette[data-stripe="rainbow"] .stripe-band > span:nth-child(3){background:var(--mint)}
+.cassette[data-stripe="rainbow"] .stripe-band > span:nth-child(4){background:var(--blue)}
+.cassette[data-stripe="solid"] .stripe-band > span{background:var(--peach)}
+.cassette[data-stripe="alt"] .stripe-band > span:nth-child(odd){background:var(--mustard)}
+.cassette[data-stripe="alt"] .stripe-band > span:nth-child(even){background:var(--mint)}
+.cassette[data-stripe="blank"] .stripe-band > span{background:repeating-linear-gradient(45deg,var(--olive-darker) 0 4px,var(--cream) 4px 8px)}
 
-.cassette .label-meta{display:flex;justify-content:space-between;align-items:center;padding:5px 10px;border-bottom:1px solid var(--olive-darker);background:var(--cream)}
-.cassette .label-meta .side{font-family:'Bungee',sans-serif;font-size:12px;letter-spacing:.04em;background:var(--olive-darker);color:var(--cream);padding:1px 8px}
-.cassette .label-meta .length{font-family:'Bungee',sans-serif;font-size:14px;color:var(--olive-darker);letter-spacing:.04em}
+.cassette .reels-row{position:absolute;left:0;right:0;top:38%;height:36%;display:grid;grid-template-columns:1fr 36% 1fr;align-items:center;padding:0 4%;gap:4%;z-index:3;pointer-events:none}
+.cassette .reel{width:72%;aspect-ratio:1;flex-shrink:0}
+.cassette .reels-row > .reel:first-of-type{justify-self:end}
+.cassette .reels-row > .reel:last-of-type {justify-self:start}
+.cassette .tape-window{width:100%;height:64%;background:var(--plastic-deep);border:2px solid var(--cream);border-radius:2px;position:relative;overflow:hidden}
+.cassette .tape-window::before{content:"";position:absolute;left:-2px;right:-2px;top:50%;transform:translateY(-50%);height:55%;background:repeating-linear-gradient(90deg,transparent 0 4px,rgba(0,0,0,.35) 4px 5px),#6b4a26;border-top:1.5px solid #2a1a08;border-bottom:1.5px solid #2a1a08}
+.cassette .tape-window::after{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:60%;height:32%;background:repeating-linear-gradient(90deg,transparent 0 6px,rgba(0,0,0,.5) 6px 7px);pointer-events:none}
 
-.cassette .label-title{padding:8px 10px;border-bottom:1px solid var(--olive-darker);background:var(--cream);min-height:62px}
-.cassette .label-title .index{font-family:'VT323',monospace;font-size:10px;letter-spacing:.18em;color:var(--olive-darker);opacity:.55;text-transform:uppercase;display:block;margin-bottom:6px;border-bottom:1px solid var(--olive-darker);padding-bottom:2px}
-.cassette .label-title h3{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;line-height:1.2;margin:0;letter-spacing:-.005em}
-.cassette[data-blank] .label-title h3{font-family:'VT323',monospace;font-weight:400;font-size:18px;color:var(--olive-darker);opacity:.6;letter-spacing:.06em;text-transform:uppercase}
+.cassette .label-bottom{flex:1;background:var(--label);padding:8px 14px;display:flex;flex-direction:column;justify-content:space-between;position:relative;z-index:2}
+.cassette .index-line{border-top:1px solid var(--plastic-deep);border-bottom:1px dashed rgba(42,39,34,.4);height:6px}
+.cassette .brand-row{display:flex;justify-content:space-between;align-items:center;font-family:'VT323',monospace;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--olive-darker)}
+.cassette .brand-row .brand{font-family:'Bungee',sans-serif;font-size:11px;letter-spacing:.06em}
+.cassette .brand-row .type{color:var(--peach-deep);font-weight:bold;font-family:'Bungee',sans-serif;font-size:11px}
 
-.cassette .reel-window{background:#0f0e0c;border-bottom:1.5px solid var(--olive-darker);padding:10px 12px;display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;position:relative}
-.cassette .reel-window::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:18px;transform:translateX(-50%);background:#1a1814;border-left:1px solid #2a2722;border-right:1px solid #2a2722}
-.cassette .reel-window svg{width:46px;height:46px;display:block;position:relative;z-index:2}
-.cassette .tape-line{height:5px;background:#3a342a;border-top:1px solid #6a6258;border-bottom:1px solid #6a6258;position:relative;z-index:3}
-.cassette .tape-line::after{content:"";position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:1px;background:var(--mustard);opacity:.45}
-
-.cassette .label-foot{display:flex;justify-content:space-between;align-items:center;padding:5px 10px;background:var(--cream);font-family:'VT323',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--olive-darker)}
-.cassette .label-foot .brand{font-family:'Bungee',sans-serif;font-size:11px;letter-spacing:.06em}
-.cassette .label-foot .arrow{background:var(--peach-deep);color:var(--cream);padding:1px 7px;font-weight:bold;border:1px solid var(--olive-darker)}
-.cassette .label-foot .type{color:var(--peach-deep);font-weight:bold;font-family:'Bungee',sans-serif;font-size:11px}
-
-.cassette .mechanism{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:6px 18px 0;margin-top:6px;height:32px}
-.cassette .mechanism .pad{width:18px;height:10px;background:#3a342a;border:1px solid #050504;border-radius:1px;flex-shrink:0}
-.cassette .mechanism .pad.lg{width:26px}
-.cassette .mechanism .felt{width:14px;height:14px;background:#5a4a32;border:1px solid #050504;border-radius:50%;flex-shrink:0}
-.cassette .mechanism .gap{flex:1}
-.cassette .mechanism .center-screw{width:9px;height:9px;border-radius:50%;background:#3a342a;border:1.5px solid #050504;position:relative;flex-shrink:0}
-.cassette .mechanism .center-screw::before{content:"";position:absolute;left:50%;top:1px;bottom:1px;width:1px;background:#0a0805;transform:translateX(-50%)}
+.cassette .mechanism{flex:1;margin:auto -18px -16px -18px;position:relative;background:rgba(255,255,255,.08);clip-path:polygon(14% 0,86% 0,100% 100%,0 100%);filter:drop-shadow(0 -2px 0 var(--casing-trim)) drop-shadow(2px 0 0 var(--casing-trim)) drop-shadow(-2px 0 0 var(--casing-trim));display:flex;align-items:center;justify-content:space-between;padding:0 22%;min-height:0}
+.cassette .mechanism .drive-hole{width:30px;height:30px;border-radius:50%;background:var(--plastic-deep);border:2px solid #4a4438;position:relative;flex-shrink:0}
+.cassette .mechanism .drive-hole::after{content:"";position:absolute;inset:5px;border-radius:50%;border:1.5px dashed #6a6258}
+.cassette .mechanism .guide{width:12px;height:16px;background:#3a342a;border:1.5px solid var(--plastic-deep);border-radius:1px;flex-shrink:0}
+.cassette .mechanism .felt{width:16px;height:12px;background:#5a4a32;border:1.5px solid var(--plastic-deep);border-radius:50%;flex-shrink:0}
 
 /* ABOUT */
 .spread.about{background:var(--blue)}
@@ -251,18 +330,19 @@ nav.site-nav .badge{padding:4px 10px;background:var(--peach);color:var(--olive-d
 .contact-card .row{padding:10px 0;border-bottom:1.5px dashed var(--olive-darker);display:flex;justify-content:space-between;align-items:baseline;gap:12px}
 .contact-card .row:last-child{border:none}
 .contact-card .k{font-family:'Bungee',sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:.06em}
-.contact-card .v a{color:var(--peach-deep);text-decoration:none;border-bottom:2px solid var(--peach-deep);font-weight:700}
+.contact-card .v a,.contact-card .v a:visited{color:var(--peach-deep);text-decoration:none;border-bottom:2px solid var(--peach-deep);font-weight:700}
 
 /* FOOTER */
 footer.site-footer{background:var(--olive-darker);color:var(--cream);padding:32px;display:flex;justify-content:space-between;align-items:center;font-family:'Bungee',sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:.06em;border-top:3px solid var(--mustard)}
-footer.site-footer a{color:var(--mustard);text-decoration:none;margin-left:18px}
+footer.site-footer a,footer.site-footer a:visited{color:var(--mustard);text-decoration:none;margin-left:18px}
 
 /* TABLET */
 @media (max-width:860px){
   .cover .wrap{grid-template-columns:1fr;gap:32px}
   .cover .photo-stack{height:300px}
   .lab-grid{grid-template-columns:repeat(2,1fr)}
-  .cassettes{grid-template-columns:1fr;gap:24px}
+  .deck-stack{height:420px}
+  .cassette{width:min(540px, 56%)}
   .about-grid{grid-template-columns:1fr;gap:32px}
   .spread{padding:56px 24px}
   .spread .head{gap:14px;margin-bottom:32px}
@@ -328,17 +408,18 @@ footer.site-footer a{color:var(--mustard);text-decoration:none;margin-left:18px}
   .controls .label{font-size:11px}
   .cabinet-foot{flex-direction:column;align-items:flex-start;gap:4px;padding:10px 14px;font-size:12px}
 
-  .cassette{transform:none!important;min-height:260px;padding:14px 12px 4px}
-  .cassette:hover{transform:translate(-2px,-2px)!important}
-  .cassette .label-title h3{font-size:14px}
-  .cassette .reel-window{padding:8px 10px;gap:8px}
-  .cassette .reel-window svg{width:40px;height:40px}
-  .cassette .stripes{height:14px}
-  .cassette .label-meta{padding:4px 8px;font-size:13px}
-  .cassette .label-foot{padding:4px 8px;font-size:11px}
-  .cassette .mechanism{padding:4px 14px 0;height:26px}
-  .cassette .screw.bl{bottom:38px}
-  .cassette .screw.br{bottom:38px}
+  .deck-stack{height:320px}
+  .cassette{width:min(380px, 70%)}
+  .cassette .label-top{padding:8px 10px;gap:8px}
+  .cassette .side-tab .letter{font-size:24px}
+  .cassette .length-num{font-size:24px}
+  .cassette .title{font-size:13px}
+  .cassette .mechanism .drive-hole{width:24px;height:24px}
+  .cassette .mechanism .guide,
+  .cassette .mechanism .felt{width:10px;height:14px}
+  .deck-btn{padding:8px 12px;font-size:11px}
+  .deck-btn .glyph{font-size:18px}
+  .counter{font-size:16px;min-width:160px;padding:6px 12px}
 
   .about-grid .blurb{font-size:20px}
   .about-grid .blurb em{font-size:26px}

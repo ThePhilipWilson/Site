@@ -1,17 +1,17 @@
 ---
 import Cassette from './Cassette.astro';
-// Empty-state for the writing section: a single unrecorded cassette.
+// Empty-state for the writing section: a single unrecorded cassette,
+// rendered inside the same deck-stack frame as the populated pile.
 ---
-<div class="cassettes">
+<div class="deck-stack" data-empty="true" aria-label="No tapes yet">
   <Cassette
-    pos={1}
-    side="A"
+    index={0}
     number="00"
-    length={0}
+    side="A"
+    minutes={0}
     date="UNRECORDED"
     title="Blank tape · ready to record"
     tape="NORMAL"
-    minutes={0}
     blank={true}
   />
 </div>

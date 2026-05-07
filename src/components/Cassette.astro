@@ -1,29 +1,36 @@
 ---
-import Logo from './Logo.astro';
-
 interface Props {
-  pos: number;     // 1-based position in the grid; drives rotation
+  index: number;
+  number: string;
   side: 'A' | 'B';
-  number: string;  // 01, 02, 03 etc
-  length: number;  // C-XX number, derived from minutes (x10)
-  date: string;    // formatted "APR 2026" etc
+  minutes: number;
+  date: string;
   title: string;
   tape: 'NORMAL' | 'CHROME' | 'METAL';
-  minutes: number;
   href?: string;
   blank?: boolean;
 }
-const { pos, side, number, length, date, title, tape, minutes, href, blank = false } = Astro.props;
-const Tag: 'a' | 'div' = href ? 'a' : 'div';
+const { index, number, side, minutes, date, title, tape, href, blank = false } = Astro.props;
 
-// Stripe pattern cycles through three styles by position
-const stripePatterns = ['rainbow', 'solid', 'alt'] as const;
-const stripe = blank ? 'blank' : stripePatterns[(pos - 1) % stripePatterns.length];
+const CASINGS = ['dark', 'cream', 'mint', 'peach', 'blue', 'mustard'] as const;
+const STRIPES = ['rainbow', 'solid', 'alt'] as const;
+const casing = blank ? 'dark' : CASINGS[index % CASINGS.length];
+const stripe = blank ? 'blank' : STRIPES[index % STRIPES.length];
+
+const TYPE_LABEL = {
+  NORMAL: 'Type I · Normal',
+  CHROME: 'Type II · Chrome',
+  METAL:  'Type IV · Metal',
+} as const;
+const typeLabel = TYPE_LABEL[tape];
+
+const Tag: 'a' | 'div' = href ? 'a' : 'div';
 ---
 <Tag
   class="cassette"
-  data-pos={pos}
+  data-casing={casing}
   data-stripe={stripe}
+  data-idx={index}
   {...(blank ? { 'data-blank': 'true' } : {})}
   href={href}
 >
@@ -31,36 +38,33 @@ const stripe = blank ? 'blank' : stripePatterns[(pos - 1) % stripePatterns.lengt
   <span class="screw bl"></span><span class="screw br"></span>
 
   <div class="label">
-    <div class="stripes"><span></span><span></span><span></span><span></span></div>
-    <div class="label-meta">
-      <span class="side">SIDE {side} · {number}</span>
-      <span class="length">{length}</span>
+    <div class="label-top">
+      <span class="side-tab"><span class="word">side</span><span class="letter">{side}</span></span>
+      <h3 class="title">{title}</h3>
+      <span class="length-num">{minutes || '—'}</span>
     </div>
-    <div class="label-title">
-      <span class="index">— INDEX · {date} —</span>
-      <h3>{title}</h3>
+    <div class="stripe-band"><span></span><span></span><span></span><span></span></div>
+    <div class="reels-row">
+      <svg class="reel"><use href="#reel"/></svg>
+      <div class="tape-window"></div>
+      <svg class="reel"><use href="#reel"/></svg>
     </div>
-    <div class="reel-window">
-      <svg><use href="#reel"/></svg>
-      <span class="tape-line"></span>
-      <svg><use href="#reel"/></svg>
-    </div>
-    <div class="label-foot">
-      <span class="brand">P.A.W. SOUNDS</span>
-      <span class="arrow">▶</span>
-      <span class="type">C-{String(minutes).padStart(2, '0')} · {tape}</span>
+    <div class="label-bottom">
+      <div class="index-line"></div>
+      <div class="brand-row">
+        <span class="brand">P.A.W. Sounds</span>
+        <span>★ {date} · No. {number} ★</span>
+        <span class="type">{typeLabel}</span>
+      </div>
     </div>
   </div>
 
   <div class="mechanism">
-    <span class="center-screw"></span>
-    <span class="pad"></span>
-    <span class="felt"></span>
-    <span class="pad lg"></span>
-    <span class="gap"></span>
-    <span class="pad lg"></span>
-    <span class="felt"></span>
-    <span class="pad"></span>
-    <span class="center-screw"></span>
+    <span class="screw cb"></span>
+    <div class="drive-hole"></div>
+    <div class="guide"></div>
+    <div class="felt"></div>
+    <div class="guide"></div>
+    <div class="drive-hole"></div>
   </div>
 </Tag>
