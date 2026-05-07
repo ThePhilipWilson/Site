@@ -4,7 +4,10 @@ import Layout from '../../layouts/Layout.astro';
 import Footer from '../../components/Footer.astro';
 
 export async function getStaticPaths() {
-  const entries = await getCollection('lab', ({ data }) => !data.draft);
+  // Entries with `demo:` link straight to that URL (often a static toy under
+  // public/) so we skip generating an internal writeup page for them — that
+  // would collide with the public file at the same path.
+  const entries = await getCollection('lab', ({ data }) => !data.draft && !data.demo);
   return entries.map((entry) => ({
     params: { id: entry.id },
     props: { entry },

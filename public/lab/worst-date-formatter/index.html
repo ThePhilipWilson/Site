@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Worst Date Format Converter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Space+Mono:wght@400;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1d2d 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            color: #fff;
+        }
+
+        /* Animated background grain */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(255, 255, 255, 0.03) 0px,
+                    rgba(255, 255, 255, 0.03) 1px,
+                    transparent 1px,
+                    transparent 2px
+                );
+            pointer-events: none;
+            animation: flicker 0.15s infinite;
+            z-index: 0;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 0.97; }
+            50% { opacity: 1; }
+            100% { opacity: 0.97; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            width: 100%;
+        }
+
+        /* Glitch border effect */
+        .card {
+            background: rgba(15, 29, 45, 0.8);
+            border: 2px solid #00ff88;
+            padding: 40px;
+            border-radius: 2px;
+            box-shadow: 
+                0 0 20px rgba(0, 255, 136, 0.3),
+                inset 0 0 20px rgba(0, 255, 136, 0.1),
+                0 0 40px rgba(255, 0, 150, 0.1);
+            position: relative;
+            animation: cardGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes cardGlow {
+            0%, 100% {
+                box-shadow: 
+                    0 0 20px rgba(0, 255, 136, 0.3),
+                    inset 0 0 20px rgba(0, 255, 136, 0.1),
+                    0 0 40px rgba(255, 0, 150, 0.1);
+            }
+            50% {
+                box-shadow: 
+                    0 0 30px rgba(0, 255, 136, 0.5),
+                    inset 0 0 30px rgba(0, 255, 136, 0.2),
+                    0 0 60px rgba(255, 0, 150, 0.2);
+            }
+        }
+
+        .title {
+            font-family: 'Fredoka One', sans-serif;
+            font-size: 2.5em;
+            font-weight: 900;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, #00ff88 0%, #ff006e 50%, #00d4ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleShift 4s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+        }
+
+        @keyframes titleShift {
+            0%, 100% { transform: translateX(0px); }
+            50% { transform: translateX(2px); }
+        }
+
+        .subtitle {
+            font-size: 0.9em;
+            color: #ff006e;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+            color: #00ff88;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        input[type="date"],
+        input[type="time"] {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #00ff88;
+            border-radius: 2px;
+            color: #fff;
+            font-family: 'Courier Prime', monospace;
+            font-size: 1em;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="date"]:focus,
+        input[type="time"]:focus {
+            outline: none;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5), inset 0 0 10px rgba(0, 255, 136, 0.2);
+            border-color: #00d4ff;
+            transform: scale(1.01);
+        }
+
+        input[type="date"]::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Chrome calendar icon color */
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(0.8) brightness(1.2);
+            cursor: pointer;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        button {
+            flex: 1;
+            padding: 14px 20px;
+            background: linear-gradient(135deg, #00ff88 0%, #00d4ff 100%);
+            border: none;
+            color: #0a0e27;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 0.95em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: all 0.2s ease;
+            box-shadow: 0 8px 24px rgba(0, 255, 136, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(0, 255, 136, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button.secondary {
+            background: rgba(255, 0, 150, 0.2);
+            color: #ff006e;
+            border: 1px solid #ff006e;
+        }
+
+        button.secondary:hover {
+            box-shadow: 0 12px 32px rgba(255, 0, 150, 0.3);
+        }
+
+        .output-section {
+            margin-top: 30px;
+            padding: 25px;
+            background: rgba(0, 255, 136, 0.05);
+            border: 2px dashed #00d4ff;
+            border-radius: 2px;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .output-section.active {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: #00ff88;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2), inset 0 0 20px rgba(0, 255, 136, 0.05);
+        }
+
+        .output-text {
+            font-family: 'Fredoka One', sans-serif;
+            font-size: 1.8em;
+            color: #00ff88;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: glitch 2s ease-in-out infinite;
+            text-shadow: 
+                3px 3px 0px rgba(255, 0, 150, 0.5),
+                -2px -2px 0px rgba(0, 212, 255, 0.3);
+        }
+
+        @keyframes glitch {
+            0%, 100% { 
+                transform: translate(0, 0);
+            }
+            20% { 
+                transform: translate(-2px, 2px);
+            }
+            40% { 
+                transform: translate(-2px, -2px);
+            }
+            60% { 
+                transform: translate(2px, 2px);
+            }
+            80% { 
+                transform: translate(2px, -2px);
+            }
+        }
+
+        .placeholder-text {
+            color: rgba(0, 255, 136, 0.4);
+            font-size: 1em;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .controls {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(0, 255, 136, 0.03);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 2px;
+        }
+
+        .control-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+            color: #00d4ff;
+        }
+
+        .control-label:last-child {
+            margin-bottom: 0;
+        }
+
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #00ff88;
+        }
+
+        .info-box {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 0, 150, 0.1);
+            border-left: 3px solid #ff006e;
+            border-radius: 2px;
+            font-size: 0.85em;
+            color: #ff99cc;
+            line-height: 1.6;
+        }
+
+        .copy-button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: rgba(255, 0, 150, 0.3);
+            border: 1px solid #ff006e;
+            color: #ff006e;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        .copy-button:hover {
+            background: rgba(255, 0, 150, 0.4);
+            box-shadow: 0 0 15px rgba(255, 0, 150, 0.3);
+        }
+
+        .copy-button.copied {
+            background: rgba(0, 255, 136, 0.3);
+            color: #00ff88;
+            border-color: #00ff88;
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                padding: 25px;
+            }
+
+            .title {
+                font-size: 1.8em;
+            }
+
+            .output-text {
+                font-size: 1.3em;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1 class="title">THE WORST DATE FORMAT</h1>
+            <p class="subtitle">► Data Destruction Engine ◄</p>
+
+            <div class="input-group">
+                <label for="dateInput">📅 Select Date</label>
+                <input type="date" id="dateInput">
+            </div>
+
+            <div class="input-group">
+                <label for="timeInput">⏰ Select Time (Optional)</label>
+                <input type="time" id="timeInput">
+            </div>
+
+            <div class="controls">
+                <div class="control-label">
+                    <input type="checkbox" id="includeTime" checked>
+                    <label for="includeTime" style="margin: 0; color: #00d4ff; cursor: pointer;">Include time in output</label>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button onclick="convertDate()">Obliterate Format</button>
+                <button class="secondary" onclick="useToday()">Today's Chaos</button>
+            </div>
+
+            <div class="output-section" id="outputSection">
+                <div class="placeholder-text">awaiting date input...</div>
+            </div>
+
+            <button class="copy-button" id="copyButton" style="display: none;" onclick="copyToClipboard()">
+                📋 Copy to Clipboard
+            </button>
+
+            <div class="info-box">
+                <strong>Example:</strong> January 15, 2026 becomes "15th Wednesday of 2026" — because readability is overrated.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const dateInput = document.getElementById('dateInput');
+        const timeInput = document.getElementById('timeInput');
+        const outputSection = document.getElementById('outputSection');
+        const copyButton = document.getElementById('copyButton');
+        const includeTimeCheckbox = document.getElementById('includeTime');
+
+        // Set today's date as default
+        const today = new Date();
+        dateInput.valueAsDate = today;
+        convertDate();
+
+        dateInput.addEventListener('change', convertDate);
+        timeInput.addEventListener('change', convertDate);
+        includeTimeCheckbox.addEventListener('change', convertDate);
+
+        function getOrdinalSuffix(n) {
+            if (n > 3 && n < 21) return 'th';
+            switch (n % 10) {
+                case 1: return 'st';
+                case 2: return 'nd';
+                case 3: return 'rd';
+                default: return 'th';
+            }
+        }
+
+        function getWeekdayName(dayIndex) {
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            return days[dayIndex];
+        }
+
+        function convertDate() {
+            const dateValue = dateInput.value;
+            if (!dateValue) {
+                outputSection.innerHTML = '<div class="placeholder-text">awaiting date input...</div>';
+                copyButton.style.display = 'none';
+                return;
+            }
+
+            const date = new Date(dateValue + 'T00:00:00');
+            const year = date.getFullYear();
+            const month = date.getMonth();
+            const day = date.getDate();
+            const dayOfWeek = date.getDay();
+            const weekdayName = getWeekdayName(dayOfWeek);
+
+            // Calculate which occurrence of this weekday in the year
+            let count = 0;
+            for (let d = 1; d <= day; d++) {
+                const checkDate = new Date(year, month, d);
+                if (checkDate.getDay() === dayOfWeek) {
+                    count++;
+                }
+            }
+
+            // Count total occurrences of this weekday in the entire year
+            let totalOccurrences = 0;
+            for (let m = 0; m < 12; m++) {
+                for (let d = 1; d <= 31; d++) {
+                    const checkDate = new Date(year, m, d);
+                    if (checkDate.getFullYear() === year && checkDate.getDay() === dayOfWeek) {
+                        totalOccurrences++;
+                    }
+                }
+            }
+
+            // Count which weekday overall in the year (e.g., "the 234th weekday")
+            let weekdayCount = 0;
+            for (let m = 0; m < month; m++) {
+                for (let d = 1; d <= 31; d++) {
+                    const checkDate = new Date(year, m, d);
+                    if (checkDate.getFullYear() === year && checkDate.getDay() === dayOfWeek) {
+                        weekdayCount++;
+                    }
+                }
+            }
+            weekdayCount += count;
+
+            const suffix = getOrdinalSuffix(weekdayCount);
+            let output = `${weekdayCount}${suffix} ${weekdayName} of ${year}`;
+
+            if (includeTimeCheckbox.checked && timeInput.value) {
+                const [hours, minutes] = timeInput.value.split(':');
+                const totalMinutes = parseInt(hours) * 60 + parseInt(minutes);
+                output += ` (${totalMinutes} minutes into the day)`;
+            }
+
+            outputSection.classList.add('active');
+            outputSection.innerHTML = `<div class="output-text">${output}</div>`;
+            copyButton.style.display = 'block';
+            copyButton.classList.remove('copied');
+        }
+
+        function useToday() {
+            dateInput.valueAsDate = new Date();
+            timeInput.value = new Date().toTimeString().slice(0, 5);
+            convertDate();
+        }
+
+        function copyToClipboard() {
+            const text = outputSection.querySelector('.output-text').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                copyButton.classList.add('copied');
+                copyButton.textContent = '✓ Copied!';
+                setTimeout(() => {
+                    copyButton.classList.remove('copied');
+                    copyButton.textContent = '📋 Copy to Clipboard';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -9,7 +9,9 @@ const lab = defineCollection({
     type: z.enum(['canvas', 'webgl', 'audio', 'svg', 'js', 'shaders', 'other']),
     stars: z.number().int().min(1).max(5),
     description: z.string().max(120),
-    demo: z.string().url().optional(),
+    // demo accepts both absolute URLs and site-relative paths (e.g. for static
+    // toys that live under public/). repo stays a fully-qualified URL.
+    demo: z.string().optional(),
     repo: z.string().url().optional(),
     draft: z.boolean().default(false),
   }),
