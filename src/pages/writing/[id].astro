@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/Footer.astro';
 
 export async function getStaticPaths() {
   const entries = await getCollection('writing', ({ data }) => !data.draft);
@@ -20,7 +21,7 @@ const monthShort = entry.data.date
   .toUpperCase();
 const cAxis = `C-${String(entry.data.minutes).padStart(2, '0')}`;
 ---
-<Layout title={`${entry.data.title} · Philip A Wilson`} description={entry.data.excerpt}>
+<Layout title={`${entry.data.title} · Philip Wilson`} description={entry.data.excerpt}>
   <article class="entry writing-entry">
     <a class="back" href="/#writing">← back to the rack</a>
 
@@ -44,6 +45,8 @@ const cAxis = `C-${String(entry.data.minutes).padStart(2, '0')}`;
       <Content />
     </div>
   </article>
+
+  <Footer />
 
   <style>
     .entry{max-width:720px;margin:0 auto;padding:48px 32px 96px;color:var(--olive-darker)}

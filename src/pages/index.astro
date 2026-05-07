@@ -8,6 +8,7 @@ import LabCard from '../components/LabCard.astro';
 import NoSignal from '../components/NoSignal.astro';
 import Cassette from '../components/Cassette.astro';
 import BlankTape from '../components/BlankTape.astro';
+import Footer from '../components/Footer.astro';
 import { site } from '../lib/site.ts';
 
 // Collections (filter drafts, sort newest first)
@@ -25,15 +26,15 @@ const yearOf = (d: Date) => d.getFullYear();
 
   <!-- COVER -->
   <header class="cover">
-    <div class="meta-strip">
-      <span>VOL.&nbsp;{site.issue.volume.toString().padStart(2, '0')} — ISSUE&nbsp;{String(site.issue.number).padStart(2, '0')}</span>
-      <span>{site.issue.season}</span>
-      <span>UK · £FREE</span>
-    </div>
     <div class="wrap">
+      <div class="meta-strip">
+        <span>VOL.&nbsp;{site.issue.volume.toString().padStart(2, '0')} — ISSUE&nbsp;{String(site.issue.number).padStart(2, '0')}</span>
+        <span>{site.issue.season}</span>
+        <span>UK · £FREE</span>
+      </div>
       <div>
         <h1>
-          <span class="p">PHILIP</span> <span class="y">A</span> <span class="o">WILSON</span>
+          <span class="p">PHILIP</span> <span class="o">WILSON</span>
         </h1>
         <p class="sub">{site.tagline}</p>
         <a class="stamp" href={site.comingSoon ? `mailto:${site.email}` : '#lab'}>
@@ -162,7 +163,7 @@ const yearOf = (d: Date) => d.getFullYear();
       </div>
       <div class="about-grid">
         <div class="blurb">
-          {site.bio.map((p) => <p>{p}</p>)}
+          {site.bio.map((p) => <p set:html={p} />)}
         </div>
         <div class="contact-card">
           <h3>↳ get in touch</h3>
@@ -181,5 +182,6 @@ const yearOf = (d: Date) => d.getFullYear();
         </div>
       </div>
     </div>
+    <Footer />
   </section>
 </Layout>

@@ -5,7 +5,7 @@ type: canvas
 stars: 3
 description: "Three rules. One swarm. Starlings emerge from the math."
 demo: "https://example.com/boids"
-repo: "https://github.com/philipwilson/boids"
+repo: "https://github.com/ThePhilipWilson/boids"
 draft: true
 ---
 

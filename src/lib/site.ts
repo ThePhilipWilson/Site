@@ -1,7 +1,7 @@
 // Site-wide data. Edit here; nothing else hardcodes this stuff.
 
 export const site = {
-  name: 'Philip A Wilson',
+  name: 'Philip Wilson',
   tagline: 'A small zine of software, games, and things that move on screens. First issue tuning in.',
   email: 'philipwilson@philipwilson.co.uk',
   region: 'United Kingdom',
@@ -15,14 +15,15 @@ export const site = {
 
   // Bio. Short, deliberately. Replace when you've got better words.
   bio: [
-    "I'm Philip, a software engineer with a games and graphics background. Comfortable from shaders to UI; happiest somewhere in the middle.",
+    // Wrap any text in <em>...</em> to get the handwritten peach accent.
+    "I'm <em>Phil</em>, a (primarily backend) software engineer in games with a graphics background. Comfortable from AWS to UI; happiest somewhere in the middle.",
     "This is the holding sleeve for a small zine of software, games, and small experiments. The first issue is on the desk; tuning in soon. If you'd like a heads-up when it lands, please say hello.",
   ],
 
   links: [
     { key: 'EMAIL', label: 'philipwilson@philipwilson.co.uk', href: 'mailto:philipwilson@philipwilson.co.uk' },
-    { key: 'GITHUB', label: '@philipwilson', href: 'https://github.com/philipwilson' },
-    { key: 'MASTODON', label: '@philipwilson', href: '#' },
+    { key: 'GITHUB', label: '@ThePhilipWilson', href: 'https://github.com/ThePhilipWilson' },
+    { key: 'INSTAGRAM', label: '@ThePhilipWilson', href: 'https://instagram.com/ThePhilipWilson' },
   ],
 
   // Issue framing — feeds the cover meta strip and nav badge.

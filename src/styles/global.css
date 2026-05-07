@@ -1,4 +1,4 @@
-/* Philip A Wilson — global styles. Ported from concepts/19-zine-plus.html. */
+/* Philip Wilson — global styles. Ported from concepts/19-zine-plus.html. */
 
 :root{
   --olive:#5B564A;
@@ -15,9 +15,27 @@
 }
 
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;background:var(--cream);color:var(--olive-darker);font-family:'Space Grotesk',system-ui,sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+/* overflow-x:clip prevents horizontal scrollbars without creating a scroll
+   container (unlike `hidden`), which would otherwise break scroll-snap below.
+   Body bg matches the footer (olive-darker) so any space below the last section
+   looks like the footer extends to the viewport bottom. */
+html,body{margin:0;padding:0;background:var(--olive-darker);color:var(--olive-darker);font-family:'Space Grotesk',system-ui,sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:clip}
 ::selection{background:var(--mustard);color:var(--olive-darker)}
 @keyframes blink{50%{opacity:0}}
+
+/* Section-by-section scroll snap. Each section is a viewport-sized "card";
+   the browser animates the stop. Applied to both html AND body so whichever
+   is the actual scroll container picks it up. Disabled for reduced-motion. */
+html,body{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+.cover,.spread{scroll-snap-align:start;scroll-snap-stop:always;min-height:100vh;display:flex;flex-direction:column;justify-content:safe start}
+/* About is the last section AND contains the footer. Size to content so the
+   footer ends the page cleanly, and zero the section's bottom padding so the
+   footer sits flush with the section's bottom edge (no blue gap below it). */
+.spread.about{min-height:auto;padding-bottom:0}
+@media (prefers-reduced-motion:reduce){
+  html,body{scroll-snap-type:none;scroll-behavior:auto}
+  .cover,.spread{scroll-snap-align:none}
+}
 
 /* Halftone grain over everything */
 body::before{
@@ -39,11 +57,10 @@ nav.site-nav .badge{padding:4px 10px;background:var(--peach);color:var(--olive-d
 .cover{position:relative;background:var(--mint);padding:64px 32px 80px;overflow:hidden}
 .cover::after{content:"";position:absolute;left:0;right:0;bottom:0;height:80px;background:var(--peach);clip-path:polygon(0 100%,15% 30%,32% 80%,48% 20%,64% 70%,80% 25%,100% 60%,100% 100%)}
 .cover .wrap{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr;gap:48px;align-items:center;position:relative;z-index:2}
-.cover .meta-strip{position:absolute;left:32px;right:32px;top:24px;display:flex;justify-content:space-between;font-family:'Bungee',sans-serif;font-size:11px;letter-spacing:.06em;color:var(--olive-darker)}
+.cover .meta-strip{grid-column:1 / -1;display:flex;justify-content:space-between;font-family:'Bungee',sans-serif;font-size:11px;letter-spacing:.06em;color:var(--olive-darker);margin-bottom:8px}
 .cover h1{font-family:'Bungee',sans-serif;font-size:clamp(48px,11vw,156px);line-height:.85;color:var(--olive-darker);margin:24px 0 16px;letter-spacing:-.02em;text-transform:uppercase;word-break:keep-all;hyphens:none}
 .cover h1 > span{display:inline-block;white-space:nowrap}
-.cover h1 .p{color:var(--olive-darker)}
-.cover h1 .y{color:var(--mustard);transform:rotate(-3deg);text-shadow:4px 4px 0 var(--olive-darker)}
+.cover h1 .p{color:var(--mustard);transform:rotate(-3deg);text-shadow:4px 4px 0 var(--olive-darker)}
 .cover h1 .o{color:var(--peach);transform:rotate(2deg)}
 .cover .sub{font-family:Caveat,cursive;font-size:34px;color:var(--olive-darker);font-weight:700;line-height:1.1;margin:0 0 24px;transform:rotate(-1deg);max-width:24ch}
 .cover .stamp{display:inline-flex;align-items:center;gap:14px;padding:16px 26px;background:var(--olive-darker);color:var(--mustard);font-family:'Bungee',sans-serif;font-size:20px;letter-spacing:.06em;text-transform:uppercase;transform:rotate(-2deg);box-shadow:7px 7px 0 var(--peach);text-decoration:none;border:2px solid var(--olive-darker);transition:transform .15s,box-shadow .15s}
@@ -265,8 +282,7 @@ footer.site-footer a{color:var(--mustard);text-decoration:none;margin-left:18px}
   .cover .meta-strip{position:static;flex-wrap:wrap;gap:8px 16px;margin-bottom:8px;font-size:10px}
   .cover h1{font-size:clamp(56px,16vw,96px);margin:8px 0 12px}
   .cover h1 > span{display:block;width:fit-content}
-  .cover h1 .y{margin-left:24px}
-  .cover h1 .o{margin-left:8px}
+  .cover h1 .o{margin-left:32px}
   .cover .sub{font-size:24px;margin:0 0 20px}
   .cover .stamp{font-size:15px;padding:12px 18px;gap:10px}
   .cover .stamp .blink{font-size:18px}
