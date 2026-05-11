@@ -286,7 +286,10 @@ nav.site-nav .badge{padding:4px 10px;background:var(--peach);color:var(--olive-d
 .cassette .side-tab .letter{font-size:34px;color:var(--olive-darker)}
 .cassette .title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;line-height:1.15;letter-spacing:-.01em;color:var(--olive-darker);margin:0;text-align:center;padding:0 4px}
 .cassette[data-blank] .title{font-family:'VT323',monospace;font-weight:400;opacity:.6;letter-spacing:.06em;text-transform:uppercase}
+.cassette .length{display:flex;flex-direction:column;align-items:center;line-height:1}
 .cassette .length-num{font-family:'Bungee',sans-serif;font-size:34px;line-height:1;color:var(--olive-darker);letter-spacing:.02em}
+.cassette .length[data-range="true"] .length-num{font-size:22px;letter-spacing:0}
+.cassette .length-unit{font-family:'VT323',monospace;font-size:11px;line-height:1;letter-spacing:.14em;color:var(--olive-darker);opacity:.65;text-transform:uppercase;margin-top:3px}
 
 .cassette .stripe-band{flex:0 0 36%;position:relative;display:flex;border-top:1.5px solid var(--plastic-deep);border-bottom:1.5px solid var(--plastic-deep)}
 .cassette .stripe-band > span{flex:1;height:100%}
@@ -309,6 +312,7 @@ nav.site-nav .badge{padding:4px 10px;background:var(--peach);color:var(--olive-d
 
 .cassette .label-bottom{flex:1;background:var(--label);padding:8px 14px;display:flex;flex-direction:column;justify-content:space-between;position:relative;z-index:2}
 .cassette .index-line{border-top:1px solid var(--plastic-deep);border-bottom:1px dashed rgba(42,39,34,.4);height:6px}
+.cassette .tracklist{font-family:Caveat,cursive;font-weight:500;font-size:14px;line-height:1.15;color:var(--olive-darker);margin:0;padding:2px 0 4px;border-top:1px solid rgba(42,39,34,.35);border-bottom:1px dashed rgba(42,39,34,.35);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;max-height:2.3em;letter-spacing:.005em}
 .cassette .brand-row{display:flex;justify-content:space-between;align-items:center;font-family:'VT323',monospace;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--olive-darker)}
 .cassette .brand-row .brand{font-family:'Bungee',sans-serif;font-size:11px;letter-spacing:.06em}
 .cassette .brand-row .type{color:var(--peach-deep);font-weight:bold;font-family:'Bungee',sans-serif;font-size:11px}

@@ -22,7 +22,11 @@ const writing = defineCollection({
   schema: z.object({
     title: z.string(),
     date: z.coerce.date(),
-    minutes: z.number().int().min(1),
+    // accepts a single integer (8) or a hyphenated range string ("5-7").
+    minutes: z.union([
+      z.number().int().min(1),
+      z.string().regex(/^\d+-\d+$/, 'expected "N-M" range like "5-7"'),
+    ]),
     tape: z.enum(['NORMAL', 'CHROME', 'METAL']).default('NORMAL'),
     side: z.enum(['A', 'B']).default('A'),
     excerpt: z.string().max(180).optional(),

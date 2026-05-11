@@ -1,16 +1,20 @@
 ---
+import { displayMinutes, type Minutes } from '../lib/minutes';
+
 interface Props {
   index: number;
   number: string;
   side: 'A' | 'B';
-  minutes: number;
+  minutes: Minutes;
   date: string;
   title: string;
   tape: 'NORMAL' | 'CHROME' | 'METAL';
+  excerpt?: string;
   href?: string;
   blank?: boolean;
 }
-const { index, number, side, minutes, date, title, tape, href, blank = false } = Astro.props;
+const { index, number, side, minutes, date, title, tape, excerpt, href, blank = false } = Astro.props;
+const minutesLabel = displayMinutes(minutes);
 
 const CASINGS = ['dark', 'cream', 'mint', 'peach', 'blue', 'mustard'] as const;
 const STRIPES = ['rainbow', 'solid', 'alt'] as const;
@@ -41,7 +45,10 @@ const Tag: 'a' | 'div' = href ? 'a' : 'div';
     <div class="label-top">
       <span class="side-tab"><span class="word">side</span><span class="letter">{side}</span></span>
       <h3 class="title">{title}</h3>
-      <span class="length-num">{minutes || '—'}</span>
+      <span class="length" data-range={minutesLabel.includes('–')}>
+        <span class="length-num">{minutesLabel || '—'}</span>
+        {!blank && <span class="length-unit">min</span>}
+      </span>
     </div>
     <div class="stripe-band"><span></span><span></span><span></span><span></span></div>
     <div class="reels-row">
@@ -50,7 +57,11 @@ const Tag: 'a' | 'div' = href ? 'a' : 'div';
       <svg class="reel"><use href="#reel"/></svg>
     </div>
     <div class="label-bottom">
-      <div class="index-line"></div>
+      {excerpt && !blank ? (
+        <p class="tracklist">{excerpt}</p>
+      ) : (
+        <div class="index-line"></div>
+      )}
       <div class="brand-row">
         <span class="brand">P.A.W. Sounds</span>
         <span>★ {date} · No. {number} ★</span>

@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Footer from '../../components/Footer.astro';
+import { cAxis as cAxisFor, readTimeLabel } from '../../lib/minutes';
 
 export async function getStaticPaths() {
   const entries = await getCollection('writing', ({ data }) => !data.draft);
@@ -19,7 +20,8 @@ const dateLabel = entry.data.date
 const monthShort = entry.data.date
   .toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })
   .toUpperCase();
-const cAxis = `C-${String(entry.data.minutes).padStart(2, '0')}`;
+const cAxis = cAxisFor(entry.data.minutes);
+const readTime = readTimeLabel(entry.data.minutes);
 ---
 <Layout title={`${entry.data.title} · Philip Wilson`} description={entry.data.excerpt}>
   <div class="writing-entry-page">
@@ -38,7 +40,7 @@ const cAxis = `C-${String(entry.data.minutes).padStart(2, '0')}`;
       {entry.data.excerpt && <p class="lede">{entry.data.excerpt}</p>}
       <div class="meta-row">
         <span class="chip">{dateLabel}</span>
-        <span class="chip">{entry.data.minutes} min read</span>
+        <span class="chip">{readTime}</span>
       </div>
     </header>
 

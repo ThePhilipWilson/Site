@@ -1,7 +1,7 @@
 ---
-title: "Nineteen homepages, one of them this one"
+title: "It took nineteen homepages to build this site"
 date: 2026-05-11
-minutes: 45
+minutes: 5-7
 tape: NORMAL
 side: A
 excerpt: "Most of what AI built for this site is in the bin. That's the whole point."
