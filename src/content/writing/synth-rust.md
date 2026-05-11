@@ -1,5 +1,5 @@
 ---
-title: "Why I rewrote my synth in Rust (and back again)"
+title: "coming soon"
 date: 2026-02-08
 minutes: 120
 tape: CHROME

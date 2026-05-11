@@ -1,5 +1,5 @@
 ---
-title: "What I learned shipping twelve game jams in a row"
+title: "More examples. Content coming soon (tm)"
 date: 2026-04-12
 minutes: 90
 tape: NORMAL

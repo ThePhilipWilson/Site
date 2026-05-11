@@ -1,5 +1,5 @@
 ---
-title: "A million particles, behaving themselves"
+title: "This will be replaced with content eventually"
 date: 2023-10-04
 minutes: 120
 tape: CHROME

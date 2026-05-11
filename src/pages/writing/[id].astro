@@ -22,6 +22,7 @@ const monthShort = entry.data.date
 const cAxis = `C-${String(entry.data.minutes).padStart(2, '0')}`;
 ---
 <Layout title={`${entry.data.title} · Philip Wilson`} description={entry.data.excerpt}>
+  <div class="writing-entry-page">
   <article class="entry writing-entry">
     <a class="back" href="/#writing">← back to the rack</a>
 
@@ -47,9 +48,11 @@ const cAxis = `C-${String(entry.data.minutes).padStart(2, '0')}`;
   </article>
 
   <Footer />
+  </div>
 
   <style>
-    .entry{max-width:720px;margin:0 auto;padding:48px 32px 96px;color:var(--olive-darker)}
+    .writing-entry-page{background:var(--cream);min-height:100vh}
+    .entry{max-width:720px;margin:0 auto;padding:48px 32px 96px;color:var(--olive-darker);background:var(--cream)}
     .back{font-family:'VT323',monospace;font-size:14px;color:var(--peach-deep);text-decoration:none;letter-spacing:.04em;text-transform:uppercase;border-bottom:1.5px solid var(--peach-deep);padding-bottom:1px}
     .back:hover{color:var(--olive-darker);border-color:var(--olive-darker)}
     .entry-head{margin:32px 0 48px;padding-bottom:32px;border-bottom:2px solid var(--olive-darker)}
@@ -76,7 +79,13 @@ const cAxis = `C-${String(entry.data.minutes).padStart(2, '0')}`;
     .prose :global(blockquote){border-left:3px solid var(--peach-deep);margin:24px 0;padding:6px 0 6px 22px;font-family:Caveat,cursive;font-weight:700;font-size:24px;color:var(--olive);line-height:1.4}
     .prose :global(ul),.prose :global(ol){margin:0 0 20px;padding-left:24px}
     .prose :global(li){margin-bottom:8px}
-    .prose :global(img){max-width:100%;border:2px solid var(--olive-darker);box-shadow:5px 5px 0 var(--olive-darker);margin:28px 0}
+    .prose :global(img){max-width:100%;border:2px solid var(--olive-darker);box-shadow:5px 5px 0 var(--olive-darker);margin:28px 0;display:block}
+    .prose :global(img + em){display:block;font-family:'VT323',monospace;font-size:15px;letter-spacing:.04em;color:var(--olive);text-transform:uppercase;margin:-16px 0 28px;font-style:normal}
+    .prose :global(.pair){display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:28px 0}
+    .prose :global(.pair > div){margin:0}
+    .prose :global(.pair img){margin:0 0 8px;box-shadow:4px 4px 0 var(--olive-darker)}
+    .prose :global(.pair figcaption){font-family:'VT323',monospace;font-size:14px;letter-spacing:.04em;color:var(--olive);text-transform:uppercase}
+    @media (max-width:540px){.prose :global(.pair){grid-template-columns:1fr}}
     .prose :global(hr){border:none;border-top:2px dashed var(--olive-darker);margin:48px 0}
     @media (max-width:640px){
       .entry{padding:32px 20px 64px}

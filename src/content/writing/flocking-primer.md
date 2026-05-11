@@ -1,5 +1,5 @@
 ---
-title: "A flocking primer for non-mathematicians"
+title: "An example because I haven't wrote much yet"
 date: 2025-08-02
 minutes: 90
 tape: NORMAL
