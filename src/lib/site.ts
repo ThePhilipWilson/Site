@@ -21,7 +21,7 @@ export const site = {
   bio: [
     // Wrap any text in <em>...</em> to get the handwritten peach accent.
     "I'm <em>Phil</em>, a (primarily backend) software engineer in games with a graphics background. Comfortable from AWS to UI; happiest somewhere in the middle.",
-    "This is the holding sleeve for a small zine of software, games, and small experiments. The first issue is on the desk; tuning in soon. If you'd like a heads-up when it lands, please say hello.",
+    "This is a work in progress site for software, games and small experiments. <em>Slowly</em> populating with content whenever I have an original thought or build something <em>interesting</em>. I'm not a web developer by trade so expect a few bugs and poor optimisations here and there.",
   ],
 
   links: [
