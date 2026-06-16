@@ -1,0 +1,35 @@
+---
+import Layout from '../layouts/Layout.astro';
+import NoSignal from '../components/NoSignal.astro';
+---
+<Layout title="404 · No Signal · Philip Wilson" description="Lost transmission — that page isn't on this frequency.">
+  <section class="dead-channel">
+    <div class="wrap">
+      <span class="code">ERR · 404</span>
+      <NoSignal message="No signal" substring="That page isn't on this frequency" />
+      <a class="retune" href="/">↩ Re-tune to the cover</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* Full-bleed dead-channel screen. NoSignal's bars/type styles are global. */
+  .dead-channel{
+    background:var(--olive-darker);min-height:calc(100vh - 52px);
+    display:flex;align-items:center;justify-content:center;padding:48px 32px;
+  }
+  .wrap{display:flex;flex-direction:column;align-items:center;gap:28px;max-width:600px;width:100%}
+  .code{
+    font-family:'VT323',monospace;font-size:18px;letter-spacing:.2em;
+    color:var(--peach);text-transform:uppercase;border:2px solid var(--peach);
+    padding:4px 16px;align-self:center;
+  }
+  .retune{
+    display:inline-block;background:var(--mustard);color:var(--olive-darker);
+    font-family:'Bungee',sans-serif;font-size:15px;letter-spacing:.04em;
+    text-transform:uppercase;padding:14px 24px;text-decoration:none;
+    border:2px solid var(--olive-darker);box-shadow:6px 6px 0 var(--peach-deep);
+    transform:rotate(-2deg);transition:transform .15s,box-shadow .15s;
+  }
+  .retune:hover{transform:rotate(-2deg) translate(-2px,-2px);box-shadow:9px 9px 0 var(--peach-deep)}
+</style>

@@ -500,3 +500,54 @@ footer.site-footer a,footer.site-footer a:visited{color:var(--mustard);text-deco
   .demo-stamp{transform:rotate(6deg) scale(.55);transform-origin:top right}
   .spread.lab .demo-stamp,.spread.writing .demo-stamp{top:16px;right:2px}
 }
+
+/* ===== print: ink-on-paper zine, effects stripped ===== */
+@media print {
+  @page{margin:2cm}
+
+  /* Black-on-white; drop the dark chrome and the halftone grain overlay. */
+  html,body{background:#fff !important;color:#000 !important;font-size:11pt}
+  body::before{display:none !important}
+
+  /* Kill motion, shadows, and the CRT scanline overlays everywhere. */
+  *,*::before,*::after{
+    animation:none !important;transition:none !important;
+    box-shadow:none !important;text-shadow:none !important;
+  }
+  .crt::after,.cover::after{display:none !important}
+
+  /* Screen-only chrome that has no business on paper. */
+  nav.site-nav,
+  .back,
+  .tape-strip,
+  .demo-stamp,
+  .coming-soon-stamp,
+  .site-footer,
+  footer.site-footer{display:none !important}
+
+  /* Release the viewport-locking scroll-snap heights so pages flow. */
+  .cover,.spread,.writing-entry-page{min-height:0 !important;height:auto !important}
+
+  /* Article body: single readable column, full width, no decorative rotation. */
+  .writing-entry-page{background:#fff !important}
+  .entry,.writing-entry{max-width:none;margin:0;padding:0;background:#fff !important;color:#000 !important}
+  .entry-head{margin:0 0 24px;padding-bottom:16px;border-bottom:1pt solid #000}
+  .entry-head h1,.prose h2,.prose h3{color:#000 !important}
+  .prose{font-size:11pt;line-height:1.5;color:#000 !important}
+
+  /* Links print their destination so a paper copy stays useful. */
+  .prose a{color:#000 !important;border-bottom:none !important;text-decoration:underline}
+  .prose a[href^="http"]::after{
+    content:" (" attr(href) ")";font-family:'VT323',monospace;
+    font-size:9pt;word-break:break-all;
+  }
+
+  /* Code blocks: light fill, hairline border — no phosphor-on-black. */
+  .prose code,.prose pre,.prose pre code{
+    background:#f2f2f2 !important;color:#000 !important;border-color:#000 !important;
+  }
+
+  /* Don't strand headings or split code blocks across page breaks. */
+  .prose h2,.prose h3{break-after:avoid}
+  .prose pre,.prose blockquote,.prose img{break-inside:avoid}
+}
