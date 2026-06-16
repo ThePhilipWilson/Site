@@ -30,6 +30,39 @@ export const site = {
     { key: 'INSTAGRAM', label: '@ThePhilipWilson', href: 'https://instagram.com/ThePhilipWilson' },
   ],
 
+  // "Now playing" page (/now): the cassette tracklist of what's currently on
+  // the deck. Bump `updated` whenever you change a track. Notes accept <em> for
+  // the handwritten peach accent.
+  // Each track carries its own quest metadata: progress / region / status,
+  // and an optional `locked` flag (redacts the title + swaps in a sealed note).
+  // Notes accept <em> (peach accent) and <a> links.
+  now: {
+    updated: '17 June 2026',
+    intro: "What's on the deck right now. A snapshot, not a CV; it goes out of date the moment I stop pressing record.",
+    sides: [
+      {
+        side: 'A',
+        label: 'Main quests',
+        tracks: [
+          { title: 'This site', note: "Building it out slowly. This very page is the newest track.", progress: 'ONGOING', region: 'THE WORKBENCH', status: 'ACTIVE', locked: false },
+          { title: 'AI adventure', note: "An AI-driven choose-your-own-adventure, still at the prototype stage.", progress: 'PROTOTYPE', region: 'UNCHARTED', status: 'ACTIVE', locked: false },
+          { title: 'Point &amp; click', note: "A point-and-click adventure demo, slowly taking shape.", progress: 'DEMO BUILD', region: 'THE DRAWING BOARD', status: 'ACTIVE', locked: false },
+          { title: 'Day job', note: "Gladly working on a still-secret, under-NDA game with TKG.", progress: '▓▓▓ ▓▓▓▓', region: 'WITH TKG', status: 'SEALED', locked: true },
+        ],
+      },
+      {
+        side: 'B',
+        label: 'Side quests',
+        tracks: [
+          { title: 'Playing', note: "Slay the Spire 2, and <em>more League of Legends than is healthy.</em>", progress: '240H+', region: 'THE ARENA', status: 'ENGAGED', locked: false },
+          { title: 'Learning', note: "To <em>rest</em> and actually pause. Also various tech skills, usually AI-shaped.", progress: 'LV. REST ↑', region: 'THE LONG PAUSE', status: 'ONGOING', locked: false },
+          { title: 'Reading', note: "The Horus Heresy. About halfway, so <em>only thirty or forty books to go.</em>", progress: 'BK 14 / 64', region: 'THE HERESY', status: 'IN PROGRESS', locked: false },
+          { title: 'Warhammer', note: 'Building, painting and playing it with Mrs Wilson, over at <a href="https://instagram.com/phataliewarhammer">@phataliewarhammer</a>.', progress: 'CO-OP', region: 'THE PAINTING DESK', status: 'ACTIVE', locked: false },
+        ],
+      },
+    ],
+  },
+
   // Issue framing — feeds the cover meta strip and nav badge.
   // Pre-launch is "issue 00 · pre-launch"; bump to a real issue once content lands.
   issue: { volume: 1, number: 0, season: 'PRE-LAUNCH 2026', version: 'v.0.0.1' },
