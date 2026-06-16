@@ -1,0 +1,415 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout
+  title="Visual style guide · Philip Wilson"
+  description="The reference for everything that carries the site's identity: palette, type, treatments, components, and rules."
+>
+  <div class="sg-page">
+<nav class="gnav">
+  <span class="brand">P.A.W · STYLE GUIDE</span>
+  <span class="toc">
+    <a href="#palette">palette</a>
+    <a href="#type">type</a>
+    <a href="#treatments">treatments</a>
+    <a href="#blocking">colour blocking</a>
+    <a href="#components">components</a>
+    <a href="#prose">writing</a>
+    <a href="#reviewers">annotations</a>
+    <a href="#interludes">interludes</a>
+    <a href="#rules">rules</a>
+  </span>
+</nav>
+
+<header class="head">
+  <div class="k">// philipwilson.co.uk · the cassette / zine / arcade identity</div>
+  <h1>visual style guide</h1>
+  <p>The reference for everything that carries the site's identity: the home page, writing, about, and the talk pieces. Lineage is <code class="kbd">concepts/19-zine-plus.html</code> → <code class="kbd">Site/src/styles/global.css</code>. Every value below is pulled from that live CSS, not invented.</p>
+  <span class="badge">Lab projects are exempt · everything else adheres</span>
+</header>
+
+<!-- PALETTE -->
+<section class="block" id="palette">
+  <div class="sec-head"><span class="n">01</span><h2>Palette</h2></div>
+  <p class="sec-lead">Flat, solid fills only. No gradients except functional texture (grain, scanlines, tape).</p>
+
+  <div class="subhead">core -- :root tokens</div>
+  <div class="swatches">
+    <div class="sw"><div class="chipc" style="background:#F4EDDF"></div><div class="meta"><span class="tok">--cream</span><span class="hex">#F4EDDF</span><span class="role">page / paper background, labels</span></div></div>
+    <div class="sw"><div class="chipc" style="background:#2A2722"></div><div class="meta"><span class="tok">--olive-darker</span><span class="hex">#2A2722</span><span class="role">ink: text, borders, nav + footer bg</span></div></div>
+    <div class="sw"><div class="chipc" style="background:#3F3B33"></div><div class="meta"><span class="tok">--olive-deep</span><span class="hex">#3F3B33</span><span class="role">dark panel fill (lab cards)</span></div></div>
+    <div class="sw"><div class="chipc" style="background:#5B564A"></div><div class="meta"><span class="tok">--olive</span><span class="hex">#5B564A</span><span class="role">muted text, captions</span></div></div>
+    <div class="sw"><div class="chipc" style="background:#E5B556"></div><div class="meta"><span class="tok">--mustard</span><span class="hex">#E5B556</span><span class="role">primary accent: nav rule, links on dark, writing bg</span></div></div>
+    <div class="sw"><div class="chipc" style="background:#D88E5E"></div><div class="meta"><span class="tok">--peach</span><span class="hex">#D88E5E</span><span class="role">secondary accent: stamps, shadows, zigzag</span></div></div>
+    <div class="sw"><div class="chipc" style="background:#9F5F33"></div><div class="meta"><span class="tok">--peach-deep</span><span class="hex">#9F5F33</span><span class="role">kickers, links on cream, hard shadows</span></div></div>
+    <div class="sw"><div class="chipc" style="background:#7DC4A4"></div><div class="meta"><span class="tok">--mint</span><span class="hex">#7DC4A4</span><span class="role">cover background, LEDs</span></div></div>
+    <div class="sw"><div class="chipc" style="background:#9BCFD6"></div><div class="meta"><span class="tok">--blue</span><span class="hex">#9BCFD6</span><span class="role">about background, tints</span></div></div>
+    <div class="sw"><div class="chipc" style="background:#1A2A22"></div><div class="meta"><span class="tok">--crt</span><span class="hex">#1A2A22</span><span class="role">CRT screen background</span></div></div>
+    <div class="sw"><div class="chipc" style="background:#A8E5C5"></div><div class="meta"><span class="tok">--phosphor</span><span class="hex">#A8E5C5</span><span class="role">CRT text (terminal green)</span></div></div>
+  </div>
+
+  <div class="subhead">secondary -- cassette internals</div>
+  <div class="swatches">
+    <div class="sw"><div class="chipc" style="background:#1a1814"></div><div class="meta"><span class="tok">--plastic</span><span class="hex">#1a1814</span><span class="role">cassette casing</span></div></div>
+    <div class="sw"><div class="chipc" style="background:#0a0805"></div><div class="meta"><span class="tok">--plastic-deep</span><span class="hex">#0a0805</span><span class="role">casing trim / hairlines</span></div></div>
+    <div class="sw"><div class="chipc" style="background:#E5DCC4"></div><div class="meta"><span class="tok">--cream-deep</span><span class="hex">#E5DCC4</span><span class="role">inset / code chip fill</span></div></div>
+  </div>
+
+  <div class="subhead">added -- writing annotation system (not yet in live site CSS)</div>
+  <div class="swatches">
+    <div class="sw"><div class="chipc" style="background:#C2402E"></div><div class="meta"><span class="tok">--ink</span><span class="hex">#C2402E</span><span class="role">the bastard's red pen: strikes, refute marks</span></div></div>
+    <div class="sw"><div class="chipc" style="background:#8E2B1E"></div><div class="meta"><span class="tok">--ink-deep</span><span class="hex">#8E2B1E</span><span class="role">red note text</span></div></div>
+    <div class="sw"><div class="chipc" style="background:#3E7E60"></div><div class="meta"><span class="tok">--mint-deep</span><span class="hex">#3E7E60</span><span class="role">the peer's green: underlines, note text</span></div></div>
+  </div>
+  <p class="note-row">// the three "added" tokens were introduced for the talk pieces. fold them into global.css if the writing annotation system ships.</p>
+</section>
+
+<!-- TYPE -->
+<section class="block" id="type">
+  <div class="sec-head"><span class="n">02</span><h2>Type</h2></div>
+  <p class="sec-lead">Five families, each with one job. Don't reach outside the roles.</p>
+
+  <div class="type-row">
+    <div class="label"><b>Bungee</b> 400<br>display</div>
+    <div><div class="spec-bungee">YOU CAN BE BAD AT THIS</div><div style="font-family:'VT323',monospace;font-size:13px;color:var(--olive);margin-top:8px;letter-spacing:.04em">HEADINGS · STAMPS · BIG NUMBERS · ALWAYS UPPERCASE · ls -.02em large / +.06em small caps · lh .85-1</div></div>
+  </div>
+  <div class="type-row">
+    <div class="label"><b>Space Grotesk</b> 400/500/700<br>body</div>
+    <div><div class="spec-grotesk">Body copy and cassette titles. The workhorse text face. 18px / 1.7 in long-form prose, 15px / 1.5 elsewhere.</div></div>
+  </div>
+  <div class="type-row">
+    <div class="label"><b>VT323</b> 400<br>terminal mono</div>
+    <div><div class="spec-vt">// KICKER · CHIP · META · COUNTER<span class="ex-chip" style="margin-left:4px"><span class="cur"></span></span></div><div style="font-family:'VT323',monospace;font-size:13px;color:var(--olive);margin-top:6px;letter-spacing:.04em">KICKERS · CHIPS · METADATA · CODE · UPPERCASE · ls .06-.16em · blinking block cursor</div></div>
+  </div>
+  <div class="type-row">
+    <div class="label"><b>Caveat</b> 500/700<br>handwriting</div>
+    <div><div class="spec-caveat">subtitles, margin notes, tracklists, blockquotes -- often rotated a degree</div></div>
+  </div>
+  <div class="type-row">
+    <div class="label"><b>Big Shoulders Display</b> 700/900<br>lab titles only</div>
+    <div><div class="spec-big">Procedural City</div><div style="font-family:'VT323',monospace;font-size:13px;color:var(--olive);margin-top:6px;letter-spacing:.04em">CONDENSED UPPERCASE · LAB-CARD TITLES ONLY · DO NOT USE ELSEWHERE</div></div>
+  </div>
+
+  <div class="subhead">heading scale (from the live CSS)</div>
+  <div class="swatches" style="grid-template-columns:repeat(auto-fill,minmax(230px,1fr))">
+    <div class="sw"><div class="meta"><span class="tok">cover h1</span><span class="role">Bungee · clamp(48px, 11vw, 156px) · lh .85</span></div></div>
+    <div class="sw"><div class="meta"><span class="tok">section h2</span><span class="role">Bungee · clamp(48px, 8vw, 96px) · lh .9</span></div></div>
+    <div class="sw"><div class="meta"><span class="tok">article h1</span><span class="role">Bungee · clamp(36px, 5.5vw, 56px)</span></div></div>
+    <div class="sw"><div class="meta"><span class="tok">prose h2 / h3</span><span class="role">Bungee · 28px / 20px</span></div></div>
+    <div class="sw"><div class="meta"><span class="tok">body / prose</span><span class="role">Space Grotesk · 18px / 1.7</span></div></div>
+    <div class="sw"><div class="meta"><span class="tok">kicker</span><span class="role">VT323 · 15-16px · ls .14em</span></div></div>
+  </div>
+</section>
+
+<!-- TREATMENTS -->
+<section class="block" id="treatments">
+  <div class="sec-head"><span class="n">03</span><h2>Signature treatments</h2></div>
+  <p class="sec-lead">These are what make a thing look like the site. Use them; don't soften them.</p>
+  <div class="tiles">
+    <div class="tile"><div class="stage"><div class="ex-shadow"></div></div><div class="cap"><b>Hard offset shadow.</b> box-shadow:6px 6px 0 -- zero blur, always. Hover lifts translate(-2px,-2px) + bigger offset.</div></div>
+    <div class="tile"><div class="stage"><div style="width:120px;height:78px;background:var(--cream);border:3px solid var(--olive-darker)"></div></div><div class="cap"><b>Thick ink borders.</b> 2-3px solid --olive-darker (mustard on dark panels, 4px on the cabinet).</div></div>
+    <div class="tile"><div class="stage"><span class="ex-stamp"><span class="blink">▶</span> press start</span></div><div class="cap"><b>Rotated stamp.</b> Bungee uppercase, rotate(-2deg…6deg), hard shadow.</div></div>
+    <div class="tile"><div class="stage"><span class="ex-coming"><span class="l1">COMING<br>SOON</span><span class="l3">EST. 2026</span></span></div><div class="cap"><b>Double-border stamp.</b> border + outline in a second colour. See coming-soon / demo stamps.</div></div>
+    <div class="tile"><div class="stage"><span class="ex-chip">// SECTION 01<span class="cur"></span></span></div><div class="cap"><b>VT323 chip / kicker.</b> mono uppercase, ls .14em, peach-deep, blinking block cursor.</div></div>
+    <div class="tile"><div class="stage"><span class="ex-badge">ISSUE 04</span></div><div class="cap"><b>Mono badge.</b> mustard fill, 1.5px ink border, VT323.</div></div>
+    <div class="tile"><div class="stage" style="padding:14px"><div class="ex-crt"><p class="p"><span class="arrow">&gt;</span> ls -lh ~/lab</p></div></div><div class="cap"><b>CRT block.</b> --crt bg, phosphor text, scanline overlay, border-radius:22px/18px.</div></div>
+    <div class="tile"><div class="stage" style="padding:0"><div class="ex-zig"></div></div><div class="cap"><b>Zigzag tear.</b> peach strip, clip-path polygon. Bottom of the cover.</div></div>
+    <div class="tile"><div class="stage" style="background:var(--cream)"><span style="font-family:'VT323',monospace;color:var(--olive);font-size:13px;letter-spacing:.06em;text-align:center;text-transform:uppercase">grain overlay<br>is on this whole page</span></div><div class="cap"><b>Halftone grain.</b> fixed feTurbulence noise, opacity .55, mix-blend multiply, over everything.</div></div>
+    <div class="tile"><div class="stage" style="padding:14px"><div class="ex-smpte"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div><div class="cap"><b>SMPTE bars.</b> 8 bars in the full palette. Empty / no-signal states.</div></div>
+  </div>
+</section>
+
+<!-- COLOUR BLOCKING -->
+<section class="block" id="blocking">
+  <div class="sec-head"><span class="n">04</span><h2>Section colour blocking</h2></div>
+  <p class="sec-lead">Each home-page section owns a background; 3px ink rules divide them. Selection is mustard.</p>
+  <div class="blocking">
+    <div class="b-cover">Cover<span class="bk">--mint</span></div>
+    <div class="b-lab">Lab<span class="bk">--olive-darker</span></div>
+    <div class="b-writing">Writing<span class="bk">--mustard</span></div>
+    <div class="b-about">About<span class="bk">--blue</span></div>
+  </div>
+  <p class="note-row">// lab is the one dark section. its rules switch to mustard; its accents to peach.</p>
+</section>
+
+<!-- COMPONENTS -->
+<section class="block" id="components">
+  <div class="sec-head"><span class="n">05</span><h2>Components</h2></div>
+  <p class="sec-lead">The recurring boxed objects. All share borders, hard shadows, and a slight tilt.</p>
+  <div class="tiles">
+    <div class="tile"><div class="stage"><span class="ex-deckbtn"><span class="glyph">◀◀</span> rewind</span></div><div class="cap"><b>Deck button.</b> Bungee, olive-darker, peach-deep shadow. Press: translate(2px,2px).</div></div>
+    <div class="tile"><div class="stage"><span class="ex-counter"><span class="now">003</span> / 012</span></div><div class="cap"><b>Counter.</b> VT323, tape-deck position readout.</div></div>
+    <div class="tile"><div class="stage"><div class="ex-card"><span class="num">// 02 · 2025</span><span class="title">Procedural City</span><span class="desc">wfc, then extruded</span><span class="meta"><span>webgl</span><span>★ ★ ★ ★</span></span></div></div><div class="cap"><b>Lab card.</b> olive-deep, mustard border, Big Shoulders title (lab only).</div></div>
+    <div class="tile"><div class="stage"><div class="ex-contact"><h3>↳ get in touch</h3><div class="row"><span class="kk">Email</span><span class="vv"><a href="#">hello@…</a></span></div><div class="row"><span class="kk">Status</span><span class="vv">Open · 2026</span></div></div></div><div class="cap"><b>Contact card.</b> cream, tilted 1deg, dashed-rule rows.</div></div>
+    <div class="tile"><div class="stage" style="padding:14px"><div class="ex-tape"><span class="side">SIDE A · 01</span><span>APR 2026</span><span class="play">▶</span></div></div><div class="cap"><b>Tape strip.</b> article header band, VT323 on olive-darker.</div></div>
+  </div>
+</section>
+
+<!-- WRITING / PROSE -->
+<section class="block" id="prose">
+  <div class="sec-head"><span class="n">06</span><h2>Writing / long-form</h2></div>
+  <p class="sec-lead">Article body rules, from the live writing template. 720px column on cream.</p>
+  <div class="prose-demo">
+    <h3 class="ph">A heading in Bungee</h3>
+    <p>Body is Space Grotesk at 18px on 1.7 line-height. Inline links are <a href="#">peach-deep with a 2px bottom border</a>, never underlined. Inline <code>code</code> sits in a bordered cream-deep chip.</p>
+    <h4 class="ph">A sub-heading</h4>
+    <p>Block code is a mini CRT: phosphor on olive-darker with a peach-deep hard shadow.</p>
+    <pre>&gt; npx marp AI-usage-slides.md \
+    --theme-set marp-theme-cassette.css</pre>
+    <blockquote>Pull quotes are Caveat at 24px with a peach-deep left border.</blockquote>
+    <div class="imgph">IMAGE</div>
+    <p class="imgcap">images get a 2px ink border + hard shadow; captions are VT323 uppercase</p>
+    <hr>
+    <p>Horizontal rules are a 2px dashed ink line.</p>
+  </div>
+</section>
+
+<!-- REVIEWER ANNOTATIONS -->
+<section class="block" id="reviewers">
+  <div class="sec-head"><span class="n">07</span><h2>Reviewer annotations</h2></div>
+  <p class="sec-lead">The system the talk pieces add on top of the identity. Three voices, three colours.</p>
+  <div class="rev-legend">
+    <span class="rl-peer"><span class="dot"></span>① the peer · mint · underline · factual catches</span>
+    <span class="rl-bastard"><span class="dot"></span>② the bastard · red ink · strike · blind-spot catches</span>
+    <span class="rl-meta"><span class="dot"></span>③ the meta · mustard · in-flow callout</span>
+  </div>
+  <div class="rev-demo">
+    <p class="doc">across <span class="pc">32 daily notes</span> this quarter i <span class="bc">consistently</span> caught my own mistakes early. <span class="bc">this isn't a highlight reel</span>, i included the failures too.</p>
+    <div class="rnote peer"><span class="t">the peer</span>i count 28.</div>
+    <div class="rnote bastard"><span class="t">the bastard</span>saying it isn't one IS the highlight.</div>
+    <div class="meta-call"><span class="t">the meta · it demonstrates itself</span><span class="b">the margins of this page are the two-reviewer pattern, running live.</span></div>
+  </div>
+  <p class="note-row">// peer = mint underline + sticky in the left gutter. bastard = red strike + sticky in the right gutter. meta = full-width callout in normal flow, never floating over text.</p>
+</section>
+
+<!-- INTERLUDES / STICKERS / CARDS -->
+<section class="block" id="interludes">
+  <div class="sec-head"><span class="n">08</span><h2>Interludes, stickers &amp; cards</h2></div>
+  <p class="sec-lead">Newer patterns from the writing pieces: bold colour panels, tilted sticker boxes, stamped cards, the reviewer rail.</p>
+  <div class="tiles">
+    <div class="tile"><div class="stage" style="padding:14px;background:var(--cream-deep)">
+      <div style="background:var(--blue);border:3px solid var(--olive-darker);box-shadow:8px 8px 0 var(--olive-darker);padding:26px 22px;display:flex;flex-direction:column;align-items:flex-start;gap:12px;width:100%">
+        <span style="background:var(--cream);border:3px solid var(--olive-darker);box-shadow:5px 5px 0 var(--olive-darker);padding:8px 14px;font-family:'Bungee',sans-serif;font-size:18px;text-transform:uppercase;letter-spacing:-.01em;color:var(--olive-darker);transform:rotate(-1deg)">so how do we do it?</span>
+        <span style="background:var(--cream);border:3px solid var(--olive-darker);box-shadow:4px 4px 0 var(--olive-darker);padding:6px 12px;font-family:Caveat,cursive;font-weight:700;font-size:18px;color:var(--ink-deep);transform:rotate(-1.5deg)">watch.</span>
+      </div>
+    </div><div class="cap"><b>Interlude panel.</b> bold full-bleed colour (talk slide-6 style) with tilted cream sticker boxes: Bungee title + Caveat note. Article transitions + the outro. Each interlude takes a different colour (mint hero / blue transition / mustard outro).</div></div>
+
+    <div class="tile"><div class="stage" style="background:var(--mint)"><span style="display:inline-block;background:var(--cream);border:2px solid var(--olive-darker);box-shadow:3px 3px 0 var(--olive-darker);padding:7px 13px;font-family:'VT323',monospace;font-size:14px;color:var(--peach-deep);text-transform:uppercase;letter-spacing:.06em;transform:rotate(-3deg)">← back to the rack</span></div><div class="cap"><b>Pinned sticker.</b> fixed rotated stamp, top-left of the view (not a bar). Shared back-link across both writing pieces.</div></div>
+
+    <div class="tile"><div class="stage"><div style="position:relative;width:158px;background:var(--cream);border:2px solid var(--olive-darker);box-shadow:5px 5px 0 var(--ink);padding:11px;transform:rotate(-1deg)"><div style="height:72px;background:var(--olive-deep);border:1.5px solid var(--olive-darker)"></div><span style="position:absolute;top:34%;left:50%;transform:translate(-50%,-50%) rotate(-11deg);font-family:'Bungee',sans-serif;font-size:15px;color:var(--ink);border:3px solid var(--ink);background:rgba(244,237,223,.85);padding:3px 9px;line-height:1">Binned</span></div></div><div class="cap"><b>Stamp card.</b> a screenshot in a tilted cream frame with a slammed Bungee verdict (Binned = ink, ★ Shipped = mint-deep). The bin gallery; click to enlarge in a dimmed lightbox.</div></div>
+
+    <div class="tile"><div class="stage" style="background:var(--cream-deep)"><div style="width:100%;display:flex;flex-direction:column;gap:8px">
+      <div style="background:var(--olive-darker);border:2px solid var(--mustard);box-shadow:3px 3px 0 var(--peach-deep);padding:10px 12px;font-family:'VT323',monospace;font-size:12px;color:var(--mustard);line-height:1.6"><span style="letter-spacing:.12em">▸ READING ALONG</span><br><span style="color:var(--mint)">● the peer</span><br><span style="color:var(--peach)">● the bastard</span><br><span style="color:var(--mustard)">● the meta</span></div>
+      <div style="background:var(--olive-darker);border:2px solid var(--mustard);box-shadow:3px 3px 0 var(--peach-deep);padding:8px 12px;font-family:'VT323',monospace;font-size:12px;color:var(--mustard)">AUDITED SO FAR · <span style="color:var(--peach)">3</span></div>
+    </div></div><div class="cap"><b>Reviewer rail.</b> sticky right column (wide screens): reading-along legend pinned top, live audit tally pinned to the bottom of the view. Collapses to a top banner + floating tally below 1540px.</div></div>
+  </div>
+  <p class="note-row">// also live: lab CRT fills its section with SMPTE "dead channel" filler tiles; the reading article can toggle page-snap on/off; home sections are full-bleed to min(1640px, 94vw).</p>
+</section>
+
+<!-- RULES -->
+<section class="block" id="rules">
+  <div class="sec-head"><span class="n">09</span><h2>Rules</h2></div>
+  <p class="sec-lead">The non-negotiables. Aggressive flatness, hand-craftiness, themed character.</p>
+  <div class="rules">
+    <div class="rule-col do">
+      <h3>Do</h3>
+      <ul>
+        <li>Solid flat fills. Colour does the work, not depth.</li>
+        <li>Hard offset shadows, zero blur, single direction.</li>
+        <li>Box everything in 2-3px ink borders.</li>
+        <li>Tilt things a degree or two; let it feel hand-placed.</li>
+        <li>Keep each typeface in its lane (Bungee display, VT323 mono, Caveat hand, Space Grotesk body, Big Shoulders lab-only).</li>
+        <li>Keep <code class="kbd">Philip</code> and <code class="kbd">Wilson</code> whole when wrapping: <code class="kbd">word-break:keep-all; hyphens:none</code>.</li>
+      </ul>
+    </div>
+    <div class="rule-col dont">
+      <h3>Don't</h3>
+      <ul>
+        <li>No gradients for decoration. (Functional texture only: grain, scanlines, tape.)</li>
+        <li>No soft / blurred / multi-direction shadows.</li>
+        <li>No borderless floating cards.</li>
+        <li>No Big Shoulders outside lab cards.</li>
+        <li>Don't break the name mid-word, ever.</li>
+        <li>Don't make lab projects follow this. The lab is the playground; it's deliberately exempt.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer class="gfoot">
+  <span>P.A.W · visual style guide · derived from global.css + the cassette deck theme</span>
+  <span><a href="#palette">↑ back to top</a></span>
+</footer>
+  </div>
+
+  <style>
+    /* page ground (the standalone file set this on <body>); the rest is the
+       guide's own CSS, scoped to this page by Astro. */
+    .sg-page{background:var(--cream);color:var(--olive-darker);min-height:100vh;font-family:'Space Grotesk',system-ui,sans-serif;font-size:15px;line-height:1.5}
+    .sg-page *{box-sizing:border-box}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--olive-darker);font-family:'Space Grotesk',system-ui,sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+::selection{background:var(--mustard);color:var(--olive-darker)}
+@keyframes blink{50%{opacity:0}}
+
+/* halftone grain -- exactly as the site applies it globally */
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1000;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.4 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity:.55;mix-blend-mode:multiply}
+
+/* guide nav */
+.gnav{position:static;z-index:100;background:var(--olive-darker);color:var(--cream);display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 24px;border-bottom:3px solid var(--mustard);flex-wrap:wrap}
+.gnav .brand{font-family:'Bungee',sans-serif;font-size:14px;text-transform:uppercase;letter-spacing:.02em;color:var(--mustard)}
+.gnav .toc{display:flex;gap:14px;flex-wrap:wrap;font-family:'VT323',monospace;font-size:14px;letter-spacing:.06em;text-transform:uppercase}
+.gnav .toc a,.gnav .toc a:visited{color:var(--cream);text-decoration:none;opacity:.8}
+.gnav .toc a:hover{color:var(--mustard);opacity:1}
+
+.head{background:var(--mint);padding:48px 32px 40px;position:relative;overflow:hidden;border-bottom:3px solid var(--olive-darker)}
+.head::after{content:"";position:absolute;left:0;right:0;bottom:0;height:46px;background:var(--peach);clip-path:polygon(0 100%,15% 30%,32% 80%,48% 20%,64% 70%,80% 25%,100% 60%,100% 100%)}
+.head .k{font-family:'VT323',monospace;font-size:15px;letter-spacing:.16em;color:var(--peach-deep);text-transform:uppercase;margin-bottom:10px}
+.head h1{font-family:'Bungee',sans-serif;font-size:clamp(34px,6vw,68px);line-height:.92;text-transform:uppercase;letter-spacing:-.02em;margin:0 0 14px;color:var(--olive-darker)}
+.head p{max-width:60ch;font-size:17px;margin:0;color:var(--olive-darker)}
+.head .badge{display:inline-block;margin-top:14px;background:var(--olive-darker);color:var(--mustard);font-family:'VT323',monospace;font-size:14px;letter-spacing:.06em;padding:5px 12px;border:2px solid var(--olive-darker);text-transform:uppercase}
+
+section.block{max-width:var(--page-max);margin:0 auto;padding:56px 32px;border-bottom:2px dashed var(--olive-darker)}
+.sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px;flex-wrap:wrap}
+.sec-head .n{font-family:'Bungee',sans-serif;font-size:22px;color:var(--peach-deep)}
+.sec-head h2{font-family:'Bungee',sans-serif;font-size:clamp(26px,4vw,40px);text-transform:uppercase;letter-spacing:-.015em;margin:0;line-height:1}
+.sec-lead{font-family:Caveat,cursive;font-weight:700;font-size:22px;color:var(--olive);transform:rotate(-.6deg);margin:0 0 28px;max-width:54ch}
+
+/* PALETTE */
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:14px}
+.sw{border:2px solid var(--olive-darker);box-shadow:5px 5px 0 var(--olive-darker);background:var(--cream)}
+.sw .chipc{height:74px;border-bottom:2px solid var(--olive-darker)}
+.sw .meta{padding:8px 10px}
+.sw .tok{font-family:'VT323',monospace;font-size:15px;letter-spacing:.04em;color:var(--olive-darker);display:block}
+.sw .hex{font-family:'VT323',monospace;font-size:13px;color:var(--olive);letter-spacing:.08em;text-transform:uppercase}
+.sw .role{font-size:12px;color:var(--olive);line-height:1.3;margin-top:4px;display:block}
+.subhead{font-family:'VT323',monospace;font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:var(--peach-deep);margin:30px 0 12px}
+
+/* TYPE */
+.type-row{border:2px solid var(--olive-darker);box-shadow:5px 5px 0 var(--olive-darker);background:var(--cream);padding:18px 20px;margin-bottom:16px;display:grid;grid-template-columns:170px 1fr;gap:20px;align-items:center}
+.type-row .label{font-family:'VT323',monospace;font-size:14px;letter-spacing:.06em;color:var(--olive);text-transform:uppercase;line-height:1.4}
+.type-row .label b{display:block;color:var(--olive-darker);font-size:15px}
+.spec-bungee{font-family:'Bungee',sans-serif;font-size:40px;text-transform:uppercase;letter-spacing:-.02em;line-height:.9}
+.spec-grotesk{font-family:'Space Grotesk',sans-serif;font-size:20px;line-height:1.5}
+.spec-vt{font-family:'VT323',monospace;font-size:24px;letter-spacing:.1em;text-transform:uppercase;color:var(--peach-deep)}
+.spec-caveat{font-family:Caveat,cursive;font-weight:700;font-size:30px;color:var(--olive-darker);transform:rotate(-1deg)}
+.spec-big{font-family:'Big Shoulders Display',sans-serif;font-weight:900;font-size:34px;text-transform:uppercase;letter-spacing:.01em;line-height:.95;color:var(--olive-deep)}
+@media(max-width:640px){.type-row{grid-template-columns:1fr;gap:8px}}
+
+/* generic specimen tile + caption */
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:22px;align-items:start}
+.tile{display:flex;flex-direction:column;gap:10px}
+.tile .stage{border:2px dashed var(--olive-darker);background:var(--cream-deep);padding:24px;display:flex;align-items:center;justify-content:center;min-height:130px;position:relative;overflow:hidden}
+.tile .cap{font-family:'VT323',monospace;font-size:13px;letter-spacing:.05em;color:var(--olive);text-transform:uppercase;line-height:1.35}
+.tile .cap b{color:var(--olive-darker)}
+
+/* example pieces (real components) */
+.ex-stamp{display:inline-flex;align-items:center;gap:10px;padding:13px 20px;background:var(--olive-darker);color:var(--mustard);font-family:'Bungee',sans-serif;font-size:15px;letter-spacing:.06em;text-transform:uppercase;transform:rotate(-2deg);box-shadow:7px 7px 0 var(--peach);border:2px solid var(--olive-darker)}
+.ex-stamp .blink{font-family:'VT323',monospace;color:var(--peach);animation:blink 1s steps(2) infinite;font-size:18px}
+.ex-coming{background:var(--peach-deep);color:var(--cream);padding:12px 20px;border:3px solid var(--cream);outline:3px solid var(--peach-deep);font-family:'Bungee',sans-serif;text-align:center;transform:rotate(-8deg);box-shadow:6px 6px 0 var(--olive-darker);text-transform:uppercase;line-height:1}
+.ex-coming .l1{display:block;font-size:24px}
+.ex-coming .l3{display:block;font-size:10px;margin-top:6px;font-family:'VT323',monospace;letter-spacing:.16em;color:var(--cream)}
+.ex-shadow{width:120px;height:78px;background:var(--mustard);border:2px solid var(--olive-darker);box-shadow:6px 6px 0 var(--olive-darker)}
+.ex-chip{font-family:'VT323',monospace;font-size:16px;letter-spacing:.14em;color:var(--peach-deep);text-transform:uppercase}
+.ex-chip .cur{display:inline-block;width:6px;height:13px;background:currentColor;vertical-align:-1px;animation:blink 1s steps(2) infinite;margin-left:4px}
+.ex-badge{font-family:'VT323',monospace;font-size:14px;background:var(--mustard);color:var(--olive-darker);padding:4px 10px;letter-spacing:.06em;text-transform:uppercase;border:1.5px solid var(--olive-darker)}
+.ex-crt{width:100%;background:var(--crt);padding:20px;border-radius:22px / 18px;border:2px solid #0a0a0a;position:relative;overflow:hidden}
+.ex-crt::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(180deg,rgba(0,0,0,0) 0 2px,rgba(0,0,0,.18) 2px 3px);pointer-events:none;border-radius:22px / 18px}
+.ex-crt .p{font-family:'VT323',monospace;font-size:16px;color:var(--phosphor);margin:0;position:relative;z-index:2}
+.ex-crt .arrow{color:var(--mustard)}
+.ex-zig{width:100%;height:60px;background:var(--mint);position:relative}
+.ex-zig::after{content:"";position:absolute;left:0;right:0;bottom:0;height:40px;background:var(--peach);clip-path:polygon(0 100%,15% 30%,32% 80%,48% 20%,64% 70%,80% 25%,100% 60%,100% 100%)}
+.ex-deckbtn{display:inline-flex;align-items:center;gap:9px;background:var(--olive-darker);color:var(--mustard);font-family:'Bungee',sans-serif;letter-spacing:.06em;text-transform:uppercase;font-size:13px;padding:10px 18px;border:2px solid var(--olive-darker);box-shadow:5px 5px 0 var(--peach-deep);cursor:pointer}
+.ex-deckbtn .glyph{font-family:'VT323',monospace;font-size:20px;color:var(--peach)}
+.ex-counter{font-family:'VT323',monospace;font-size:20px;letter-spacing:.16em;background:var(--olive-darker);color:var(--mustard);padding:8px 16px;border:2px solid var(--olive-darker);text-transform:uppercase}
+.ex-counter .now{color:var(--peach)}
+.ex-smpte{display:flex;width:100%;height:90px;border:2px solid var(--mustard);box-shadow:5px 5px 0 var(--peach-deep)}
+.ex-smpte span{flex:1}
+.ex-smpte span:nth-child(1){background:var(--cream)} .ex-smpte span:nth-child(2){background:var(--mustard)}
+.ex-smpte span:nth-child(3){background:var(--mint)} .ex-smpte span:nth-child(4){background:var(--peach)}
+.ex-smpte span:nth-child(5){background:var(--peach-deep)} .ex-smpte span:nth-child(6){background:var(--blue)}
+.ex-smpte span:nth-child(7){background:var(--olive)} .ex-smpte span:nth-child(8){background:var(--olive-darker)}
+.ex-card{background:var(--olive-deep);border:2px solid var(--mustard);padding:16px;color:var(--cream);min-height:150px;display:flex;flex-direction:column;gap:6px;width:100%}
+.ex-card .num{font-family:'VT323',monospace;color:var(--mustard);font-size:14px;letter-spacing:.06em}
+.ex-card .title{font-family:'Big Shoulders Display',sans-serif;font-weight:900;text-transform:uppercase;font-size:24px;line-height:.95;color:var(--phosphor)}
+.ex-card .desc{font-family:'VT323',monospace;font-size:16px;opacity:.85;line-height:1.3}
+.ex-card .meta{margin-top:auto;display:flex;justify-content:space-between;font-family:'VT323',monospace;font-size:13px;color:var(--mustard);padding-top:8px;border-top:1px dashed rgba(229,181,86,.3)}
+.ex-contact{background:var(--cream);border:2px solid var(--olive-darker);box-shadow:6px 6px 0 var(--olive-darker);padding:20px;transform:rotate(1deg);width:100%}
+.ex-contact h3{font-family:'Bungee',sans-serif;font-size:15px;text-transform:uppercase;margin:0 0 12px}
+.ex-contact .row{padding:8px 0;border-bottom:1.5px dashed var(--olive-darker);display:flex;justify-content:space-between;gap:12px}
+.ex-contact .row:last-child{border:none}
+.ex-contact .kk{font-family:'Bungee',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:.06em}
+.ex-contact .vv a{color:var(--peach-deep);text-decoration:none;border-bottom:2px solid var(--peach-deep);font-weight:700}
+.ex-tape{display:flex;justify-content:space-between;align-items:center;background:var(--olive-darker);color:var(--mustard);padding:8px 16px;font-family:'VT323',monospace;font-size:14px;letter-spacing:.08em;text-transform:uppercase;border:2px solid var(--olive-darker);width:100%;flex-wrap:wrap;gap:8px}
+.ex-tape .side{color:var(--cream)} .ex-tape .brand{font-family:'Bungee',sans-serif;font-size:11px} .ex-tape .play{color:var(--peach)}
+
+/* section colour blocking strip */
+.blocking{display:grid;grid-template-columns:repeat(4,1fr);border:3px solid var(--olive-darker);box-shadow:6px 6px 0 var(--olive-darker)}
+.blocking > div{padding:26px 14px;text-align:center;font-family:'Bungee',sans-serif;font-size:13px;text-transform:uppercase;letter-spacing:.02em;border-right:3px solid var(--olive-darker)}
+.blocking > div:last-child{border-right:none}
+.blocking .bk{font-family:'VT323',monospace;font-size:12px;display:block;margin-top:6px;letter-spacing:.06em;opacity:.85}
+.blocking .b-cover{background:var(--mint);color:var(--olive-darker)}
+.blocking .b-lab{background:var(--olive-darker);color:var(--mustard)}
+.blocking .b-writing{background:var(--mustard);color:var(--olive-darker)}
+.blocking .b-about{background:var(--blue);color:var(--olive-darker)}
+
+/* PROSE specimen */
+.prose-demo{background:var(--cream);border:2px solid var(--olive-darker);box-shadow:6px 6px 0 var(--olive-darker);padding:32px 34px;max-width:720px}
+.prose-demo h3.ph{font-family:'Bungee',sans-serif;font-size:28px;margin:0 0 16px;text-transform:uppercase;letter-spacing:-.005em}
+.prose-demo h4.ph{font-family:'Bungee',sans-serif;font-size:20px;margin:30px 0 12px;text-transform:uppercase}
+.prose-demo p{font-family:'Space Grotesk',sans-serif;font-size:18px;line-height:1.7;margin:0 0 18px}
+.prose-demo a{color:var(--peach-deep);text-decoration:none;border-bottom:1.5px solid var(--peach-deep);font-weight:600}
+.prose-demo code{font-family:'VT323',monospace;font-size:18px;background:var(--cream-deep);padding:1px 6px;border:1.5px solid var(--olive-darker)}
+.prose-demo pre{font-family:'VT323',monospace;background:var(--olive-darker);color:var(--phosphor);padding:16px 20px;border:2px solid var(--olive-darker);box-shadow:5px 5px 0 var(--peach-deep);overflow-x:auto;font-size:16px;line-height:1.5;margin:0 0 18px}
+.prose-demo blockquote{border-left:3px solid var(--peach-deep);margin:20px 0;padding:6px 0 6px 20px;font-family:Caveat,cursive;font-weight:700;font-size:24px;color:var(--olive);line-height:1.4}
+.prose-demo hr{border:none;border-top:2px dashed var(--olive-darker);margin:32px 0}
+.prose-demo .imgph{background:repeating-linear-gradient(45deg,var(--cream-deep) 0 12px,var(--cream) 12px 24px);border:2px solid var(--olive-darker);box-shadow:5px 5px 0 var(--olive-darker);height:120px;display:flex;align-items:center;justify-content:center;font-family:'VT323',monospace;color:var(--olive);text-transform:uppercase;letter-spacing:.08em;margin:0 0 6px}
+.prose-demo .imgcap{font-family:'VT323',monospace;font-size:15px;letter-spacing:.04em;color:var(--olive);text-transform:uppercase;margin:0 0 18px}
+
+/* REVIEWER ANNOTATION SYSTEM */
+.rev-demo{position:relative;background:var(--cream);border:2px solid var(--olive-darker);box-shadow:6px 6px 0 var(--olive-darker);padding:24px 220px;max-width:1000px;margin:0 auto}
+.rev-demo .doc{font-family:'Space Grotesk',sans-serif;font-size:17px;line-height:1.95;max-width:520px;margin:0 auto}
+.rev-demo .pc{position:relative;color:var(--mint-deep)}
+.rev-demo .pc::after{content:"";position:absolute;left:-2px;right:-2px;bottom:-1px;height:3px;background:var(--mint-deep)}
+.rev-demo .bc{position:relative;color:var(--olive)}
+.rev-demo .bc::after{content:"";position:absolute;left:-2px;right:-2px;top:52%;height:3px;background:var(--ink)}
+.rnote{position:absolute;width:190px;font-family:Caveat,cursive;font-weight:700;font-size:17px;line-height:1.15;background:var(--cream);padding:7px 10px;box-shadow:3px 3px 0 var(--olive-darker)}
+.rnote .t{display:block;font-family:'VT323',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
+.rnote.peer{left:8px;color:var(--mint-deep);border:2px solid var(--mint-deep);transform:rotate(-2deg)} .rnote.peer .t{color:var(--mint-deep)}
+.rnote.bastard{right:8px;color:var(--ink-deep);border:2px solid var(--ink);transform:rotate(2deg)} .rnote.bastard .t{color:var(--ink)}
+.meta-call{position:relative;max-width:520px;margin:18px auto 0;background:var(--olive-darker);color:var(--cream);border:2px solid var(--peach-deep);box-shadow:5px 5px 0 var(--peach-deep);padding:14px 18px}
+.meta-call::before{content:"③";position:absolute;top:-14px;left:16px;background:var(--mustard);color:var(--olive-darker);font-family:'Bungee',sans-serif;font-size:13px;padding:2px 10px;border:2px solid var(--olive-darker)}
+.meta-call .t{display:block;font-family:'VT323',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--mustard);margin-bottom:5px}
+.meta-call .b{font-family:Caveat,cursive;font-weight:700;font-size:20px;line-height:1.25;color:var(--blue)}
+.rev-legend{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;font-family:'VT323',monospace;font-size:14px}
+.rev-legend span{display:inline-flex;align-items:center;gap:7px;padding:4px 11px;border:2px solid;background:var(--cream)}
+.rev-legend .dot{width:10px;height:10px;border-radius:50%}
+.rl-peer{border-color:var(--mint-deep);color:var(--mint-deep)} .rl-peer .dot{background:var(--mint-deep)}
+.rl-bastard{border-color:var(--ink);color:var(--ink-deep)} .rl-bastard .dot{background:var(--ink)}
+.rl-meta{border-color:var(--peach-deep);color:var(--peach-deep)} .rl-meta .dot{background:var(--mustard)}
+@media(max-width:900px){.rev-demo{padding:24px}.rnote{position:static;width:auto;display:inline-block;margin:6px 6px 0 0;transform:none}}
+
+/* RULES do/don't */
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:720px){.rules{grid-template-columns:1fr}}
+.rule-col{border:2px solid var(--olive-darker);box-shadow:6px 6px 0 var(--olive-darker);background:var(--cream);padding:6px 0}
+.rule-col h3{font-family:'Bungee',sans-serif;font-size:16px;text-transform:uppercase;margin:14px 18px;letter-spacing:.02em}
+.rule-col.do h3{color:var(--mint-deep)} .rule-col.dont h3{color:var(--ink)}
+.rule-col ul{list-style:none;margin:0;padding:0}
+.rule-col li{padding:10px 18px;border-top:1.5px dashed var(--olive-darker);font-size:15px;line-height:1.45;display:flex;gap:10px}
+.rule-col li::before{font-family:'Bungee',sans-serif;font-size:13px;flex-shrink:0}
+.rule-col.do li::before{content:"✓";color:var(--mint-deep)}
+.rule-col.dont li::before{content:"✕";color:var(--ink)}
+
+code.kbd{font-family:'VT323',monospace;font-size:15px;background:var(--cream-deep);border:1.5px solid var(--olive-darker);padding:0 5px;letter-spacing:.02em}
+.note-row{font-family:'VT323',monospace;font-size:14px;color:var(--olive);letter-spacing:.04em;margin-top:14px;text-transform:uppercase}
+
+.gfoot{background:var(--olive-darker);color:var(--cream);padding:28px 32px;font-family:'VT323',monospace;font-size:14px;letter-spacing:.06em;text-transform:uppercase;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:3px solid var(--mustard)}
+.gfoot a,.gfoot a:visited{color:var(--mustard);text-decoration:none}
+
+  </style>
+</Layout>

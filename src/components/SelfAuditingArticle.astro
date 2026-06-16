@@ -274,7 +274,7 @@ html:has(.sa-root.snap-all), body:has(.sa-root.snap-all){scroll-snap-type:y mand
 }
 
 /* reviewer rail layout (wide screens, >=1441px) */
-.shell{max-width:1660px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:40px;align-items:start}
+.shell{max-width:var(--page-max);margin:0 auto;padding:0 24px;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:40px;align-items:start}
 /* rail spans the viewport: reading-along pinned top, tally pinned bottom-of-view */
 .rail{grid-column:2;grid-row:1;position:sticky;top:64px;height:calc(100vh - 84px);margin-top:54px;display:flex;flex-direction:column;gap:16px}
 .rail .tally{margin-top:auto}

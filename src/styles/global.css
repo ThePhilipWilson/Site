@@ -65,7 +65,7 @@ nav.site-nav .badge{padding:4px 10px;background:var(--peach);color:var(--olive-d
 /* COVER */
 .cover{position:relative;background:var(--mint);padding:64px 32px 80px;overflow:hidden}
 .cover::after{content:"";position:absolute;left:0;right:0;bottom:0;height:80px;background:var(--peach);clip-path:polygon(0 100%,15% 30%,32% 80%,48% 20%,64% 70%,80% 25%,100% 60%,100% 100%)}
-.cover .wrap{max-width:min(1640px,94vw);margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr;gap:48px;align-items:center;position:relative;z-index:2}
+.cover .wrap{max-width:var(--page-max);margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr;gap:48px;align-items:center;position:relative;z-index:2}
 .cover .meta-strip{grid-column:1 / -1;display:flex;justify-content:space-between;font-family:'Bungee',sans-serif;font-size:11px;letter-spacing:.06em;color:var(--olive-darker);margin-bottom:8px}
 .cover h1{font-family:'Bungee',sans-serif;font-size:clamp(48px,11vw,156px);line-height:.85;color:var(--olive-darker);margin:24px 0 16px;letter-spacing:-.02em;text-transform:uppercase;word-break:keep-all;hyphens:none}
 .cover h1 > span{display:inline-block;white-space:nowrap}
@@ -94,7 +94,7 @@ nav.site-nav .badge{padding:4px 10px;background:var(--peach);color:var(--olive-d
 /* SECTION SPREAD shared */
 .spread{padding:80px 32px;position:relative;border-top:3px solid var(--olive-darker);border-bottom:3px solid var(--olive-darker)}
 .spread + .spread{border-top:none}
-.spread .wrap{max-width:min(1640px,94vw);margin:0 auto;position:relative}
+.spread .wrap{max-width:var(--page-max);margin:0 auto;position:relative}
 .spread .head{display:flex;align-items:flex-end;gap:24px;margin-bottom:48px;flex-wrap:wrap}
 .spread .head-id{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
 .spread .head-id .kicker{font-family:'VT323',monospace;font-size:16px;letter-spacing:.14em;color:var(--peach-deep);text-transform:uppercase;line-height:1}
@@ -221,6 +221,9 @@ nav.site-nav .badge{padding:4px 10px;background:var(--peach);color:var(--olive-d
    below covers the static / no-JS / empty case so a single tape still sits
    nicely. */
 :root{--plastic:#1a1814;--plastic-deep:#0a0805;--cream-deep:#E5DCC4;--label:#F4EDDF}
+/* layout: shared widths. page-max = wide sections (home, bin, style guide,
+   self-auditing shell); read-max = prose reading columns (articles, colophon). */
+:root{--page-max:min(1640px,94vw);--read-max:900px}
 .spread.writing{background:var(--mustard)}
 /* Keep the writing header/wrap at full section width (otherwise the flex column
    shrinks the wrap onto the narrower deck-stack and the header looks inset). */

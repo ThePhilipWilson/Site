@@ -1,0 +1,145 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
+---
+<Layout
+  title="Colophon · Philip Wilson"
+  description="How this site is built: the stack, the type, and the cassette-zine identity behind it."
+>
+  <div class="colophon-page">
+    <a class="back" href="/">← back to the cover</a>
+
+    <article class="entry">
+      <header class="entry-head">
+        <div class="tape-strip">
+          <span class="side">SIDE C · COLOPHON</span>
+          <span class="brand">P.A.W. SOUNDS</span>
+          <span class="play"><span class="blink">▶</span> HOW IT'S MADE</span>
+        </div>
+
+        <span class="kicker">// COLOPHON<span class="cur"></span></span>
+        <h1>Colophon</h1>
+        <p class="lede">What this site is made of, and how it got made.</p>
+      </header>
+
+      <div class="prose">
+        <p>
+          A colophon is the note at the back of a book that records how it was
+          printed: the type, the paper, the press. This is that, for a website.
+          It's here mostly because I think the <em>how</em> is half the
+          interesting bit.
+        </p>
+
+        <h2>Built with</h2>
+        <dl class="spec">
+          <div>
+            <dt>Framework</dt>
+            <dd>Astro. It's plain HTML by the time it reaches you, with no JavaScript framework running in your browser.</dd>
+          </div>
+          <div>
+            <dt>Hosting</dt>
+            <dd>GitHub Pages, deployed straight from a <code>git push</code> to the main branch.</dd>
+          </div>
+          <div>
+            <dt>Content</dt>
+            <dd>The writing and lab notes are Markdown files, kept in the repo right next to the code.</dd>
+          </div>
+          <div>
+            <dt>Source</dt>
+            <dd><a href="https://github.com/ThePhilipWilson">github.com/ThePhilipWilson</a></dd>
+          </div>
+        </dl>
+
+        <h2>The look</h2>
+        <p>
+          The whole site is one idea pushed hard: a cassette, a zine, and an
+          arcade cabinet, all at once. Flat colours and no gradients. Hard
+          offset shadows with no blur. A halftone grain sitting over everything.
+          SMPTE colour bars and a CRT screen down in the lab.
+        </p>
+        <p>
+          It started life as nineteen rough homepage mockups. Number nineteen
+          won (there's a <a href="/writing/nineteen-homepages/">whole write-up</a>
+          on that), and the winning mockup turned into the stylesheet the site
+          runs on today.
+        </p>
+        <p>
+          Every colour, typeface, and treatment is written down in the
+          <a href="/style-guide">visual style guide</a>. It's the actual
+          reference the site is built against, published as-is. Showing the
+          workings is part of the point.
+        </p>
+
+        <h2>Type</h2>
+        <dl class="spec">
+          <div><dt>Bungee</dt><dd>headings, stamps, big numbers</dd></div>
+          <div><dt>Space Grotesk</dt><dd>body text, the workhorse</dd></div>
+          <div><dt>VT323</dt><dd>the terminal bits: kickers, chips, this very label</dd></div>
+          <div><dt>Caveat</dt><dd>handwritten notes and subtitles</dd></div>
+          <div><dt>Big Shoulders Display</dt><dd>lab project titles, and nowhere else</dd></div>
+        </dl>
+
+        <h2>How</h2>
+        <p>
+          Most of it was built in a code editor with a lot of help from Claude
+          Code, an AI coding assistant. I describe what I want, it does a good
+          chunk of the typing, and I review it and push. I'm happy to say that
+          out loud; being honest about the process is sort of the point of this
+          place.
+        </p>
+
+        <hr />
+
+        <p class="signoff">
+          I'm not a web developer by trade, so a fair bit of this is held
+          together with optimism. If you find something broken, take it as part
+          of the charm.
+        </p>
+      </div>
+    </article>
+
+    <Footer />
+  </div>
+
+  <style>
+    .colophon-page{background:var(--cream);min-height:100vh}
+    .entry{max-width:var(--read-max);margin:0 auto;padding:48px 32px 96px;color:var(--olive-darker);background:var(--cream)}
+    /* pinned rotated back sticker, shared look with the writing pages */
+    .back{position:fixed;top:60px;left:18px;z-index:95;transform:rotate(-3deg);display:inline-block;background:var(--cream);border:2px solid var(--olive-darker);box-shadow:3px 3px 0 var(--olive-darker);padding:7px 13px;font-family:'VT323',monospace;font-size:14px;color:var(--peach-deep);text-decoration:none;letter-spacing:.06em;text-transform:uppercase;transition:transform .15s,box-shadow .15s}
+    .back:hover{transform:translate(-1px,-1px) rotate(-3deg);box-shadow:5px 5px 0 var(--olive-darker);color:var(--olive-darker)}
+    @media (max-width:1040px){.back{top:50px;left:12px}}
+
+    .entry-head{margin:32px 0 48px;padding-bottom:32px;border-bottom:2px solid var(--olive-darker)}
+    .tape-strip{display:flex;justify-content:space-between;align-items:center;background:var(--olive-darker);color:var(--mustard);padding:8px 16px;font-family:'VT323',monospace;font-size:14px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:24px;flex-wrap:wrap;gap:8px;border:2px solid var(--olive-darker)}
+    .tape-strip .side{color:var(--cream)}
+    .tape-strip .brand{font-family:'Bungee',sans-serif;font-size:11px;letter-spacing:.06em}
+    .tape-strip .play{color:var(--peach)}
+    .tape-strip .play .blink{animation:blink 1s steps(2) infinite}
+    .kicker{font-family:'VT323',monospace;font-size:15px;letter-spacing:.14em;color:var(--peach-deep);text-transform:uppercase;display:inline-block;margin-bottom:12px}
+    .kicker .cur{display:inline-block;width:6px;height:12px;background:currentColor;vertical-align:-1px;animation:blink 1s steps(2) infinite;margin-left:4px}
+    .entry-head h1{font-family:'Bungee',sans-serif;font-size:clamp(36px,5.5vw,56px);line-height:1;margin:0 0 16px;color:var(--olive-darker);text-transform:uppercase;letter-spacing:-.01em;word-break:keep-all;hyphens:none}
+    .entry-head .lede{font-family:Caveat,cursive;font-weight:700;font-size:26px;line-height:1.3;color:var(--olive);max-width:48ch;margin:0;transform:rotate(-1deg)}
+
+    .prose{font-family:'Space Grotesk',sans-serif;font-size:18px;line-height:1.7;color:var(--olive-darker)}
+    .prose h2{font-family:'Bungee',sans-serif;font-size:28px;margin:48px 0 16px;text-transform:uppercase;letter-spacing:-.005em}
+    .prose p{margin:0 0 20px}
+    .prose em{font-family:Caveat,cursive;font-weight:700;font-style:normal;font-size:22px;color:var(--peach-deep)}
+    .prose a{color:var(--peach-deep);text-decoration:none;border-bottom:1.5px solid var(--peach-deep);font-weight:600}
+    .prose a:hover{color:var(--olive-darker);border-color:var(--olive-darker)}
+    .prose code{font-family:'VT323',monospace;font-size:18px;background:var(--cream-deep,#E5DCC4);padding:1px 6px;border:1.5px solid var(--olive-darker)}
+    .prose hr{border:none;border-top:2px dashed var(--olive-darker);margin:48px 0}
+    .prose .signoff{font-family:Caveat,cursive;font-weight:700;font-size:24px;line-height:1.4;color:var(--olive)}
+
+    /* cassette J-card spec sheet */
+    .spec{margin:0 0 28px;border:2px solid var(--olive-darker);box-shadow:5px 5px 0 var(--olive-darker);background:var(--cream)}
+    .spec > div{display:grid;grid-template-columns:170px 1fr;gap:16px;padding:13px 18px;border-top:1.5px dashed var(--olive-darker)}
+    .spec > div:first-child{border-top:none}
+    .spec dt{font-family:'VT323',monospace;font-size:16px;letter-spacing:.08em;text-transform:uppercase;color:var(--peach-deep)}
+    .spec dd{margin:0;font-size:17px;line-height:1.5}
+    .spec dd a{color:var(--peach-deep);text-decoration:none;border-bottom:1.5px solid var(--peach-deep);font-weight:600}
+    @media (max-width:540px){
+      .entry{padding:32px 20px 64px}
+      .spec > div{grid-template-columns:1fr;gap:4px}
+    }
+  </style>
+</Layout>
