@@ -20,6 +20,10 @@ const writing = (await getCollection('writing', ({ data }) => !data.draft))
 const monthShort = (d: Date) =>
   d.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }).toUpperCase();
 const yearOf = (d: Date) => d.getFullYear();
+// Pad the lab grid up to complete rows (min 2 rows) with dead-channel filler
+// tiles so the CRT fills its full-height section instead of letterboxing.
+const labTileTarget = Math.max(6, Math.ceil(lab.length / 3) * 3);
+const labFillers = Math.max(0, labTileTarget - lab.length);
 ---
 <Layout>
   <ReelSymbol />
@@ -112,6 +116,15 @@ const yearOf = (d: Date) => d.getFullYear();
                 stars={entry.data.stars}
                 href={entry.data.demo ?? `/lab/${entry.id}`}
               />
+            ))}
+            {Array.from({ length: labFillers }).map((_, i) => (
+              <div class="lab-card filler" aria-hidden="true">
+                <div class="bars">
+                  <span></span><span></span><span></span><span></span>
+                  <span></span><span></span><span></span><span></span>
+                </div>
+                <span class="ch">CH {String(lab.length + i + 1).padStart(2, '0')} · no signal</span>
+              </div>
             ))}
           </div>
         )}
@@ -273,6 +286,9 @@ const yearOf = (d: Date) => d.getFullYear();
     let drag: { startX: number; dx: number; tape: HTMLElement } | null = null;
     let lastDragDx = 0;
     const frontTape = () => tapes[activeIdx];
+
+    // Kill the browser's native link-drag (ghost + URL) so it doesn't fight the swipe.
+    stack.addEventListener('dragstart', (e) => e.preventDefault());
 
     stack.addEventListener('pointerdown', (e) => {
       const tape = (e.target as HTMLElement | null)?.closest<HTMLElement>('.cassette');

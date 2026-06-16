@@ -31,6 +31,12 @@ const writing = defineCollection({
     side: z.enum(['A', 'B']).default('A'),
     excerpt: z.string().max(180).optional(),
     draft: z.boolean().default(false),
+    // when true, /writing/[id] renders a bespoke interactive component instead
+    // of the markdown prose template (e.g. the self-auditing article).
+    interactive: z.boolean().default(false),
+    // when true, the prose template appends the interactive "bin" gallery
+    // (nineteen-homepages).
+    bin: z.boolean().default(false),
   }),
 });
 

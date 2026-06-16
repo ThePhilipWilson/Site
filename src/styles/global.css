@@ -12,6 +12,10 @@
   --cream:#F4EDDF;
   --crt:#1A2A22;
   --phosphor:#A8E5C5;
+  /* annotation system (writing pieces with the peer/bastard/meta reviewers) */
+  --ink:#C2402E;
+  --ink-deep:#8E2B1E;
+  --mint-deep:#3E7E60;
 }
 
 *{box-sizing:border-box}
@@ -51,7 +55,7 @@ body::before{
 
 /* NAV */
 nav.site-nav{position:sticky;top:0;z-index:100;background:var(--olive-darker);color:var(--cream);display:flex;justify-content:space-between;align-items:center;padding:14px 28px;border-bottom:3px solid var(--mustard);font-weight:700;letter-spacing:.04em;font-size:13px;text-transform:uppercase}
-nav.site-nav .mark{display:flex;gap:10px;align-items:center}
+nav.site-nav .mark,nav.site-nav .mark:visited{display:flex;gap:10px;align-items:center;text-decoration:none;color:var(--cream)}
 nav.site-nav .mark svg{width:22px;height:22px;color:var(--mustard)}
 nav.site-nav .links{display:flex;gap:20px}
 nav.site-nav .links a,nav.site-nav .links a:visited{color:var(--cream);text-decoration:none;opacity:.8;transition:color .2s}
@@ -61,7 +65,7 @@ nav.site-nav .badge{padding:4px 10px;background:var(--peach);color:var(--olive-d
 /* COVER */
 .cover{position:relative;background:var(--mint);padding:64px 32px 80px;overflow:hidden}
 .cover::after{content:"";position:absolute;left:0;right:0;bottom:0;height:80px;background:var(--peach);clip-path:polygon(0 100%,15% 30%,32% 80%,48% 20%,64% 70%,80% 25%,100% 60%,100% 100%)}
-.cover .wrap{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr;gap:48px;align-items:center;position:relative;z-index:2}
+.cover .wrap{max-width:min(1640px,94vw);margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr;gap:48px;align-items:center;position:relative;z-index:2}
 .cover .meta-strip{grid-column:1 / -1;display:flex;justify-content:space-between;font-family:'Bungee',sans-serif;font-size:11px;letter-spacing:.06em;color:var(--olive-darker);margin-bottom:8px}
 .cover h1{font-family:'Bungee',sans-serif;font-size:clamp(48px,11vw,156px);line-height:.85;color:var(--olive-darker);margin:24px 0 16px;letter-spacing:-.02em;text-transform:uppercase;word-break:keep-all;hyphens:none}
 .cover h1 > span{display:inline-block;white-space:nowrap}
@@ -90,7 +94,7 @@ nav.site-nav .badge{padding:4px 10px;background:var(--peach);color:var(--olive-d
 /* SECTION SPREAD shared */
 .spread{padding:80px 32px;position:relative;border-top:3px solid var(--olive-darker);border-bottom:3px solid var(--olive-darker)}
 .spread + .spread{border-top:none}
-.spread .wrap{max-width:1100px;margin:0 auto;position:relative}
+.spread .wrap{max-width:min(1640px,94vw);margin:0 auto;position:relative}
 .spread .head{display:flex;align-items:flex-end;gap:24px;margin-bottom:48px;flex-wrap:wrap}
 .spread .head-id{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
 .spread .head-id .kicker{font-family:'VT323',monospace;font-size:16px;letter-spacing:.14em;color:var(--peach-deep);text-transform:uppercase;line-height:1}
@@ -167,6 +171,34 @@ nav.site-nav .badge{padding:4px 10px;background:var(--peach);color:var(--olive-d
 .lab-card .meta{margin-top:auto;display:flex;justify-content:space-between;font-family:'VT323',monospace;font-size:13px;color:var(--mustard);letter-spacing:.04em;padding-top:8px;border-top:1px dashed rgba(229,181,86,.3)}
 .cabinet-foot{background:var(--olive-darker);padding:10px 18px;font-family:'VT323',monospace;font-size:14px;color:var(--mustard);display:flex;justify-content:space-between;border-top:2px solid var(--mustard)}
 
+/* Lab fills its full-height section even with few toys: a flex chain from the
+   section down to the CRT screen, then the grid stretches its rows and
+   dead-channel filler tiles complete the empty slots (squarer CRT, no letterbox). */
+/* Lab is locked to exactly one viewport page so the CRT scales to fit (a hard
+   height gives the flex chain a definite size to shrink the grid into). */
+.spread.lab{height:100vh;overflow:hidden}
+/* Lab: header stays full-width; only the CABINET breaks out of the full-bleed,
+   capped and centred so the CRT lands nearer a 2:1 (6:3) screen, not a letterbox. */
+.spread.lab .wrap{display:flex;flex-direction:column;flex:1;min-height:0;width:100%}
+.spread.lab .cabinet{display:flex;flex-direction:column;flex:1;min-height:0;width:100%;max-width:min(1120px,92vw);align-self:center}
+.spread.lab .bezel{display:flex;flex-direction:column;flex:1;min-height:0}
+.spread.lab .crt{display:flex;flex-direction:column;flex:1;min-height:0}
+.spread.lab .crt > .lab-grid{flex:1;min-height:0;grid-auto-rows:minmax(0,1fr)}
+.spread.lab .lab-card{min-height:0;overflow:hidden}
+.lab-card.filler{background:var(--olive-deep);border:2px dashed var(--mustard);display:flex;flex-direction:column;gap:10px;justify-content:center;opacity:.82;cursor:default}
+.lab-card.filler:hover{transform:none;box-shadow:none}
+.lab-card.filler .bars{flex:1;min-height:46px;display:flex;border:1.5px solid var(--olive-darker)}
+.lab-card.filler .bars span{flex:1}
+.lab-card.filler .bars span:nth-child(1){background:var(--cream)}
+.lab-card.filler .bars span:nth-child(2){background:var(--mustard)}
+.lab-card.filler .bars span:nth-child(3){background:var(--mint)}
+.lab-card.filler .bars span:nth-child(4){background:var(--peach)}
+.lab-card.filler .bars span:nth-child(5){background:var(--peach-deep)}
+.lab-card.filler .bars span:nth-child(6){background:var(--blue)}
+.lab-card.filler .bars span:nth-child(7){background:var(--olive)}
+.lab-card.filler .bars span:nth-child(8){background:var(--olive-darker)}
+.lab-card.filler .ch{font-family:'VT323',monospace;color:var(--mustard);text-transform:uppercase;letter-spacing:.12em;font-size:13px;text-align:center;opacity:.85}
+
 /* NO SIGNAL — empty lab state */
 .no-signal{padding:32px 0;text-align:center;display:flex;flex-direction:column;align-items:center;gap:24px}
 .smpte-bars{display:flex;width:100%;max-width:520px;height:130px;border:2px solid var(--mustard);box-shadow:5px 5px 0 var(--peach-deep)}
@@ -190,6 +222,11 @@ nav.site-nav .badge{padding:4px 10px;background:var(--peach);color:var(--olive-d
    nicely. */
 :root{--plastic:#1a1814;--plastic-deep:#0a0805;--cream-deep:#E5DCC4;--label:#F4EDDF}
 .spread.writing{background:var(--mustard)}
+/* Keep the writing header/wrap at full section width (otherwise the flex column
+   shrinks the wrap onto the narrower deck-stack and the header looks inset). */
+.spread.writing .wrap{width:100%}
+/* Stop the browser's native link-drag (ghost + URL) fighting the carousel drag. */
+.cassette,.cassette *{-webkit-user-drag:none;user-select:none;-webkit-user-select:none}
 
 /* Demo stamp — pre-launch placeholder notice. Used inside .wrap of any section
    that's currently showing seeded / sample content. Same family as the cover's
@@ -199,7 +236,7 @@ nav.site-nav .badge{padding:4px 10px;background:var(--peach);color:var(--olive-d
 .demo-stamp .l1,.demo-stamp .l2{display:block;font-size:28px}
 .demo-stamp .l3{display:block;font-size:11px;margin-top:8px;font-family:'VT323',monospace;letter-spacing:.16em}
 /* Writing (mustard background) — dark stamp with peach accent. */
-.spread.writing .demo-stamp{background:var(--olive-darker);color:var(--mustard);border:3px solid var(--mustard);outline:3px solid var(--olive-darker);box-shadow:6px 6px 0 var(--peach-deep)}
+.spread.writing .demo-stamp{background:var(--olive-darker);color:var(--mustard);border:3px solid var(--mustard);outline:3px solid var(--olive-darker);box-shadow:6px 6px 0 var(--peach-deep);top:8px}
 .spread.writing .demo-stamp .l3{color:var(--peach)}
 /* Lab (olive-darker background) — bright stamp pops against the dark cabinet. */
 .spread.lab .demo-stamp{background:var(--peach-deep);color:var(--cream);border:3px solid var(--cream);outline:3px solid var(--peach-deep);box-shadow:6px 6px 0 var(--mustard);top:8px}

@@ -1,0 +1,409 @@
+---
+// Bespoke renderer for the "you can be bad at this" writing entry.
+// Used by src/pages/writing/[id].astro when an entry has `interactive: true`.
+// The piece reviews its own claims in the margins (peer / bastard / meta) and
+// embeds the bastard-review animation; the markdown body of the entry is unused.
+import Footer from './Footer.astro';
+---
+
+<div class="sa-root">
+  <div class="sa-back"><a href="/#writing">← back to the rack</a></div>
+
+  <header class="hero">
+    <div class="k">// learning from failure · how we done do that AI</div>
+    <h1>you can be <span class="bad">bad</span> at this</h1>
+    <p class="sub">an honest account of AI-assisted work, that reviews itself as you read it.</p>
+  </header>
+
+  <div class="reviewers">
+    <span class="lbl">reading along:</span>
+    <span class="rv peer"><span class="d"></span><b>the peer</b> · checks the facts</span>
+    <span class="rv bastard"><span class="d"></span><b>the bastard</b> · catches the shape</span>
+    <span class="rv meta"><span class="d"></span><b>the meta</b> · catches it twice</span>
+  </div>
+
+  <div class="shell">
+    <aside class="rail">
+      <div class="rail-card reading">
+        <span class="rc-title">▸ reading along</span>
+        <span class="rv peer"><span class="d"></span><b>the peer</b> · checks the facts</span>
+        <span class="rv bastard"><span class="d"></span><b>the bastard</b> · catches the shape</span>
+        <span class="rv meta"><span class="d"></span><b>the meta</b> · catches it twice</span>
+      </div>
+      <div class="tally" id="tally">
+        <span class="t">audited so far</span>
+        <span class="row peer"><span>the peer</span><b id="c-peer">0</b></span>
+        <span class="row bastard"><span>the bastard</span><b id="c-bastard">0</b></span>
+        <span class="row meta"><span>the meta</span><b id="c-meta">0</b></span>
+      </div>
+    </aside>
+
+    <main class="page" id="page">
+      <div class="col">
+        <section class="beat intro">
+        <p class="lead">I've worked with AI tooling daily for a few months, cross-repo features, developer tooling, docs. the most useful thing I can tell you about it is that <em>you can be bad at it</em>. what follows is the system I use to be less bad, deliberately.</p>
+
+        <p>a talk about catching your own blind spots that doesn't catch its own is just hype. so this page does the thing it describes: the two reviewers I ran on the files that produced it are reading along with you. their notes land in the margins. i didn't soften them.</p>
+
+        </section>
+
+        <section class="beat">
+        <h2><span class="n">01</span>I keep notes on what works and what doesn't</h2>
+        <p>the core of it is a mistake log. append-only, seven weeks old, <span class="claim peer" data-side="left" data-tag="the peer" data-note="naive grep gives 44, ten entries drifted to ## instead of the schema's ###. the log catching its own schema violations is, admittedly, on-theme."><span>54 entries</span><span class="mk"></span></span>, two working cycles of rule promotions. alongside it sit <span class="claim bastard" data-side="right" data-tag="the bastard" data-note="43. you counted the index file and the log itself, the exact miscount the review caught in May, back again in June. the number won't sit still and you should say so."><span>45 memory files</span><span class="mk"></span></span>, each naming a specific failure mode with a why and a how-to-apply.</p>
+        <p>seven weeks isn't a long-running practice. that's the point, it paid off this fast because the logging is disciplined, not because i've been at it for years.</p>
+
+        </section>
+
+        <section class="beat">
+        <h2><span class="n">02</span>the loop: plan → check → review → do</h2>
+        <p>most of my time now sits at the planning end of that loop. <span class="claim bastard" data-side="right" data-tag="the bastard" data-note="you never measured 90%. you'd be lying and you know it. you already cut this line, say 'the ratio inverted, here are 15 plans in the vault'. it's true and it's stronger."><span>i plan maybe 90% of the time now</span><span class="mk"></span></span>; the implementation falls out of a good plan and has become the cheap part.</p>
+        <p>the counter-example keeps me honest: the one time i skipped the planning step on a rewrite, i paid a whole wrong-architecture round for it. planning isn't immunity to a bad assumption. it's just where the leverage is.</p>
+
+        </section>
+
+        <section class="beat interlude">
+          <div class="interlude-panel">
+            <span class="stick-title">so how do we actually do it?</span>
+            <span class="stick-note">two reviewers. one of them a bastard. watch.</span>
+          </div>
+        </section>
+
+        <section class="beat showpiece">
+        <h2><span class="n">03</span>the bastard review</h2>
+        <p>that "review" stage is two independent passes on the same work: a competent peer who checks every fact, and an annoying colleague briefed to catch what i'm hiding. neither sees the other's notes. here's that pair, run live on the four files that produced this talk.</p>
+
+        <div class="br-block" id="br-block">
+          <div class="br-stage" id="br-stage">
+            <div class="br-artifact">
+              <span class="doc-tab">exhibit a · a post-mortem</span>
+              <div class="doc-meta"><span>self-review · draft</span><span>v1</span></div>
+              <p class="doc-body">
+                across <span class="br-clip peer" data-tag="the peer" data-note="i count 28."><span>32 daily notes</span><span class="m"></span></span> this quarter i <span class="br-clip peer" data-tag="the peer" data-note="3 of them. not 'consistently.'"><span>consistently</span><span class="m"></span></span> caught my own mistakes early. <span class="br-clip bastard" data-tag="the bastard" data-note="saying it isn't one IS the highlight."><span>this isn't a highlight reel</span><span class="m"></span></span>, <span class="br-clip bastard" data-tag="the bastard" data-note="you quoted the 4 flattering ones."><span>i included the failures too</span><span class="m"></span></span>. the process is <span class="br-clip bastard" data-tag="the bastard" data-note="faults found = working. none found = good. unprovable."><span>working as designed</span><span class="m"></span></span>.
+              </p>
+            </div>
+            <div class="br-meta" id="br-meta">
+              <div class="mhead">③ meta-review · the reckoning</div>
+              <div class="counts">
+                <span class="count peer"><b>the peer</b> caught 2 things that are <b>wrong</b>: a count, a word.</span>
+                <span class="count bastard"><b>the bastard</b> caught 3 things that aren't wrong, they're <b>hollow</b>.</span>
+              </div>
+              <div class="overlap">they overlapped on <span class="zero">0</span></div>
+              <div class="punch">↳ near-zero overlap is usually the signal, each catches what the other can't. the margins of this page are that same pair, running on me.</div>
+            </div>
+          </div>
+        </div>
+
+        </section>
+
+        <section class="beat">
+        <p>the value is usually the gap between them, each catches what the other can't. but sometimes the peer and the bastard land on the <em>same</em> finding, and that isn't the process failing. it's the loudest signal there is: the thing is so plainly broken that both of them caught it. fix that one first.</p>
+        <p>it cuts both ways, though: on one dated morning my own bastard pass <span class="claim bastard" data-side="right" data-tag="the bastard" data-note="it manufactured findings; a colleague's Claude caught all seven. the method working, not failing."><span>got a few things wrong</span><span class="mk"></span></span>, and the fix was eight grounding gates, now baked into the skill.</p>
+        </section>
+
+        <section class="beat">
+        <h2><span class="n">04</span>where the methodology stops</h2>
+        <p>if a methodology talk has no section on where it stops working, it's a sales pitch. mine has one because the data has one. even hook-blocked rules recur: <span class="claim meta" data-tag="the meta"><span>one habit fired eight times in five weeks</span><span class="mk"></span></span> despite a hook that catches every single instance. the hook fixes the symptom; the reflex underneath is unchanged.</p>
+        <div class="meta-call"><span class="tag">the meta · it demonstrates itself</span><span class="body">three of those eight fired while this talk was being written. the claim proved itself three times during prep. about as clean as evidence gets.</span></div>
+
+        </section>
+
+        <section class="beat">
+        <h2><span class="n">05</span>what I haven't measured</h2>
+        <p>cost in tokens and money: unmeasured. a real non-AI baseline: directional only. the false-negative rate of the mistake log: unknown, <span class="claim peer" data-side="left" data-tag="the peer" data-note="five unlogged self-catches on a single day, so 54 entries is a floor, not a count. correct framing, keep it."><span>five self-catches went unlogged on one day alone</span><span class="mk"></span></span>.</p>
+        <p><span class="claim bastard" data-side="right" data-tag="the bastard" data-note="good, you named the five gaps before the room could. but be honest about the bigger one: this whole audit is the methodology grading its own homework. it can only catch what the methodology can already see."><span>i'd rather name the gaps than have the room name them for me</span><span class="mk"></span></span>. and the deepest gap is the one this page is built on, an audit produced by the method can only ever catch what the method already sees. saying that out loud is what turns the weakness into the frame.</p>
+        </section>
+      </div>
+    </main>
+  </div><!-- /shell -->
+
+  <section class="close">
+    <h2>you can be bad at this</h2>
+    <p>and then you can get less bad, deliberately, with a system that catches what you missed.</p>
+    <p class="tail">↳ that's the whole talk, including the part where it caught itself, on this page, while you watched.</p>
+  </section>
+
+  <div class="snap-toggle" id="snap-toggle" role="group" aria-label="Page scroll mode">
+    <span class="lbl">snap</span>
+    <button type="button" data-mode="off">off</button>
+    <button type="button" data-mode="all">on</button>
+  </div>
+</div>
+
+<Footer />
+
+<style is:global>
+/* Styles ship only on the page that renders this component, so the un-scoped
+   selectors below are safe; is:global is needed so the JS-created note elements
+   pick up these rules. Tokens, grain, nav, and ::selection come from global.css. */
+
+/* this page is a reading article, not the snap-scrolling home page */
+html:has(.sa-root), body:has(.sa-root){scroll-snap-type:none}
+/* the site body is olive-darker (to match the footer); the reading area needs paper */
+.sa-root{background:var(--cream)}
+
+/* ===== snap mode: reader can flip the article between free-scroll and a
+   page-per-beat snap (the home page's pageified feel). Default is off. ===== */
+html:has(.sa-root.snap-all), body:has(.sa-root.snap-all){scroll-snap-type:y mandatory}
+.sa-root.snap-all .hero, .sa-root.snap-all .beat, .sa-root.snap-all .close{
+  min-height:100vh;scroll-snap-align:start;scroll-snap-stop:always;
+  display:flex;flex-direction:column;justify-content:safe center;
+}
+.snap-toggle{position:fixed;left:16px;bottom:16px;z-index:300;background:var(--olive-darker);color:var(--cream);border:2px solid var(--mustard);box-shadow:4px 4px 0 var(--peach-deep);padding:8px 11px;display:flex;align-items:center;gap:7px;font-family:'VT323',monospace;font-size:14px}
+.snap-toggle .lbl{color:var(--mustard);text-transform:uppercase;letter-spacing:.1em;margin-right:2px}
+.snap-toggle button{font-family:'VT323',monospace;font-size:14px;text-transform:uppercase;letter-spacing:.06em;background:var(--olive-deep);color:var(--cream);border:1.5px solid var(--olive);padding:3px 10px;cursor:pointer}
+.snap-toggle button.active{background:var(--mustard);color:var(--olive-darker);border-color:var(--olive-darker)}
+
+/* back link as a pinned rotated sticker (top-left of the view), not a top bar */
+.sa-back{position:fixed;top:60px;left:18px;z-index:95;transform:rotate(-3deg)}
+.sa-back a,.sa-back a:visited{display:inline-block;background:var(--cream);border:2px solid var(--olive-darker);box-shadow:3px 3px 0 var(--olive-darker);padding:7px 13px;font-family:'VT323',monospace;font-size:14px;color:var(--peach-deep);text-decoration:none;letter-spacing:.06em;text-transform:uppercase;transition:transform .15s,box-shadow .15s}
+.sa-back a:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--olive-darker);color:var(--olive-darker)}
+@media(max-width:860px){.sa-back{top:auto;bottom:14px;left:14px}}
+
+/* HERO */
+.hero{background:var(--mint);padding:64px 28px 56px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:54px;background:var(--peach);clip-path:polygon(0 100%,15% 30%,32% 80%,48% 20%,64% 70%,80% 25%,100% 60%,100% 100%)}
+.hero .k{font-family:'VT323',monospace;font-size:15px;letter-spacing:.16em;color:var(--peach-deep);text-transform:uppercase;margin-bottom:14px}
+.hero h1{font-family:'Bungee',sans-serif;font-size:clamp(40px,8.5vw,96px);line-height:.9;margin:0 0 18px;text-transform:uppercase;color:var(--olive-darker);letter-spacing:-.02em}
+.hero h1 .bad{display:inline-block;color:var(--ink);text-shadow:5px 5px 0 var(--olive-darker);transform:rotate(-3deg)}
+.hero .sub{font-family:Caveat,cursive;font-weight:700;font-size:26px;max-width:30ch;margin:0 auto;color:var(--olive-darker);line-height:1.2}
+
+/* the "reviewers are reading along" banner (narrow screens) */
+.reviewers{position:sticky;top:44px;z-index:90;background:var(--olive-darker);color:var(--cream);border-bottom:2px solid var(--mustard);display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;padding:10px 16px;font-family:'VT323',monospace;font-size:14px;letter-spacing:.04em}
+.reviewers .lbl{color:var(--mustard);text-transform:uppercase;letter-spacing:.1em}
+.rv{display:inline-flex;align-items:center;gap:7px;padding:3px 11px;border:1.5px solid;background:rgba(255,255,255,.04);text-transform:uppercase}
+.rv .d{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.rv.peer{border-color:var(--mint)} .rv.peer .d{background:var(--mint)} .rv.peer b{color:var(--mint)}
+.rv.bastard{border-color:var(--ink)} .rv.bastard .d{background:var(--ink)} .rv.bastard b{color:var(--peach)}
+.rv.meta{border-color:var(--mustard)} .rv.meta .d{background:var(--mustard)} .rv.meta b{color:var(--mustard)}
+.rv .d{animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.3}}
+
+/* ARTICLE */
+.page{position:relative;grid-column:1;grid-row:1;min-width:0;padding:54px 0 80px}
+.col{max-width:680px;margin:0 auto;padding:0 24px}
+.col h2{font-family:'Bungee',sans-serif;font-size:clamp(24px,4vw,34px);text-transform:uppercase;letter-spacing:-.01em;margin:48px 0 16px;color:var(--olive-darker)}
+.col h2 .n{font-family:'VT323',monospace;font-size:.5em;color:var(--peach-deep);letter-spacing:.1em;display:block;margin-bottom:2px}
+.col p{margin:0 0 20px;font-size:18px;line-height:1.7}
+.col .lead{font-size:20px;line-height:1.55}
+.col .lead em{font-family:Caveat,cursive;font-style:normal;font-weight:700;color:var(--peach-deep);font-size:26px}
+
+/* a claim that gets audited */
+.claim{position:relative;cursor:default}
+.claim .mk{position:absolute;left:-2px;right:-2px;height:3px;transform:scaleX(0);transform-origin:left;border-radius:2px}
+.claim.peer .mk{bottom:-1px;background:var(--mint-deep)}
+.claim.bastard .mk{top:54%;background:var(--ink)}
+.claim.meta .mk{bottom:-3px;height:6px;background:var(--mustard);opacity:.45;border-radius:0}
+.claim.lit.peer{color:var(--mint-deep)}
+.claim.lit.bastard{color:var(--olive)}
+.claim.lit .mk{animation:grow .28s ease-out forwards}
+@keyframes grow{to{transform:scaleX(1)}}
+
+/* side notes */
+.note{position:absolute;width:200px;font-family:Caveat,cursive;font-weight:700;font-size:18px;line-height:1.14;opacity:0;background:var(--cream);border:2px solid var(--olive-darker);padding:8px 11px 9px;box-shadow:3px 3px 0 var(--olive-darker);z-index:5}
+.note.show{animation:noteIn .28s ease-out forwards}
+@keyframes noteIn{from{opacity:0;transform:translateY(10px) rotate(var(--rot,-2deg)) scale(.96)}to{opacity:1;transform:translateY(0) rotate(var(--rot,-2deg)) scale(1)}}
+.note .tag{display:block;font-family:'VT323',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px}
+.note.left{--rot:-2deg;color:var(--mint-deep);border-color:var(--mint-deep)} .note.left .tag{color:var(--mint-deep)}
+.note.right{--rot:2deg;color:var(--ink-deep);border-color:var(--ink)} .note.right .tag{color:var(--ink)}
+.note .lead{position:absolute;top:50%;transform:translateY(-50%);height:2px;width:26px;z-index:-1}
+.note.left .lead{right:-26px;background:var(--mint-deep)}
+.note.right .lead{left:-26px;background:var(--ink)}
+
+/* transition interlude between sections (talk slide-6 style): a bold mustard
+   band breaking out of the reading column, with tilted cream sticker boxes. */
+.beat.interlude{padding:30px 0}
+.interlude-panel{margin-left:50%;transform:translateX(-50%);width:min(1040px,94vw);background:var(--blue);border:3px solid var(--olive-darker);box-shadow:8px 8px 0 var(--olive-darker);padding:clamp(40px,6vw,72px) clamp(28px,4vw,52px);display:flex;flex-direction:column;align-items:flex-start;gap:20px}
+.interlude-panel .stick-title{background:var(--cream);border:3px solid var(--olive-darker);box-shadow:6px 6px 0 var(--olive-darker);padding:12px 22px;font-family:'Bungee',sans-serif;font-size:clamp(24px,3.4vw,40px);text-transform:uppercase;letter-spacing:-.01em;color:var(--olive-darker);transform:rotate(-1deg);line-height:1}
+.interlude-panel .stick-note{background:var(--cream);border:3px solid var(--olive-darker);box-shadow:5px 5px 0 var(--olive-darker);padding:9px 16px;font-family:Caveat,cursive;font-weight:700;font-size:24px;color:var(--ink-deep);transform:rotate(-1.5deg);line-height:1.1}
+
+/* outro as an INTERLUDE panel (talk slide-6 style): bold colour, tilted cream
+   sticker boxes with hard offset shadows. Also differentiates it from the footer. */
+.close{background:var(--mustard);color:var(--olive-darker);padding:80px 8vw;min-height:70vh;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:22px;position:relative;overflow:hidden}
+.close h2{align-self:flex-start;background:var(--cream);border:3px solid var(--olive-darker);box-shadow:8px 8px 0 var(--olive-darker);padding:14px 24px;font-family:'Bungee',sans-serif;font-size:clamp(28px,5.5vw,56px);text-transform:uppercase;color:var(--olive-darker);letter-spacing:-.01em;margin:0;transform:rotate(-1deg)}
+.close p{max-width:46ch;margin:0;font-size:19px;line-height:1.55;color:var(--olive-darker)}
+.close .tail{align-self:flex-start;background:var(--cream);border:3px solid var(--olive-darker);box-shadow:6px 6px 0 var(--olive-darker);padding:10px 18px;font-family:Caveat,cursive;font-weight:700;font-size:25px;color:var(--ink-deep);margin:0;line-height:1.2;transform:rotate(-1.4deg)}
+
+/* tally chip that fills as audits fire */
+.tally{background:var(--olive-darker);color:var(--cream);border:2px solid var(--mustard);box-shadow:4px 4px 0 var(--peach-deep);padding:12px 14px;font-family:'VT323',monospace;font-size:14px;letter-spacing:.04em;display:flex;flex-direction:column;gap:4px}
+.tally .t{color:var(--mustard);text-transform:uppercase;letter-spacing:.1em;font-size:12px;border-bottom:1px solid rgba(229,181,86,.3);padding-bottom:3px;margin-bottom:2px}
+.tally .row{display:flex;justify-content:space-between;gap:12px;text-transform:uppercase}
+.tally .row.peer b{color:var(--mint)} .tally .row.bastard b{color:var(--peach)} .tally .row.meta b{color:var(--mustard)}
+
+/* META callout: in normal flow, never covers body text */
+.meta-call{position:relative;margin:22px 0 26px;background:var(--olive-darker);color:var(--cream);border:2px solid var(--peach-deep);box-shadow:5px 5px 0 var(--peach-deep);padding:15px 18px 16px;opacity:0;transform:translateY(12px);transition:opacity .55s,transform .55s}
+.meta-call.show{opacity:1;transform:none}
+.meta-call::before{content:"③";position:absolute;top:-14px;left:16px;background:var(--mustard);color:var(--olive-darker);font-family:'Bungee',sans-serif;font-size:13px;padding:2px 10px;border:2px solid var(--olive-darker)}
+.meta-call .tag{display:block;font-family:'VT323',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--mustard);margin-bottom:5px}
+.meta-call .body{font-family:Caveat,cursive;font-weight:700;font-size:21px;line-height:1.25;color:var(--blue)}
+
+/* embedded bastard-review animation (section 03 showpiece) */
+.br-block{position:relative;margin:30px auto 10px;margin-left:50%;transform:translateX(-50%);width:min(1040px,94vw)}
+.br-stage{position:relative;padding:0 224px}
+.br-artifact{position:relative;background:var(--cream);border:2px solid var(--olive-darker);box-shadow:8px 8px 0 var(--olive-darker);padding:22px 24px 20px;transform:rotate(.5deg);max-width:540px;margin:0 auto}
+.br-artifact .doc-tab{position:absolute;top:-14px;left:18px;background:var(--olive-darker);color:var(--cream);font-family:'VT323',monospace;font-size:13px;letter-spacing:.12em;padding:3px 12px;text-transform:uppercase;border:2px solid var(--olive-darker)}
+.br-artifact .doc-meta{display:flex;justify-content:space-between;font-family:'VT323',monospace;font-size:13px;color:var(--olive);letter-spacing:.06em;text-transform:uppercase;border-bottom:1.5px dashed var(--olive-darker);padding-bottom:8px;margin-bottom:14px}
+.br-artifact .doc-body{font-size:17px;line-height:1.9;color:var(--olive-darker)}
+.br-clip{position:relative;transition:color .3s}
+.br-clip .m{position:absolute;left:-2px;right:-2px;height:3px;transform:scaleX(0);transform-origin:left;border-radius:2px}
+.br-clip.peer .m{bottom:-1px;background:var(--mint-deep)}
+.br-clip.bastard .m{top:52%;background:var(--ink)}
+.br-clip.lit.peer{color:var(--mint-deep)}
+.br-clip.lit.bastard{color:var(--olive)}
+.br-clip.lit .m{animation:grow .24s ease-out forwards}
+.br-note{position:absolute;width:190px;font-family:Caveat,cursive;font-weight:700;font-size:17px;line-height:1.14;opacity:0;background:var(--cream);border:2px solid var(--olive-darker);padding:7px 10px 8px;box-shadow:3px 3px 0 var(--olive-darker);z-index:5}
+.br-note.show{animation:noteIn .24s ease-out forwards}
+.br-note .t{display:block;font-family:'VT323',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
+.br-note.left{--rot:-2deg;color:var(--mint-deep);border-color:var(--mint-deep)} .br-note.left .t{color:var(--mint-deep)}
+.br-note.right{--rot:2deg;color:var(--ink-deep);border-color:var(--ink)} .br-note.right .t{color:var(--ink)}
+.br-meta{max-width:720px;margin:26px auto 0;background:var(--olive-darker);color:var(--cream);border:2px solid var(--olive-darker);box-shadow:7px 7px 0 var(--peach-deep);padding:18px 22px;opacity:0;transform:translateY(16px);transition:opacity .38s,transform .38s}
+.br-meta.show{opacity:1;transform:none}
+.br-meta .mhead{font-family:'VT323',monospace;font-size:14px;letter-spacing:.14em;color:var(--peach);text-transform:uppercase;margin-bottom:10px}
+.br-meta .counts{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:10px}
+.br-meta .count{flex:1;min-width:200px;font-size:15px;background:var(--olive-deep);border:1.5px solid;padding:7px 12px;line-height:1.3}
+.br-meta .count.peer{border-color:var(--mint)} .br-meta .count.peer b{color:var(--mint)}
+.br-meta .count.bastard{border-color:var(--ink)} .br-meta .count.bastard b{color:var(--peach)}
+.br-meta .overlap{font-family:'Bungee',sans-serif;font-size:clamp(20px,3vw,30px);color:var(--mustard);display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;text-transform:uppercase}
+.br-meta .overlap .zero{color:var(--ink);background:var(--cream);padding:2px 14px;transform:rotate(-2deg);display:inline-block}
+.br-meta .punch{font-family:Caveat,cursive;font-weight:700;font-size:21px;color:var(--blue);margin-top:8px;line-height:1.25}
+@media(max-width:900px){
+  .br-stage{padding:0}
+  .br-note{position:static;width:auto;opacity:1;display:block;margin:8px 0;box-shadow:2px 2px 0 var(--olive-darker)}
+  .br-note.show{animation:none}
+}
+
+/* reviewer rail layout (wide screens, >=1441px) */
+.shell{max-width:1660px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:40px;align-items:start}
+/* rail spans the viewport: reading-along pinned top, tally pinned bottom-of-view */
+.rail{grid-column:2;grid-row:1;position:sticky;top:64px;height:calc(100vh - 84px);margin-top:54px;display:flex;flex-direction:column;gap:16px}
+.rail .tally{margin-top:auto}
+.rail-card.reading{background:var(--olive-darker);color:var(--cream);border:2px solid var(--mustard);box-shadow:4px 4px 0 var(--peach-deep);padding:14px 16px;display:flex;flex-direction:column;gap:9px}
+.rail .rc-title{font-family:'VT323',monospace;color:var(--mustard);text-transform:uppercase;letter-spacing:.12em;font-size:13px;border-bottom:1px solid rgba(229,181,86,.3);padding-bottom:7px}
+.rail .rv{width:100%;white-space:nowrap}
+.reviewers{display:none}  /* top banner replaced by the rail on wide screens */
+
+/* below the rail breakpoint there isn't room for a rail + two note gutters:
+   revert to the centred reading layout with the top banner + floating tally */
+@media(max-width:1540px){
+  .reviewers{display:flex}
+  .shell{display:block;max-width:none;padding:0}
+  .page{max-width:min(1280px,92vw);margin:0 auto}
+  .rail{position:static;margin:0;height:auto}
+  .rail .rail-card.reading{display:none}
+  .note{width:230px}
+  .tally{position:fixed;right:18px;bottom:18px;z-index:200;min-width:150px}
+}
+
+@media(max-width:1080px){ .note{width:170px;font-size:16px} }
+@media(max-width:860px){
+  .page{padding:40px 0 64px}
+  .col{padding:0 20px}
+  .note{position:static;display:block;width:auto;opacity:1;transform:none;margin:8px 0 14px;box-shadow:2px 2px 0 var(--olive-darker)}
+  .note.show{animation:none}
+  .note .lead{display:none}
+  .tally{display:none}
+}
+</style>
+
+<script>
+  const counts = { peer: 0, bastard: 0, meta: 0 };
+  const sideClass = { left: 'left', right: 'right', mid: 'mid' };
+
+  function placeNote(claim) {
+    const page = document.getElementById('page');
+    if (!page) return;
+    const pr = page.getBoundingClientRect();
+    const cr = claim.getBoundingClientRect();
+    const side = claim.dataset.side;
+    const note = document.createElement('div');
+    note.className = 'note ' + sideClass[side];
+    note.innerHTML = '<span class="tag">' + claim.dataset.tag + '</span>' + claim.dataset.note + '<span class="lead"></span>';
+    if (side === 'left') { note.style.left = '8px'; }
+    else if (side === 'right') { note.style.right = '8px'; }
+    else { note.style.left = '50%'; note.style.transform = 'translateX(-50%)'; note.style.marginTop = '34px'; }
+    page.appendChild(note);
+    // centre the note on its claim, then clamp so it can't fall off the page bottom
+    let top = (cr.top - pr.top + cr.height / 2) - note.offsetHeight / 2;
+    const maxTop = page.scrollHeight - note.offsetHeight - 12;
+    if (top > maxTop) top = maxTop;
+    if (top < 0) top = 0;
+    note.style.top = top + 'px';
+    requestAnimationFrame(() => requestAnimationFrame(() => note.classList.add('show')));
+  }
+
+  function audit(claim) {
+    if (claim.classList.contains('lit')) return;
+    claim.classList.add('lit');
+    const who = claim.classList.contains('peer') ? 'peer' : claim.classList.contains('bastard') ? 'bastard' : 'meta';
+    if (who === 'meta') {
+      const p = claim.closest('p');
+      const call = p && p.nextElementSibling;
+      if (call && call.classList.contains('meta-call')) call.classList.add('show');
+    } else {
+      placeNote(claim);
+    }
+    counts[who]++;
+    const el = document.getElementById('c-' + who);
+    if (el) el.textContent = String(counts[who]);
+  }
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) audit(e.target); });
+  }, { rootMargin: '0px 0px -35% 0px', threshold: 0 });
+  document.querySelectorAll('.claim').forEach((c) => io.observe(c));
+
+  // section 03: the embedded bastard-review animation, fires once on scroll-in
+  let brDone = false;
+  const brLastY = { left: -9999, right: -9999 };
+  const BR_MIN_GAP = 70;
+  function brPlace(clip, side) {
+    const stage = document.getElementById('br-stage');
+    if (!stage) return;
+    const sb = stage.getBoundingClientRect();
+    const cb = clip.getBoundingClientRect();
+    const note = document.createElement('div');
+    note.className = 'br-note ' + side;
+    note.innerHTML = '<span class="t">' + clip.dataset.tag + '</span>' + clip.dataset.note;
+    let top = cb.top - sb.top + cb.height / 2 - 12;
+    if (top < brLastY[side] + BR_MIN_GAP) top = brLastY[side] + BR_MIN_GAP;
+    brLastY[side] = top;
+    note.style.top = top + 'px';
+    if (side === 'left') { note.style.left = '4px'; } else { note.style.right = '4px'; }
+    stage.appendChild(note);
+    requestAnimationFrame(() => requestAnimationFrame(() => note.classList.add('show')));
+  }
+  function runBastard() {
+    if (brDone) return; brDone = true;
+    const peer = [...document.querySelectorAll('#br-stage .br-clip.peer')];
+    const bastard = [...document.querySelectorAll('#br-stage .br-clip.bastard')];
+    let t = 220;
+    peer.forEach((c) => { setTimeout(() => { c.classList.add('lit'); brPlace(c, 'left'); }, t); t += 400; });
+    t += 130;
+    bastard.forEach((c) => { setTimeout(() => { c.classList.add('lit'); brPlace(c, 'right'); }, t); t += 400; });
+    const meta = document.getElementById('br-meta');
+    setTimeout(() => { if (meta) meta.classList.add('show'); }, t + 170);
+  }
+  const brBlock = document.getElementById('br-block');
+  if (brBlock) {
+    const brIo = new IntersectionObserver((es) => {
+      es.forEach((e) => { if (e.isIntersecting) runBastard(); });
+    }, { rootMargin: '-12% 0px -28% 0px' });
+    brIo.observe(brBlock);
+  }
+
+  // ===== TEMPORARY: snap-mode QA toggle (off / beats / all) =====
+  const saRoot = document.querySelector('.sa-root');
+  const snapToggle = document.getElementById('snap-toggle');
+  if (saRoot && snapToggle) {
+    const setMode = (mode) => {
+      saRoot.classList.remove('snap-beats', 'snap-all');
+      if (mode === 'beats') saRoot.classList.add('snap-beats');
+      else if (mode === 'all') saRoot.classList.add('snap-all');
+      snapToggle.querySelectorAll('button').forEach((b) => b.classList.toggle('active', b.dataset.mode === mode));
+      try { localStorage.setItem('sa-snap', mode); } catch (e) {}
+    };
+    snapToggle.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode)));
+    let initial = 'off';
+    try { initial = localStorage.getItem('sa-snap') || 'off'; } catch (e) {}
+    setMode(initial);
+  }
+</script>

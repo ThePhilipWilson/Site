@@ -1,0 +1,122 @@
+---
+// "The bin" — an interactive gallery of every homepage concept that didn't make
+// it (plus the one that did). Used at the end of the nineteen-homepages piece.
+// Images are generated from the real concept files into public/writing/nineteen-homepages/.
+const base = '/writing/nineteen-homepages';
+const CONCEPTS = [
+  { n: '01', name: 'Cartridge', fate: 'binned' },
+  { n: '02', name: 'Modernist newsprint', fate: 'binned', note: '"not keen on 2 and 4"' },
+  { n: '03', name: 'Diorama', fate: 'binned', note: '"ditching 3 and 8"' },
+  { n: '04', name: 'CRT terminal', fate: 'binned', note: '"not keen on 2 and 4"' },
+  { n: '05', name: 'Music zine', fate: 'binned' },
+  { n: '06', name: 'Arcade cabinet', fate: 'binned', note: 'liked it for an hour. the cabinet survived.' },
+  { n: '07', name: 'Workshop', fate: 'binned', note: '"discard 9 and 7"' },
+  { n: '08', name: 'Cards', fate: 'binned', note: '"ditching 3 and 8"' },
+  { n: '09', name: 'Atlas', fate: 'binned', note: '"discard 9 and 7"' },
+  { n: '10', name: 'Room', fate: 'binned' },
+  { n: '11', name: 'Hybrid, recommended', fate: 'binned' },
+  { n: '12', name: 'Hybrid, light', fate: 'binned' },
+  { n: '13', name: 'Hybrid, zine-led', fate: 'binned' },
+  { n: '14', name: 'Hybrid, framed', fate: 'binned' },
+  { n: '15', name: 'Hybrid, inverted', fate: 'binned' },
+  { n: '16', name: 'Riff, comic', fate: 'binned' },
+  { n: '17', name: 'Riff, riso', fate: 'binned' },
+  { n: '18', name: 'Riff, stamps', fate: 'binned' },
+  { n: '19', name: 'Zine-plus', fate: 'shipped', note: "the one you're looking at." },
+];
+---
+<section class="the-bin" aria-label="The bin: all nineteen homepage concepts">
+  <div class="bin-head">
+    <span class="bin-title">the bin</span>
+    <span class="bin-note">nineteen tries. eighteen in the bin. one shipped.</span>
+  </div>
+
+  <div class="bin-grid">
+    {CONCEPTS.map((c, i) => (
+      <button
+        class:list={['bin-card', c.fate]}
+        type="button"
+        data-img={`${base}/concept-${c.n}.png`}
+        data-name={c.name}
+        data-n={c.n}
+        style={`--tilt:${((i % 3) - 1) * 0.8}deg`}
+        aria-label={`Concept ${c.n}, ${c.name}, ${c.fate}. Click to enlarge.`}
+      >
+        <span class="bin-num">{c.n}</span>
+        <span class="bin-shot"><img src={`${base}/concept-${c.n}.png`} alt={`Concept ${c.n}: ${c.name}`} loading="lazy" /></span>
+        <span class:list={['bin-stamp', c.fate]}>{c.fate === 'shipped' ? '★ Shipped' : 'Binned'}</span>
+        <span class="bin-cap"><b>{c.name}</b>{c.note && <em>{c.note}</em>}</span>
+      </button>
+    ))}
+  </div>
+
+  <div class="bin-lightbox" id="bin-lightbox" hidden>
+    <button class="bin-close" id="bin-close" type="button" aria-label="Close">✕ close</button>
+    <figure>
+      <img id="bin-lb-img" src="" alt="" />
+      <figcaption id="bin-lb-cap"></figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .the-bin{max-width:min(1640px,94vw);margin:56px auto 0;padding:0 8px}
+  .bin-head{display:flex;flex-direction:column;align-items:flex-start;gap:12px;margin-bottom:32px}
+  .bin-title{background:var(--cream);border:3px solid var(--olive-darker);box-shadow:7px 7px 0 var(--olive-darker);padding:12px 22px;font-family:'Bungee',sans-serif;font-size:clamp(26px,4vw,44px);text-transform:uppercase;letter-spacing:-.01em;color:var(--olive-darker);transform:rotate(-1deg)}
+  .bin-note{font-family:Caveat,cursive;font-weight:700;font-size:24px;color:var(--olive);transform:rotate(-.6deg)}
+
+  .bin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:24px}
+  .bin-card{position:relative;display:flex;flex-direction:column;gap:0;background:var(--cream);border:2px solid var(--olive-darker);box-shadow:6px 6px 0 var(--olive-darker);padding:12px 12px 14px;text-align:left;cursor:zoom-in;transform:rotate(var(--tilt,0deg));transition:transform .15s,box-shadow .15s;font:inherit;color:inherit}
+  .bin-card:hover{transform:rotate(0) translate(-2px,-2px);box-shadow:9px 9px 0 var(--olive-darker);z-index:2}
+  .bin-card:focus-visible{outline:3px solid var(--peach-deep);outline-offset:3px}
+  .bin-num{position:absolute;top:-11px;left:12px;background:var(--olive-darker);color:var(--mustard);font-family:'VT323',monospace;font-size:14px;letter-spacing:.08em;padding:1px 9px;border:2px solid var(--olive-darker);z-index:3}
+  .bin-shot{display:block;border:1.5px solid var(--olive-darker);overflow:hidden;aspect-ratio:16/10;background:var(--olive-deep)}
+  .bin-shot img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+  .bin-cap{display:flex;flex-direction:column;gap:2px;margin-top:10px}
+  .bin-cap b{font-family:'VT323',monospace;font-size:16px;letter-spacing:.04em;text-transform:uppercase;color:var(--olive-darker)}
+  .bin-cap em{font-family:Caveat,cursive;font-style:normal;font-weight:700;font-size:16px;color:var(--peach-deep);line-height:1.1}
+
+  /* fate stamps, slammed across the shot */
+  .bin-stamp{position:absolute;top:42%;left:50%;transform:translate(-50%,-50%) rotate(-11deg);font-family:'Bungee',sans-serif;text-transform:uppercase;font-size:20px;letter-spacing:.04em;padding:4px 12px;border:3px solid;pointer-events:none;z-index:2;line-height:1}
+  .bin-stamp.binned{color:var(--ink);border-color:var(--ink);background:rgba(244,237,223,.82)}
+  .bin-stamp.shipped{color:var(--mint-deep);border-color:var(--mint-deep);background:rgba(244,237,223,.9);font-size:18px}
+  .bin-card.shipped{box-shadow:6px 6px 0 var(--mint-deep);border-color:var(--mint-deep)}
+  .bin-card.shipped:hover{box-shadow:9px 9px 0 var(--mint-deep)}
+  .bin-card.shipped .bin-num{background:var(--mint-deep);border-color:var(--mint-deep);color:var(--cream)}
+
+  /* lightbox */
+  .bin-lightbox{position:fixed;inset:0;z-index:400;background:rgba(42,39,34,.86);display:flex;align-items:center;justify-content:center;padding:40px}
+  .bin-lightbox[hidden]{display:none}
+  .bin-lightbox figure{margin:0;max-width:1100px;width:100%}
+  .bin-lightbox img{display:block;width:100%;height:auto;border:3px solid var(--cream);box-shadow:10px 10px 0 var(--peach-deep)}
+  .bin-lightbox figcaption{font-family:'VT323',monospace;font-size:16px;letter-spacing:.06em;text-transform:uppercase;color:var(--cream);margin-top:14px;text-align:center}
+  .bin-close{position:fixed;top:22px;right:24px;background:var(--cream);color:var(--olive-darker);border:2px solid var(--olive-darker);box-shadow:3px 3px 0 var(--peach-deep);font-family:'VT323',monospace;font-size:16px;text-transform:uppercase;letter-spacing:.06em;padding:7px 13px;cursor:pointer}
+
+  @media (max-width:640px){
+    .bin-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px}
+    .bin-card{transform:none}
+    .bin-stamp{font-size:15px}
+  }
+</style>
+
+<script>
+  const lb = document.getElementById('bin-lightbox');
+  const lbImg = document.getElementById('bin-lb-img') as HTMLImageElement | null;
+  const lbCap = document.getElementById('bin-lb-cap');
+  const close = document.getElementById('bin-close');
+  if (lb && lbImg && lbCap && close) {
+    const open = (src: string, name: string, n: string) => {
+      lbImg.src = src; lbImg.alt = `Concept ${n}: ${name}`;
+      lbCap.textContent = `Concept ${n} · ${name}`;
+      lb.hidden = false;
+      document.body.style.overflow = 'hidden';
+    };
+    const hide = () => { lb.hidden = true; document.body.style.overflow = ''; };
+    document.querySelectorAll<HTMLButtonElement>('.bin-card').forEach((card) => {
+      card.addEventListener('click', () => open(card.dataset.img || '', card.dataset.name || '', card.dataset.n || ''));
+    });
+    close.addEventListener('click', hide);
+    lb.addEventListener('click', (e) => { if (e.target === lb) hide(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !lb.hidden) hide(); });
+  }
+</script>

@@ -12,6 +12,9 @@ const {
   description = site.tagline,
 } = Astro.props;
 const issueLabel = `Issue ${String(site.issue.number).padStart(2, '0')} · ${site.issue.season.split(' ')[1] ?? ''}`.trim();
+// The section links are same-page anchors that only exist on the home page;
+// hide them on sub-pages (articles), where they'd be dead links.
+const isHome = Astro.url.pathname === '/';
 ---
 <!doctype html>
 <html lang="en">
@@ -36,12 +39,14 @@ const issueLabel = `Issue ${String(site.issue.number).padStart(2, '0')} · ${sit
       <Logo width={22} height={22} />
       <span>{site.name}</span>
     </a>
-    <div class="links">
-      <a href="#lab">Lab</a>
-      <a href="#writing">Writing</a>
-      <a href="#about">About</a>
-      <a href={`mailto:${site.email}`}>Hello</a>
-    </div>
+    {isHome && (
+      <div class="links">
+        <a href="#lab">Lab</a>
+        <a href="#writing">Writing</a>
+        <a href="#about">About</a>
+        <a href={`mailto:${site.email}`}>Hello</a>
+      </div>
+    )}
     <span class="badge">{issueLabel}</span>
   </nav>
 

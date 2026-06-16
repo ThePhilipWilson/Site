@@ -1,0 +1,91 @@
+---
+// Bespoke renderer for the "it took nineteen homepages" piece. Sibling of the
+// self-auditing article: bold hero, the interactive bin woven into the narrative
+// (not dumped at the end), and an interlude outro. Used by writing/[id].astro.
+import Footer from './Footer.astro';
+import TheBin from './TheBin.astro';
+---
+
+<div class="nh-root">
+  <div class="nh-back"><a href="/#writing">← back to the rack</a></div>
+
+  <header class="nh-hero">
+    <div class="k">// writing · the bin · may 2026</div>
+    <h1>it took <span class="big">nineteen</span> homepages to build this site</h1>
+    <p class="sub">most of what AI built for this site is in the bin. that's the whole point.</p>
+  </header>
+
+  <main class="nh-body">
+    <div class="col">
+      <p class="lead">I built this site with Claude doing most of the typing. the cassette you're looking at, the arcade cabinet/CRT tele on the lab page that I'm still not sure about, the way the type sits, all of it came out of a chat window. and I know exactly how that reads in 2026. <em>that must have been so difficult for you to type "make website" into an AI. how you have suffered for your art...</em></p>
+
+      <p>the bit nobody shows you, when they show off the AI thing they made, is the bin. mine has a lot in it. I threw a lot of shit out.</p>
+
+      <p>this site went through nineteen homepage concepts before I picked one. some were genuinely nice. most were not. a brutalist newsprint version, a CRT terminal, a thing that looked like a Bandcamp page, an arcade cabinet centrefold, a literal music zine, gradients that were very reminiscent of that one iPhone update. I killed them in batches. <em>"I'm really not keen on 2 and 4."</em> <em>"discard 9 and 7."</em> <em>"ditching 3 and 8."</em> here's the lot of them.</p>
+    </div>
+
+    <TheBin />
+
+    <div class="col">
+      <p>it got faster every time. a certain amount of convergence, a certain amount of "AI kinda sucks at design" speeds up the process. it can make pretty things, it's just not very interested in doing it, but if you shout at it in the right tone of voice and have a strong idea of what you actually think, it gets there. AI seems to work best with strongly opinionated stubborn people, which is just as well for me.</p>
+
+      <p>I'm not a web developer; front end is not my skill set and, whilst I once harboured dreams of graphic design, I'm not an artist. neither is AI, just to be clear. it's often called a "force-multiplier", so I made far more concepts than I ever would have before. I've a short attention span and was doing this off my own dime, so quick iteration and visible progress were what got it done.</p>
+
+      <p>the cassette has the same story, with less success. five versions. the first had screws in the corners and looked less like a cassette than a rectangle with reels glued on. then stacked. then wider. then <em>"the pile should spread further out, less and less as it goes."</em> then draggable. then the one you're holding: rounded shell, trapezoid relief, the little notched window. if I'd been drawing them myself I'd have stopped at version two and convinced myself it was fine.</p>
+
+      <p>a couple of honest things, because the people posting their AI-built sites tend to skip these.</p>
+
+      <p>the good ideas were mostly mine, vain I know. the arcade cabinet for the lab was my call, mid-chat, unprompted. the fanned-out pile of cassettes was mine too; Claude had them in a normal vertical stack and I kept pushing until they spread out like a hand of cards. the flat-colours-no-gradients-slight-chunkiness language came from me vetoing things, not from the model offering them. unguided refinement is not Claude's strong point. and guided refinement is not most people's. that's where slop hits its stride.</p>
+
+      <p>the bad ideas were also mostly mine. I asked for things that turned out terrible, sat with them for thirty seconds, and went <em>nope, kill it.</em> which is the other half of why this worked. when you don't have to draw the bad idea yourself, you stop being precious about it. you just look at it and bin it without the ego shock of sunk cost.</p>
+
+      <p>and Claude got it wrong constantly. it guessed at what was on my screen instead of checking. it broke the cassette drag more than once. it put a 404 on the lab route. at one point I typed <em>"you seem to be guessing rather than actually knowing,"</em> a sentence I never expected to write at a computer and now write roughly four times an hour. the more abstract, visual or opinionated the task, the more likely Claude is to do weird, useless nonsense.</p>
+
+      <p>so if you came expecting a piece about how AI does it all for you, sorry, haven't got one. what I've got is this: AI lets you be wasteful with concepts. you can throw eighteen homepages in the bin and not feel like you wasted a weekend on each. you can ask <em>"but what if the cassettes fanned out instead of stacking"</em> without committing to twenty minutes of redrawing. you can be picky in a way I frankly can't afford to be when I'm the one drawing every version.</p>
+    </div>
+  </main>
+
+  <section class="nh-outro">
+    <h2>eighteen in the bin</h2>
+    <p>this site is exactly as good as I could make it. a version of me that's far more patient and has way more disposable time, at any rate. garbage in, garbage out. the cassette in your hand is draft five.</p>
+    <p class="tail">↳ that's what I think AI is actually for.</p>
+  </section>
+</div>
+
+<Footer />
+
+<style is:global>
+/* Styles ship only on this page; tokens / grain / nav / footer come from global.css. */
+/* pagify the bookends: mandatory snap with three targets, the title and the
+   outro are full pages; the middle (prose + bin) is one tall snap section you
+   scroll through freely, so it only snaps decisively at the two boundaries. */
+html:has(.nh-root), body:has(.nh-root){scroll-snap-type:y mandatory}
+.nh-root{background:var(--cream)}
+
+/* pinned back sticker (shared look with the self-auditing piece) */
+.nh-back{position:fixed;top:60px;left:18px;z-index:95;transform:rotate(-3deg)}
+.nh-back a,.nh-back a:visited{display:inline-block;background:var(--cream);border:2px solid var(--olive-darker);box-shadow:3px 3px 0 var(--olive-darker);padding:7px 13px;font-family:'VT323',monospace;font-size:14px;color:var(--peach-deep);text-decoration:none;letter-spacing:.06em;text-transform:uppercase;transition:transform .15s,box-shadow .15s}
+.nh-back a:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--olive-darker);color:var(--olive-darker)}
+@media(max-width:1040px){.nh-back{top:auto;bottom:14px;left:14px}}
+
+/* HERO (peach, to distinguish from the mint hero of the other piece) */
+.nh-hero{background:var(--peach);padding:66px 28px 58px;text-align:center;position:relative;overflow:hidden;min-height:100vh;display:flex;flex-direction:column;justify-content:center;scroll-snap-align:start}
+.nh-hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:54px;background:var(--olive-darker);clip-path:polygon(0 100%,15% 30%,32% 80%,48% 20%,64% 70%,80% 25%,100% 60%,100% 100%)}
+.nh-hero .k{font-family:'VT323',monospace;font-size:15px;letter-spacing:.16em;color:var(--peach-deep);text-transform:uppercase;margin-bottom:14px}
+.nh-hero h1{font-family:'Bungee',sans-serif;font-size:clamp(34px,6.5vw,80px);line-height:.92;margin:0 auto 18px;max-width:18ch;text-transform:uppercase;color:var(--olive-darker);letter-spacing:-.02em;word-break:keep-all;hyphens:none}
+.nh-hero h1 .big{display:inline-block;color:var(--mint);text-shadow:5px 5px 0 var(--olive-darker);transform:rotate(-3deg)}
+.nh-hero .sub{font-family:Caveat,cursive;font-weight:700;font-size:26px;max-width:34ch;margin:0 auto;color:var(--olive-darker);line-height:1.2}
+
+/* BODY prose (one tall snap section: read freely, snaps at the bookends) */
+.nh-body{padding:8px 0;scroll-snap-align:start}
+.nh-body .col{max-width:720px;margin:0 auto;padding:48px 24px}
+.nh-body .col p{font-family:'Space Grotesk',sans-serif;font-size:18px;line-height:1.7;color:var(--olive-darker);margin:0 0 22px}
+.nh-body .col .lead{font-size:21px;line-height:1.55}
+.nh-body .col em{font-family:Caveat,cursive;font-style:normal;font-weight:700;color:var(--peach-deep);font-size:1.15em;line-height:1}
+
+/* OUTRO interlude (mint) */
+.nh-outro{background:var(--mint);color:var(--olive-darker);padding:80px 8vw;min-height:100vh;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:22px;position:relative;overflow:hidden;scroll-snap-align:start}
+.nh-outro h2{align-self:flex-start;background:var(--cream);border:3px solid var(--olive-darker);box-shadow:8px 8px 0 var(--olive-darker);padding:14px 24px;font-family:'Bungee',sans-serif;font-size:clamp(28px,5.5vw,56px);text-transform:uppercase;color:var(--olive-darker);letter-spacing:-.01em;margin:0;transform:rotate(-1deg)}
+.nh-outro p{max-width:52ch;margin:0;font-size:19px;line-height:1.55;color:var(--olive-darker)}
+.nh-outro .tail{align-self:flex-start;background:var(--cream);border:3px solid var(--olive-darker);box-shadow:6px 6px 0 var(--olive-darker);padding:10px 18px;font-family:Caveat,cursive;font-weight:700;font-size:25px;color:var(--peach-deep);margin:0;line-height:1.2;transform:rotate(-1.4deg)}
+</style>

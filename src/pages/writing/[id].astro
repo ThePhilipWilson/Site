@@ -2,6 +2,8 @@
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Footer from '../../components/Footer.astro';
+import SelfAuditingArticle from '../../components/SelfAuditingArticle.astro';
+import NineteenHomepages from '../../components/NineteenHomepages.astro';
 import { cAxis as cAxisFor, readTimeLabel } from '../../lib/minutes';
 
 export async function getStaticPaths() {
@@ -24,6 +26,11 @@ const cAxis = cAxisFor(entry.data.minutes);
 const readTime = readTimeLabel(entry.data.minutes);
 ---
 <Layout title={`${entry.data.title} · Philip Wilson`} description={entry.data.excerpt}>
+  {entry.id === 'you-can-be-bad-at-this' ? (
+    <SelfAuditingArticle />
+  ) : entry.id === 'nineteen-homepages' ? (
+    <NineteenHomepages />
+  ) : (
   <div class="writing-entry-page">
   <article class="entry writing-entry">
     <a class="back" href="/#writing">← back to the rack</a>
@@ -51,12 +58,15 @@ const readTime = readTimeLabel(entry.data.minutes);
 
   <Footer />
   </div>
+  )}
 
   <style>
     .writing-entry-page{background:var(--cream);min-height:100vh}
     .entry{max-width:720px;margin:0 auto;padding:48px 32px 96px;color:var(--olive-darker);background:var(--cream)}
-    .back{font-family:'VT323',monospace;font-size:14px;color:var(--peach-deep);text-decoration:none;letter-spacing:.04em;text-transform:uppercase;border-bottom:1.5px solid var(--peach-deep);padding-bottom:1px}
-    .back:hover{color:var(--olive-darker);border-color:var(--olive-darker)}
+    /* pinned rotated sticker, shared with the interactive article for sibling feel */
+    .back{position:fixed;top:60px;left:18px;z-index:95;transform:rotate(-3deg);display:inline-block;background:var(--cream);border:2px solid var(--olive-darker);box-shadow:3px 3px 0 var(--olive-darker);padding:7px 13px;font-family:'VT323',monospace;font-size:14px;color:var(--peach-deep);text-decoration:none;letter-spacing:.06em;text-transform:uppercase;transition:transform .15s,box-shadow .15s}
+    .back:hover{transform:translate(-1px,-1px) rotate(-3deg);box-shadow:5px 5px 0 var(--olive-darker);color:var(--olive-darker)}
+    @media (max-width:1040px){.back{top:auto;bottom:14px;left:14px}}
     .entry-head{margin:32px 0 48px;padding-bottom:32px;border-bottom:2px solid var(--olive-darker)}
     .tape-strip{display:flex;justify-content:space-between;align-items:center;background:var(--olive-darker);color:var(--mustard);padding:8px 16px;font-family:'VT323',monospace;font-size:14px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:24px;flex-wrap:wrap;gap:8px;border:2px solid var(--olive-darker)}
     .tape-strip .side{color:var(--cream)}

@@ -23,8 +23,15 @@ const dateLabel = entry.data.date
 const stars = '★ '.repeat(Math.max(1, Math.min(5, entry.data.stars))).trim();
 ---
 <Layout title={`${entry.data.title} · Philip Wilson`} description={entry.data.description}>
+  <div class="lab-entry-page">
+  <a class="back" href="/#lab">← back to the arcade</a>
   <article class="entry lab-entry">
-    <a class="back" href="/#lab">← back to the lab</a>
+
+    <div class="cab-strip">
+      <span class="side">CABINET · {entry.data.type} · {stars}</span>
+      <span class="brand">P.A.W. ARCADE</span>
+      <span class="play"><span class="blink">▶</span> INSERT COIN</span>
+    </div>
 
     <header class="entry-head">
       <span class="kicker">// LAB · {dateLabel}<span class="cur"></span></span>
@@ -44,11 +51,21 @@ const stars = '★ '.repeat(Math.max(1, Math.min(5, entry.data.stars))).trim();
   </article>
 
   <Footer />
+  </div>
 
   <style>
-    .entry{max-width:780px;margin:0 auto;padding:64px 32px 96px;color:var(--olive-darker)}
-    .back{font-family:'VT323',monospace;font-size:14px;color:var(--peach-deep);text-decoration:none;letter-spacing:.04em;text-transform:uppercase;border-bottom:1.5px solid var(--peach-deep);padding-bottom:1px}
-    .back:hover{color:var(--olive-darker);border-color:var(--olive-darker)}
+    .lab-entry-page{background:var(--cream);min-height:100vh}
+    .entry{max-width:780px;margin:0 auto;padding:64px 32px 96px;color:var(--olive-darker);background:var(--cream)}
+    /* pinned rotated sticker, shared look with the writing pieces */
+    .back{position:fixed;top:60px;left:18px;z-index:95;transform:rotate(-3deg);display:inline-block;background:var(--cream);border:2px solid var(--olive-darker);box-shadow:3px 3px 0 var(--olive-darker);padding:7px 13px;font-family:'VT323',monospace;font-size:14px;color:var(--peach-deep);text-decoration:none;letter-spacing:.06em;text-transform:uppercase;transition:transform .15s,box-shadow .15s}
+    .back:hover{transform:translate(-1px,-1px) rotate(-3deg);box-shadow:5px 5px 0 var(--olive-darker);color:var(--olive-darker)}
+    @media (max-width:1040px){.back{top:auto;bottom:14px;left:14px}}
+    /* cabinet strip, mirrors the writing tape-strip */
+    .cab-strip{display:flex;justify-content:space-between;align-items:center;background:var(--olive-darker);color:var(--mustard);padding:8px 16px;font-family:'VT323',monospace;font-size:14px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:24px;flex-wrap:wrap;gap:8px;border:2px solid var(--olive-darker)}
+    .cab-strip .side{color:var(--cream)}
+    .cab-strip .brand{font-family:'Bungee',sans-serif;font-size:11px;letter-spacing:.06em}
+    .cab-strip .play{color:var(--peach)}
+    .cab-strip .play .blink{animation:blink 1s steps(2) infinite}
     .entry-head{margin:32px 0 48px;padding-bottom:32px;border-bottom:2px solid var(--olive-darker)}
     .kicker{font-family:'VT323',monospace;font-size:15px;letter-spacing:.14em;color:var(--peach-deep);text-transform:uppercase;display:inline-block;margin-bottom:12px}
     .kicker .cur{display:inline-block;width:6px;height:12px;background:currentColor;vertical-align:-1px;animation:blink 1s steps(2) infinite;margin-left:4px}
