@@ -6,11 +6,18 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  // Social-share image, site-relative (e.g. "/og-default.png"). Falls back to
+  // site.ogImage. Left null until the Tier-3 cassette OG image is designed.
+  image?: string;
 }
 const {
   title = site.name,
   description = site.tagline,
+  image = site.ogImage,
 } = Astro.props;
+// Absolute URLs for canonical + social tags (Astro.site = astro.config `site`).
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = image ? new URL(image, Astro.site) : null;
 const issueLabel = `Issue ${String(site.issue.number).padStart(2, '0')} · ${site.issue.season.split(' ')[1] ?? ''}`.trim();
 // The section links are same-page anchors that only exist on the home page;
 // hide them on sub-pages (articles), where they'd be dead links.
@@ -23,7 +30,33 @@ const isHome = Astro.url.pathname === '/';
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content={description} />
   <meta name="generator" content={Astro.generator} />
+  <link rel="canonical" href={canonical} />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content={site.name} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  {ogImage && <meta property="og:image" content={ogImage} />}
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  {ogImage && <meta name="twitter:image" content={ogImage} />}
+
+  <!-- Icons / PWA -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="theme-color" content="#2A2722" />
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title={site.name} href="/rss.xml" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link

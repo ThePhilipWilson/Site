@@ -6,6 +6,10 @@ export const site = {
   email: 'philipwilson@philipwilson.co.uk',
   region: 'United Kingdom',
 
+  // Default social-share image, site-relative (1200x630).
+  // Regenerate with `node scripts/gen-og.mjs` if the wordmark/palette changes.
+  ogImage: '/og-default.png' as string | null,
+
   // Pre-launch toggle. When true, the homepage shows the COMING SOON stamp
   // and uses holding-state copy. Flip to false on launch.
   comingSoon: true,
