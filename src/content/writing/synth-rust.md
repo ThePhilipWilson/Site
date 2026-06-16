@@ -1,5 +1,5 @@
 ---
-title: "coming soon"
+title: "Coming soon"
 date: 2026-02-08
 minutes: 120
 tape: CHROME

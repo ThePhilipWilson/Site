@@ -12,7 +12,7 @@ import Footer from './Footer.astro';
   <header class="hero">
     <div class="k">// learning from failure · how we done do that AI</div>
     <h1>you can be <span class="bad">bad</span> at this</h1>
-    <p class="sub">an honest account of AI-assisted work, that reviews itself as you read it.</p>
+    <p class="sub">An honest account of AI-assisted work, that reviews itself as you read it.</p>
   </header>
 
   <div class="reviewers">
@@ -41,36 +41,36 @@ import Footer from './Footer.astro';
     <main class="page" id="page">
       <div class="col">
         <section class="beat intro">
-        <p class="lead">I've worked with AI tooling daily for a few months, cross-repo features, developer tooling, docs. the most useful thing I can tell you about it is that <em>you can be bad at it</em>. what follows is the system I use to be less bad, deliberately.</p>
+        <p class="lead">I've worked with AI tooling daily for a few months, cross-repo features, developer tooling, docs. The most useful thing I can tell you about it is that <em>you can be bad at it</em>. What follows is the system I use to be less bad, deliberately.</p>
 
-        <p>a talk about catching your own blind spots that doesn't catch its own is just hype. so this page does the thing it describes: the two reviewers I ran on the files that produced it are reading along with you. their notes land in the margins. i didn't soften them.</p>
+        <p>A talk about catching your own blind spots that doesn't catch its own is just hype. So this page does the thing it describes: the two reviewers I ran on the files that produced it are reading along with you. Their notes land in the margins. I didn't soften them.</p>
 
         </section>
 
         <section class="beat">
         <h2><span class="n">01</span>I keep notes on what works and what doesn't</h2>
-        <p>the core of it is a mistake log. append-only, seven weeks old, <span class="claim peer" data-side="left" data-tag="the peer" data-note="naive grep gives 44, ten entries drifted to ## instead of the schema's ###. the log catching its own schema violations is, admittedly, on-theme."><span>54 entries</span><span class="mk"></span></span>, two working cycles of rule promotions. alongside it sit <span class="claim bastard" data-side="right" data-tag="the bastard" data-note="43. you counted the index file and the log itself, the exact miscount the review caught in May, back again in June. the number won't sit still and you should say so."><span>45 memory files</span><span class="mk"></span></span>, each naming a specific failure mode with a why and a how-to-apply.</p>
-        <p>seven weeks isn't a long-running practice. that's the point, it paid off this fast because the logging is disciplined, not because i've been at it for years.</p>
+        <p>The core of it is a mistake log. Append-only, seven weeks old, <span class="claim peer" data-side="left" data-tag="the peer" data-note="Naive grep gives 44, ten entries drifted to ## instead of the schema's ###. The log catching its own schema violations is, admittedly, on-theme."><span>54 entries</span><span class="mk"></span></span>, two working cycles of rule promotions. Alongside it sit <span class="claim bastard" data-side="right" data-tag="the bastard" data-note="43. You counted the index file and the log itself, the exact miscount the review caught in May, back again in June. The number won't sit still and you should say so."><span>45 memory files</span><span class="mk"></span></span>, each naming a specific failure mode with a why and a how-to-apply.</p>
+        <p>Seven weeks isn't a long-running practice. That's the point, it paid off this fast because the logging is disciplined, not because I've been at it for years.</p>
 
         </section>
 
         <section class="beat">
         <h2><span class="n">02</span>the loop: plan → check → review → do</h2>
-        <p>most of my time now sits at the planning end of that loop. <span class="claim bastard" data-side="right" data-tag="the bastard" data-note="you never measured 90%. you'd be lying and you know it. you already cut this line, say 'the ratio inverted, here are 15 plans in the vault'. it's true and it's stronger."><span>i plan maybe 90% of the time now</span><span class="mk"></span></span>; the implementation falls out of a good plan and has become the cheap part.</p>
-        <p>the counter-example keeps me honest: the one time i skipped the planning step on a rewrite, i paid a whole wrong-architecture round for it. planning isn't immunity to a bad assumption. it's just where the leverage is.</p>
+        <p>Most of my time now sits at the planning end of that loop. <span class="claim bastard" data-side="right" data-tag="the bastard" data-note="You never measured 90%. You'd be lying and you know it. You already cut this line, say 'the ratio inverted, here are 15 plans in the vault'. It's true and it's stronger."><span>I plan maybe 90% of the time now</span><span class="mk"></span></span>; the implementation falls out of a good plan and has become the cheap part.</p>
+        <p>The counter-example keeps me honest: the one time I skipped the planning step on a rewrite, I paid a whole wrong-architecture round for it. Planning isn't immunity to a bad assumption. It's just where the leverage is.</p>
 
         </section>
 
         <section class="beat interlude">
           <div class="interlude-panel">
             <span class="stick-title">so how do we actually do it?</span>
-            <span class="stick-note">two reviewers. one of them a bastard. watch.</span>
+            <span class="stick-note">Two reviewers. One of them a bastard. Watch.</span>
           </div>
         </section>
 
         <section class="beat showpiece">
         <h2><span class="n">03</span>the bastard review</h2>
-        <p>that "review" stage is two independent passes on the same work: a competent peer who checks every fact, and an annoying colleague briefed to catch what i'm hiding. neither sees the other's notes. here's that pair, run live on the four files that produced this talk.</p>
+        <p>That "review" stage is two independent passes on the same work: a competent peer who checks every fact, and an annoying colleague briefed to catch what I'm hiding. Neither sees the other's notes. Here's that pair, run live on the four files that produced this talk.</p>
 
         <div class="br-block" id="br-block">
           <div class="br-stage" id="br-stage">
@@ -78,17 +78,17 @@ import Footer from './Footer.astro';
               <span class="doc-tab">exhibit a · a post-mortem</span>
               <div class="doc-meta"><span>self-review · draft</span><span>v1</span></div>
               <p class="doc-body">
-                across <span class="br-clip peer" data-tag="the peer" data-note="i count 28."><span>32 daily notes</span><span class="m"></span></span> this quarter i <span class="br-clip peer" data-tag="the peer" data-note="3 of them. not 'consistently.'"><span>consistently</span><span class="m"></span></span> caught my own mistakes early. <span class="br-clip bastard" data-tag="the bastard" data-note="saying it isn't one IS the highlight."><span>this isn't a highlight reel</span><span class="m"></span></span>, <span class="br-clip bastard" data-tag="the bastard" data-note="you quoted the 4 flattering ones."><span>i included the failures too</span><span class="m"></span></span>. the process is <span class="br-clip bastard" data-tag="the bastard" data-note="faults found = working. none found = good. unprovable."><span>working as designed</span><span class="m"></span></span>.
+                Across <span class="br-clip peer" data-tag="the peer" data-note="I count 28."><span>32 daily notes</span><span class="m"></span></span> this quarter I <span class="br-clip peer" data-tag="the peer" data-note="3 of them. Not 'consistently.'"><span>consistently</span><span class="m"></span></span> caught my own mistakes early. <span class="br-clip bastard" data-tag="the bastard" data-note="Saying it isn't one IS the highlight."><span>This isn't a highlight reel</span><span class="m"></span></span>, <span class="br-clip bastard" data-tag="the bastard" data-note="You quoted the 4 flattering ones."><span>I included the failures too</span><span class="m"></span></span>. The process is <span class="br-clip bastard" data-tag="the bastard" data-note="Faults found = working. None found = good. Unprovable."><span>working as designed</span><span class="m"></span></span>.
               </p>
             </div>
             <div class="br-meta" id="br-meta">
               <div class="mhead">③ meta-review · the reckoning</div>
               <div class="counts">
-                <span class="count peer"><b>the peer</b> caught 2 things that are <b>wrong</b>: a count, a word.</span>
-                <span class="count bastard"><b>the bastard</b> caught 3 things that aren't wrong, they're <b>hollow</b>.</span>
+                <span class="count peer"><b>The peer</b> caught 2 things that are <b>wrong</b>: a count, a word.</span>
+                <span class="count bastard"><b>The bastard</b> caught 3 things that aren't wrong, they're <b>hollow</b>.</span>
               </div>
               <div class="overlap">they overlapped on <span class="zero">0</span></div>
-              <div class="punch">↳ near-zero overlap is usually the signal, each catches what the other can't. the margins of this page are that same pair, running on me.</div>
+              <div class="punch">↳ Near-zero overlap is usually the signal, each catches what the other can't. The margins of this page are that same pair, running on me.</div>
             </div>
           </div>
         </div>
@@ -96,21 +96,21 @@ import Footer from './Footer.astro';
         </section>
 
         <section class="beat">
-        <p>the value is usually the gap between them, each catches what the other can't. but sometimes the peer and the bastard land on the <em>same</em> finding, and that isn't the process failing. it's the loudest signal there is: the thing is so plainly broken that both of them caught it. fix that one first.</p>
-        <p>it cuts both ways, though: on one dated morning my own bastard pass <span class="claim bastard" data-side="right" data-tag="the bastard" data-note="it manufactured findings; a colleague's Claude caught all seven. the method working, not failing."><span>got a few things wrong</span><span class="mk"></span></span>, and the fix was eight grounding gates, now baked into the skill.</p>
+        <p>The value is usually the gap between them, each catches what the other can't. But sometimes the peer and the bastard land on the <em>same</em> finding, and that isn't the process failing. It's the loudest signal there is: the thing is so plainly broken that both of them caught it. Fix that one first.</p>
+        <p>It cuts both ways, though: on one dated morning my own bastard pass <span class="claim bastard" data-side="right" data-tag="the bastard" data-note="It manufactured findings; a colleague's Claude caught all seven. The method working, not failing."><span>got a few things wrong</span><span class="mk"></span></span>, and the fix was eight grounding gates, now baked into the skill.</p>
         </section>
 
         <section class="beat">
         <h2><span class="n">04</span>where the methodology stops</h2>
-        <p>if a methodology talk has no section on where it stops working, it's a sales pitch. mine has one because the data has one. even hook-blocked rules recur: <span class="claim meta" data-tag="the meta"><span>one habit fired eight times in five weeks</span><span class="mk"></span></span> despite a hook that catches every single instance. the hook fixes the symptom; the reflex underneath is unchanged.</p>
-        <div class="meta-call"><span class="tag">the meta · it demonstrates itself</span><span class="body">three of those eight fired while this talk was being written. the claim proved itself three times during prep. about as clean as evidence gets.</span></div>
+        <p>If a methodology talk has no section on where it stops working, it's a sales pitch. Mine has one because the data has one. Even hook-blocked rules recur: <span class="claim meta" data-tag="the meta"><span>one habit fired eight times in five weeks</span><span class="mk"></span></span> despite a hook that catches every single instance. The hook fixes the symptom; the reflex underneath is unchanged.</p>
+        <div class="meta-call"><span class="tag">the meta · it demonstrates itself</span><span class="body">Three of those eight fired while this talk was being written. The claim proved itself three times during prep. About as clean as evidence gets.</span></div>
 
         </section>
 
         <section class="beat">
         <h2><span class="n">05</span>what I haven't measured</h2>
-        <p>cost in tokens and money: unmeasured. a real non-AI baseline: directional only. the false-negative rate of the mistake log: unknown, <span class="claim peer" data-side="left" data-tag="the peer" data-note="five unlogged self-catches on a single day, so 54 entries is a floor, not a count. correct framing, keep it."><span>five self-catches went unlogged on one day alone</span><span class="mk"></span></span>.</p>
-        <p><span class="claim bastard" data-side="right" data-tag="the bastard" data-note="good, you named the five gaps before the room could. but be honest about the bigger one: this whole audit is the methodology grading its own homework. it can only catch what the methodology can already see."><span>i'd rather name the gaps than have the room name them for me</span><span class="mk"></span></span>. and the deepest gap is the one this page is built on, an audit produced by the method can only ever catch what the method already sees. saying that out loud is what turns the weakness into the frame.</p>
+        <p>Cost in tokens and money: unmeasured. A real non-AI baseline: directional only. The false-negative rate of the mistake log: unknown, <span class="claim peer" data-side="left" data-tag="the peer" data-note="Five unlogged self-catches on a single day, so 54 entries is a floor, not a count. Correct framing, keep it."><span>five self-catches went unlogged on one day alone</span><span class="mk"></span></span>.</p>
+        <p><span class="claim bastard" data-side="right" data-tag="the bastard" data-note="Good, you named the five gaps before the room could. But be honest about the bigger one: this whole audit is the methodology grading its own homework. It can only catch what the methodology can already see."><span>I'd rather name the gaps than have the room name them for me</span><span class="mk"></span></span>. And the deepest gap is the one this page is built on, an audit produced by the method can only ever catch what the method already sees. Saying that out loud is what turns the weakness into the frame.</p>
         </section>
       </div>
     </main>
@@ -118,8 +118,8 @@ import Footer from './Footer.astro';
 
   <section class="close">
     <h2>you can be bad at this</h2>
-    <p>and then you can get less bad, deliberately, with a system that catches what you missed.</p>
-    <p class="tail">↳ that's the whole talk, including the part where it caught itself, on this page, while you watched.</p>
+    <p>And then you can get less bad, deliberately, with a system that catches what you missed.</p>
+    <p class="tail">↳ That's the whole talk, including the part where it caught itself, on this page, while you watched.</p>
   </section>
 
   <div class="snap-toggle" id="snap-toggle" role="group" aria-label="Page scroll mode">
@@ -157,7 +157,7 @@ html:has(.sa-root.snap-all), body:has(.sa-root.snap-all){scroll-snap-type:y mand
 .sa-back{position:fixed;top:60px;left:18px;z-index:95;transform:rotate(-3deg)}
 .sa-back a,.sa-back a:visited{display:inline-block;background:var(--cream);border:2px solid var(--olive-darker);box-shadow:3px 3px 0 var(--olive-darker);padding:7px 13px;font-family:'VT323',monospace;font-size:14px;color:var(--peach-deep);text-decoration:none;letter-spacing:.06em;text-transform:uppercase;transition:transform .15s,box-shadow .15s}
 .sa-back a:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--olive-darker);color:var(--olive-darker)}
-@media(max-width:860px){.sa-back{top:auto;bottom:14px;left:14px}}
+@media(max-width:860px){.sa-back{top:50px;bottom:auto;left:12px}}
 
 /* HERO */
 .hero{background:var(--mint);padding:64px 28px 56px;text-align:center;position:relative;overflow:hidden}
@@ -187,16 +187,18 @@ html:has(.sa-root.snap-all), body:has(.sa-root.snap-all){scroll-snap-type:y mand
 .col .lead{font-size:20px;line-height:1.55}
 .col .lead em{font-family:Caveat,cursive;font-style:normal;font-weight:700;color:var(--peach-deep);font-size:26px}
 
-/* a claim that gets audited */
-.claim{position:relative;cursor:default}
-.claim .mk{position:absolute;left:-2px;right:-2px;height:3px;transform:scaleX(0);transform-origin:left;border-radius:2px}
-.claim.peer .mk{bottom:-1px;background:var(--mint-deep)}
-.claim.bastard .mk{top:54%;background:var(--ink)}
-.claim.meta .mk{bottom:-3px;height:6px;background:var(--mustard);opacity:.45;border-radius:0}
+/* a claim that gets audited — the highlight is a background bar with
+   box-decoration-break:clone, so it follows the text across line wraps. (The old
+   absolute .mk marker only sized to the first wrapped line, e.g. just the "I".)
+   The empty <span class="mk"> in the markup is now inert. */
+.claim{position:relative;cursor:default;background-repeat:no-repeat;background-size:0% 3px;-webkit-box-decoration-break:clone;box-decoration-break:clone;transition:background-size .3s ease-out}
+.claim.peer{background-image:linear-gradient(var(--mint-deep),var(--mint-deep));background-position:0 100%}
+.claim.bastard{background-image:linear-gradient(var(--ink),var(--ink));background-position:0 54%}
+.claim.meta{background-image:linear-gradient(rgba(229,181,86,.45),rgba(229,181,86,.45));background-position:0 100%;background-size:0% 6px}
+.claim.lit{background-size:100% 3px}
+.claim.lit.meta{background-size:100% 6px}
 .claim.lit.peer{color:var(--mint-deep)}
 .claim.lit.bastard{color:var(--olive)}
-.claim.lit .mk{animation:grow .28s ease-out forwards}
-@keyframes grow{to{transform:scaleX(1)}}
 
 /* side notes */
 .note{position:absolute;width:200px;font-family:Caveat,cursive;font-weight:700;font-size:18px;line-height:1.14;opacity:0;background:var(--cream);border:2px solid var(--olive-darker);padding:8px 11px 9px;box-shadow:3px 3px 0 var(--olive-darker);z-index:5}
@@ -243,13 +245,13 @@ html:has(.sa-root.snap-all), body:has(.sa-root.snap-all){scroll-snap-type:y mand
 .br-artifact .doc-tab{position:absolute;top:-14px;left:18px;background:var(--olive-darker);color:var(--cream);font-family:'VT323',monospace;font-size:13px;letter-spacing:.12em;padding:3px 12px;text-transform:uppercase;border:2px solid var(--olive-darker)}
 .br-artifact .doc-meta{display:flex;justify-content:space-between;font-family:'VT323',monospace;font-size:13px;color:var(--olive);letter-spacing:.06em;text-transform:uppercase;border-bottom:1.5px dashed var(--olive-darker);padding-bottom:8px;margin-bottom:14px}
 .br-artifact .doc-body{font-size:17px;line-height:1.9;color:var(--olive-darker)}
-.br-clip{position:relative;transition:color .3s}
-.br-clip .m{position:absolute;left:-2px;right:-2px;height:3px;transform:scaleX(0);transform-origin:left;border-radius:2px}
-.br-clip.peer .m{bottom:-1px;background:var(--mint-deep)}
-.br-clip.bastard .m{top:52%;background:var(--ink)}
+/* exhibit clips: same background-bar highlight so it spans wrapped lines too */
+.br-clip{position:relative;background-repeat:no-repeat;background-size:0% 3px;-webkit-box-decoration-break:clone;box-decoration-break:clone;transition:color .3s,background-size .26s ease-out}
+.br-clip.peer{background-image:linear-gradient(var(--mint-deep),var(--mint-deep));background-position:0 100%}
+.br-clip.bastard{background-image:linear-gradient(var(--ink),var(--ink));background-position:0 54%}
+.br-clip.lit{background-size:100% 3px}
 .br-clip.lit.peer{color:var(--mint-deep)}
 .br-clip.lit.bastard{color:var(--olive)}
-.br-clip.lit .m{animation:grow .24s ease-out forwards}
 .br-note{position:absolute;width:190px;font-family:Caveat,cursive;font-weight:700;font-size:17px;line-height:1.14;opacity:0;background:var(--cream);border:2px solid var(--olive-darker);padding:7px 10px 8px;box-shadow:3px 3px 0 var(--olive-darker);z-index:5}
 .br-note.show{animation:noteIn .24s ease-out forwards}
 .br-note .t{display:block;font-family:'VT323',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
@@ -267,8 +269,8 @@ html:has(.sa-root.snap-all), body:has(.sa-root.snap-all){scroll-snap-type:y mand
 .br-meta .punch{font-family:Caveat,cursive;font-weight:700;font-size:21px;color:var(--blue);margin-top:8px;line-height:1.25}
 @media(max-width:900px){
   .br-stage{padding:0}
-  .br-note{position:static;width:auto;opacity:1;display:block;margin:8px 0;box-shadow:2px 2px 0 var(--olive-darker)}
-  .br-note.show{animation:none}
+  .br-note{position:static;width:auto;display:block;opacity:0;transform:translateY(6px);transition:opacity .3s ease-out,transform .3s ease-out;margin:8px 0;box-shadow:2px 2px 0 var(--olive-darker)}
+  .br-note.show{opacity:1;transform:none;animation:none}
 }
 
 /* reviewer rail layout (wide screens, >=1441px) */
@@ -297,10 +299,14 @@ html:has(.sa-root.snap-all), body:has(.sa-root.snap-all){scroll-snap-type:y mand
 @media(max-width:860px){
   .page{padding:40px 0 64px}
   .col{padding:0 20px}
-  .note{position:static;display:block;width:auto;opacity:1;transform:none;margin:8px 0 14px;box-shadow:2px 2px 0 var(--olive-darker)}
-  .note.show{animation:none}
+  /* pre-placed inline: reserve space while hidden (so snap heights are fixed),
+     then fade in when the claim is reached. opacity/transform only = no reflow. */
+  .note{position:static;display:block;width:auto;opacity:0;transform:translateY(8px);transition:opacity .35s ease-out,transform .35s ease-out;margin:8px 0 14px;box-shadow:3px 3px 0 var(--olive-darker)}
+  .note.show{opacity:1;transform:none;animation:none}
   .note .lead{display:none}
   .tally{display:none}
+  /* reviewer legend: inline card at the top of the first beat, not a sticky bar */
+  .reviewers{position:static;top:auto;justify-content:flex-start;border:2px solid var(--mustard);box-shadow:4px 4px 0 var(--peach-deep);margin:40px 0 24px}
 }
 </style>
 
@@ -308,15 +314,43 @@ html:has(.sa-root.snap-all), body:has(.sa-root.snap-all){scroll-snap-type:y mand
   const counts = { peer: 0, bastard: 0, meta: 0 };
   const sideClass = { left: 'left', right: 'right', mid: 'mid' };
 
+  const isNarrow = () => window.matchMedia('(max-width: 860px)').matches;
+
+  function buildNote(claim) {
+    const note = document.createElement('div');
+    note.className = 'note ' + sideClass[claim.dataset.side];
+    note.innerHTML = '<span class="tag">' + claim.dataset.tag + '</span>' + claim.dataset.note + '<span class="lead"></span>';
+    return note;
+  }
+  const reveal = (note) => requestAnimationFrame(() => requestAnimationFrame(() => note.classList.add('show')));
+
+  // Mobile: there are no side margins, so pre-place every reviewer note inline
+  // right after its claim's paragraph at load. Each note reserves its space while
+  // hidden and only fades in when the claim is reached, so the beats keep the
+  // exact same height before and after the reveal and page-snap stays put.
+  const placedNotes = new Map();
+  function prePlaceNotes() {
+    document.querySelectorAll('.claim').forEach((claim) => {
+      if (claim.classList.contains('meta')) return; // meta uses the inline .meta-call already in the markup
+      const host = claim.closest('p') || claim.closest('.beat');
+      if (!host) return;
+      // stack multiple notes from the same paragraph in claim order
+      let ref = host;
+      while (ref.nextElementSibling && ref.nextElementSibling.classList.contains('note')) ref = ref.nextElementSibling;
+      const note = buildNote(claim);
+      ref.insertAdjacentElement('afterend', note);
+      placedNotes.set(claim, note);
+    });
+  }
+
+  // Desktop: float the note out into the margin beside its claim.
   function placeNote(claim) {
     const page = document.getElementById('page');
     if (!page) return;
     const pr = page.getBoundingClientRect();
     const cr = claim.getBoundingClientRect();
     const side = claim.dataset.side;
-    const note = document.createElement('div');
-    note.className = 'note ' + sideClass[side];
-    note.innerHTML = '<span class="tag">' + claim.dataset.tag + '</span>' + claim.dataset.note + '<span class="lead"></span>';
+    const note = buildNote(claim);
     if (side === 'left') { note.style.left = '8px'; }
     else if (side === 'right') { note.style.right = '8px'; }
     else { note.style.left = '50%'; note.style.transform = 'translateX(-50%)'; note.style.marginTop = '34px'; }
@@ -327,7 +361,17 @@ html:has(.sa-root.snap-all), body:has(.sa-root.snap-all){scroll-snap-type:y mand
     if (top > maxTop) top = maxTop;
     if (top < 0) top = 0;
     note.style.top = top + 'px';
-    requestAnimationFrame(() => requestAnimationFrame(() => note.classList.add('show')));
+    reveal(note);
+  }
+
+  if (isNarrow()) prePlaceNotes();
+
+  // Mobile: the reviewer legend isn't a sticky bar; drop it inline at the top of
+  // the first beat so it introduces the three reviewers once, then scrolls away.
+  if (isNarrow()) {
+    const rev = document.querySelector('.reviewers');
+    const intro = document.querySelector('.beat.intro');
+    if (rev && intro) intro.insertBefore(rev, intro.firstChild);
   }
 
   function audit(claim) {
@@ -338,8 +382,10 @@ html:has(.sa-root.snap-all), body:has(.sa-root.snap-all){scroll-snap-type:y mand
       const p = claim.closest('p');
       const call = p && p.nextElementSibling;
       if (call && call.classList.contains('meta-call')) call.classList.add('show');
+    } else if (placedNotes.has(claim)) {
+      reveal(placedNotes.get(claim)); // mobile: reveal the pre-placed inline note
     } else {
-      placeNote(claim);
+      placeNote(claim);               // desktop: float into the margin
     }
     counts[who]++;
     const el = document.getElementById('c-' + who);
@@ -355,7 +401,32 @@ html:has(.sa-root.snap-all), body:has(.sa-root.snap-all){scroll-snap-type:y mand
   let brDone = false;
   const brLastY = { left: -9999, right: -9999 };
   const BR_MIN_GAP = 70;
+
+  // Mobile: pre-place the showpiece notes (hidden, reserving space) between the
+  // exhibit and the meta-review, in the order the animation reveals them, so the
+  // showpiece beat keeps a fixed height and page-snap stays put.
+  const brNotes = new Map();
+  function prePlaceBrNotes() {
+    const stage = document.getElementById('br-stage');
+    const meta = document.getElementById('br-meta');
+    if (!stage) return;
+    const peer = [...stage.querySelectorAll('.br-clip.peer')];
+    const bastard = [...stage.querySelectorAll('.br-clip.bastard')];
+    [...peer, ...bastard].forEach((clip) => {
+      const note = document.createElement('div');
+      note.className = 'br-note ' + (clip.classList.contains('peer') ? 'left' : 'right');
+      note.innerHTML = '<span class="t">' + clip.dataset.tag + '</span>' + clip.dataset.note;
+      stage.insertBefore(note, meta);
+      brNotes.set(clip, note);
+    });
+  }
+  if (isNarrow()) prePlaceBrNotes();
+
   function brPlace(clip, side) {
+    // Mobile: just fade in the pre-placed note (no reflow, so snap stays put).
+    const placed = brNotes.get(clip);
+    if (placed) { reveal(placed); return; }
+    // Desktop: float the note into the margin beside the clip.
     const stage = document.getElementById('br-stage');
     if (!stage) return;
     const sb = stage.getBoundingClientRect();
@@ -369,7 +440,7 @@ html:has(.sa-root.snap-all), body:has(.sa-root.snap-all){scroll-snap-type:y mand
     note.style.top = top + 'px';
     if (side === 'left') { note.style.left = '4px'; } else { note.style.right = '4px'; }
     stage.appendChild(note);
-    requestAnimationFrame(() => requestAnimationFrame(() => note.classList.add('show')));
+    reveal(note);
   }
   function runBastard() {
     if (brDone) return; brDone = true;
@@ -402,8 +473,8 @@ html:has(.sa-root.snap-all), body:has(.sa-root.snap-all){scroll-snap-type:y mand
       try { localStorage.setItem('sa-snap', mode); } catch (e) {}
     };
     snapToggle.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode)));
-    let initial = 'off';
-    try { initial = localStorage.getItem('sa-snap') || 'off'; } catch (e) {}
+    let initial = 'all';
+    try { initial = localStorage.getItem('sa-snap') || 'all'; } catch (e) {}
     setMode(initial);
   }
 </script>

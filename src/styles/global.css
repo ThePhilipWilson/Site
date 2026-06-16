@@ -244,11 +244,11 @@ nav.site-nav .badge{padding:4px 10px;background:var(--peach);color:var(--olive-d
 
 /* Deck controls (Rew / counter / FF) */
 .deck-controls{max-width:1100px;margin:0 auto 28px;display:flex;align-items:center;justify-content:center;gap:18px;position:relative;z-index:200}
-.deck-btn{display:flex;align-items:center;gap:10px;background:var(--olive-darker);color:var(--mustard);font-family:'Bungee',sans-serif;letter-spacing:.06em;text-transform:uppercase;font-size:13px;padding:10px 18px;border:2px solid var(--olive-darker);box-shadow:5px 5px 0 var(--peach-deep);cursor:pointer;font-weight:400}
+.deck-btn{display:flex;align-items:center;gap:10px;background:var(--olive-darker);color:var(--mustard);font-family:'Bungee',sans-serif;letter-spacing:.06em;text-transform:uppercase;font-size:13px;padding:10px 18px;border:2px solid var(--olive-darker);box-shadow:5px 5px 0 var(--peach-deep);cursor:pointer;font-weight:400;white-space:nowrap;flex-shrink:0}
 .deck-btn:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--peach-deep)}
 .deck-btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--peach-deep)}
 .deck-btn .glyph{font-family:'VT323',monospace;font-size:22px;line-height:1;color:var(--peach)}
-.counter{font-family:'VT323',monospace;font-size:22px;letter-spacing:.16em;background:var(--olive-darker);color:var(--mustard);padding:8px 18px;border:2px solid var(--olive-darker);text-transform:uppercase;min-width:240px;text-align:center}
+.counter{font-family:'VT323',monospace;font-size:22px;letter-spacing:.16em;background:var(--olive-darker);color:var(--mustard);padding:8px 18px;border:2px solid var(--olive-darker);text-transform:uppercase;min-width:240px;text-align:center;white-space:nowrap}
 .counter .now{color:var(--peach)}
 .counter .total{opacity:.6}
 
@@ -458,9 +458,10 @@ footer.site-footer a,footer.site-footer a:visited{color:var(--mustard);text-deco
   .cassette .mechanism .drive-hole{width:24px;height:24px}
   .cassette .mechanism .guide,
   .cassette .mechanism .felt{width:10px;height:14px}
-  .deck-btn{padding:8px 12px;font-size:11px}
-  .deck-btn .glyph{font-size:18px}
-  .counter{font-size:16px;min-width:160px;padding:6px 12px}
+  .deck-controls{gap:8px}
+  .deck-btn{padding:8px 10px;font-size:11px}
+  .deck-btn .glyph{font-size:17px}
+  .counter{font-size:14px;min-width:0;padding:6px 10px}
 
   .about-grid .blurb{font-size:20px}
   .about-grid .blurb em{font-size:26px}
@@ -468,6 +469,8 @@ footer.site-footer a,footer.site-footer a:visited{color:var(--mustard);text-deco
   .contact-card .row{flex-direction:column;align-items:flex-start;gap:4px;padding:12px 0}
   .contact-card .v{font-size:13px;word-break:keep-all;hyphens:none}
   .contact-card .v a{word-break:keep-all}
+  /* gap below the contact card so its hard drop-shadow clears the footer bar */
+  .spread.about .wrap{padding-bottom:22px}
 
   footer.site-footer{flex-direction:column;align-items:flex-start;gap:8px;padding:24px}
 }
@@ -480,4 +483,20 @@ footer.site-footer a,footer.site-footer a:visited{color:var(--mustard);text-deco
   .spread h2{font-size:36px}
   .marquee-bar .right span:not(:last-child){display:none}
   .marquee-bar .right span:last-child::before{content:"★ "}
+}
+
+/* ===== mobile / vertical pass ===== */
+@media (max-width:640px){
+  /* Lab: don't lock the CRT to one page on a phone; let the cabinet size to its
+     content so cards stay readable, and drop the dead-channel fillers (they're
+     just scroll fluff in a single column). */
+  .spread.lab{height:auto;overflow:visible}
+  .spread.lab .wrap{flex:0 0 auto}
+  .spread.lab .cabinet,.spread.lab .bezel,.spread.lab .crt{display:block;flex:0 0 auto;min-height:0;max-width:none}
+  .spread.lab .crt > .lab-grid{grid-auto-rows:auto}
+  .spread.lab .lab-card{min-height:160px;overflow:visible}
+  .lab-card.filler{display:none}
+  /* pre-launch demo stamps: shrink so they don't cover the section titles */
+  .demo-stamp{transform:rotate(6deg) scale(.55);transform-origin:top right}
+  .spread.lab .demo-stamp,.spread.writing .demo-stamp{top:16px;right:2px}
 }
