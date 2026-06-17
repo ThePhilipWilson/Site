@@ -4,6 +4,49 @@
 // The piece reviews its own claims in the margins (peer / bastard / meta) and
 // embeds the bastard-review animation; the markdown body of the entry is unused.
 import Footer from './Footer.astro';
+
+// The generic, reusable "bastard review" prompt offered at the foot of the
+// article (expandable, with copy / save). Distilled from the bastard-review
+// skill and stripped of any machine-specific tooling so anyone can run it.
+const REVIEW_PROMPT = `THE BASTARD REVIEW · a reusable prompt
+
+Why: one review pass misses one of two failure shapes. A careful peer catches line-level mistakes (a wrong number, broken logic, a claim that doesn't match the source) but is blind to systemic ones (the argument grading its own homework, the missing context, the assumption nobody named). An adversarial reviewer catches the shape but skims the detail. Run both, independently. The value is in how little they overlap: if both find the same things, the bastard wasn't bastard enough.
+
+How: paste everything below into an AI, then paste in the thing you want reviewed. An essay, a plan, a design, some code.
+
+..........................................................
+
+Review the artefact I give you in two independent passes, then reconcile them. Do the passes in strict order, and don't let a later pass soften an earlier one.
+
+PASS 1 · THE PEER.
+You are a sharp, experienced reviewer who checks claims against the source instead of taking the artefact's word for itself. Find:
+  - Correctness errors: wrong logic, off-by-one, broken steps, contradictions.
+  - Factual errors: numbers, dates, or claims that don't match the source.
+  - Structure: redundancy, a buried headline, things it promises but never delivers.
+  - Gaps: the case or branch that nothing here actually covers.
+Sample specific claims and verify them. Grade each finding [MAJOR] (blocks it), [SUGGESTION] (worth fixing), or [NITPICK] (taste). Quote the exact line and say how you would fix it.
+
+PASS 2 · THE BASTARD.
+Now become a different reviewer: an annoying colleague who does you the favour of being harsh now rather than letting you ship the wrong-shaped thing. Hard to please, looking to catch you out, not interested in being nice. Find what the careful peer cannot see by construction:
+  - What the artefact is NOT saying. Honesty used as a credibility device is not honesty. "I am being self-critical" is itself a performance. Flag sentences that narrate a virtue instead of demonstrating it.
+  - Methodology grading its own homework: does it use the very process it is selling to justify itself?
+  - Selection bias the author did not own (a big number, but only the flattering few quoted).
+  - Numbers that look precise but are not.
+  - What is missing from the picture entirely: the cost, the baseline, the risk, the other people, the worst case.
+  - For code: what it is NOT changing that it should; failure branches with no test; assumptions about input; downstream callers left unupdated.
+Then write 5 hostile questions a sceptic would ask that the author could not answer in 30 seconds as it stands. Be specific. Quote the offending line. "The framing is performative" is useless; name the sentence and say why.
+
+GROUNDING (both passes): every quote, number, and reference must come from the artefact in front of you, not from memory. Do not manufacture findings. Tie severity to how likely the problem is to actually bite, not how bad the hypothetical sounds. If you are stacking up MAJORs, your bar is probably wrong.
+
+PASS 3 · RECONCILE.
+Compare the two sets:
+  - Overlap (both caught it): usually the highest-confidence findings. If it is most of them, the bastard pass was not harsh enough.
+  - Only the peer: the "right in detail" findings.
+  - Only the bastard: the "right in shape" findings, the blind spots.
+  - Either reviewer wrong: both passes can be wrong. Check against the source and strike anything you cannot stand behind.
+Output one ranked list ([MAJOR], then [SUGGESTION], then [NITPICK]), each with its location, a plain-spoken description, and the fix. End with the single most important thing the double pass caught that one pass would have missed.
+
+Tip: for true independence, run Pass 2 in a fresh chat that never saw Pass 1.`;
 ---
 
 <div class="sa-root">
@@ -122,6 +165,26 @@ import Footer from './Footer.astro';
     <p class="tail">↳ That's the whole talk, including the part where it caught itself, on this page, while you watched.</p>
   </section>
 
+  <section class="takeaway">
+    <div class="ta-inner">
+      <div class="ta-head">
+        <span class="ta-k">// run it yourself</span>
+        <h2>Take the bastard review home</h2>
+        <p>The exact pattern from this page, stripped down and made generic. Paste it into any AI, then paste in whatever you want torn apart: an essay, a plan, a design, some code. Two passes, one of them a bastard.</p>
+      </div>
+      <details class="ta-box">
+        <summary><span class="sum-label">the reusable prompt</span><span class="sum-hint">tap to expand</span></summary>
+        <div class="ta-actions">
+          <button type="button" id="ta-copy">⧉ Copy</button>
+          <button type="button" id="ta-save">↓ Save .md</button>
+          <span id="ta-state" aria-live="polite"></span>
+        </div>
+        <pre class="ta-prompt" id="ta-prompt">{REVIEW_PROMPT}</pre>
+      </details>
+      <p class="ta-foot">For real independence, run the bastard pass in a fresh chat that never saw the peer pass. If you like this, get your AI to turn it into a skill to really turn it up a level.</p>
+    </div>
+  </section>
+
   <div class="snap-toggle" id="snap-toggle" role="group" aria-label="Page scroll mode">
     <span class="lbl">snap</span>
     <button type="button" data-mode="off">off</button>
@@ -130,6 +193,32 @@ import Footer from './Footer.astro';
 </div>
 
 <Footer />
+
+<script>
+  // Copy / save for the take-home bastard-review prompt. Reads from the rendered
+  // <pre> so there is a single source of truth.
+  (() => {
+    const pre = document.getElementById('ta-prompt');
+    const state = document.getElementById('ta-state');
+    if (!pre) return;
+    const flash = (msg) => { if (state) { state.textContent = msg; setTimeout(() => { state.textContent = ''; }, 1600); } };
+    document.getElementById('ta-copy')?.addEventListener('click', () => {
+      navigator.clipboard.writeText(pre.textContent || '').then(() => flash('✓ copied'), () => flash('copy failed'));
+    });
+    document.getElementById('ta-save')?.addEventListener('click', () => {
+      const blob = new Blob([pre.textContent || ''], { type: 'text/markdown' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'bastard-review-prompt.md';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      flash('✓ saved');
+    });
+  })();
+</script>
 
 <style is:global>
 /* Styles ship only on the page that renders this component, so the un-scoped
@@ -144,13 +233,37 @@ html:has(.sa-root), body:has(.sa-root){scroll-snap-type:none}
 /* ===== snap mode: reader can flip the article between free-scroll and a
    page-per-beat snap (the home page's pageified feel). Default is off. ===== */
 html:has(.sa-root.snap-all), body:has(.sa-root.snap-all){scroll-snap-type:y mandatory}
-.sa-root.snap-all .hero, .sa-root.snap-all .beat, .sa-root.snap-all .close{
+.sa-root.snap-all .hero, .sa-root.snap-all .beat, .sa-root.snap-all .close, .sa-root.snap-all .takeaway{
   min-height:100vh;scroll-snap-align:start;scroll-snap-stop:always;
   display:flex;flex-direction:column;justify-content:safe center;
 }
+/* the footer trails the last snap section; align its end so mandatory snap can
+   rest on the very bottom of the page instead of stranding it. */
+body:has(.sa-root.snap-all) .site-footer{scroll-snap-align:end}
 .snap-toggle{position:fixed;left:16px;bottom:16px;z-index:300;background:var(--olive-darker);color:var(--cream);border:2px solid var(--mustard);box-shadow:4px 4px 0 var(--peach-deep);padding:8px 11px;display:flex;align-items:center;gap:7px;font-family:'VT323',monospace;font-size:14px}
 .snap-toggle .lbl{color:var(--mustard);text-transform:uppercase;letter-spacing:.1em;margin-right:2px}
 .snap-toggle button{font-family:'VT323',monospace;font-size:14px;text-transform:uppercase;letter-spacing:.06em;background:var(--olive-deep);color:var(--cream);border:1.5px solid var(--olive);padding:3px 10px;cursor:pointer}
+
+/* ===== take-home: the reusable bastard-review prompt ===== */
+.takeaway{background:var(--blue);color:var(--olive-darker);padding:64px 8vw;border-top:3px solid var(--olive-darker)}
+.ta-inner{max-width:min(900px,94vw);margin:0 auto}
+.ta-k{font-family:'VT323',monospace;font-size:15px;letter-spacing:.16em;text-transform:uppercase;color:var(--peach-deep)}
+.ta-head h2{font-family:'Bungee',sans-serif;font-size:clamp(26px,4.5vw,44px);margin:10px 0 12px;text-transform:uppercase;color:var(--olive-darker);letter-spacing:-.01em;line-height:1}
+.ta-head > p{font-family:'Space Grotesk',sans-serif;font-size:18px;line-height:1.6;margin:0 0 24px;max-width:60ch}
+.ta-box{background:var(--cream);border:3px solid var(--olive-darker);box-shadow:8px 8px 0 var(--olive-darker)}
+.ta-box > summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 18px;font-family:'Bungee',sans-serif;font-size:14px;text-transform:uppercase;letter-spacing:.02em;color:var(--olive-darker)}
+.ta-box > summary::-webkit-details-marker{display:none}
+.ta-box > summary .sum-label::before{content:"▸ "}
+.ta-box[open] > summary .sum-label::before{content:"▾ "}
+.ta-box > summary .sum-hint{font-family:'VT323',monospace;font-size:14px;letter-spacing:.06em;color:var(--peach-deep);text-transform:uppercase}
+.ta-box[open] > summary{border-bottom:2px dashed var(--olive-darker)}
+.ta-actions{display:flex;align-items:center;gap:10px;padding:14px 18px 0}
+.ta-actions button{font-family:'VT323',monospace;font-size:15px;text-transform:uppercase;letter-spacing:.06em;background:var(--mustard);color:var(--olive-darker);border:2px solid var(--olive-darker);padding:6px 13px;cursor:pointer;box-shadow:3px 3px 0 var(--peach-deep)}
+.ta-actions button:active{transform:translate(3px,3px);box-shadow:none}
+.ta-actions #ta-state{font-family:'VT323',monospace;font-size:14px;color:var(--mint-deep);text-transform:uppercase;letter-spacing:.06em}
+.ta-prompt{margin:14px 18px 18px;background:var(--olive-darker);color:var(--phosphor);border:2px solid #0a0a0a;padding:18px 20px;font-family:'VT323',monospace;font-size:16px;line-height:1.5;white-space:pre-wrap;overflow:auto;max-height:440px;letter-spacing:.01em}
+.ta-foot{font-family:'VT323',monospace;font-size:15px;letter-spacing:.04em;text-transform:uppercase;color:var(--olive-deep);margin:20px 0 0}
+@media(max-width:640px){.takeaway{padding:48px 24px}.ta-prompt{font-size:15px}}
 .snap-toggle button.active{background:var(--mustard);color:var(--olive-darker);border-color:var(--olive-darker)}
 
 /* back link as a pinned rotated sticker (top-left of the view), not a top bar */
