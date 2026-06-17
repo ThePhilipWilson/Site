@@ -78,7 +78,9 @@ nav.site-nav .badge{padding:4px 10px;background:var(--peach);color:var(--olive-d
 .cover .photo-stack{position:relative;height:340px}
 
 /* COMING SOON stamp — pre-launch only */
-.coming-soon-stamp{position:absolute;right:32px;top:96px;background:var(--peach-deep);color:var(--cream);padding:14px 24px;border:3px solid var(--cream);outline:3px solid var(--peach-deep);font-family:'Bungee',sans-serif;text-align:center;transform:rotate(-8deg);box-shadow:6px 6px 0 var(--olive-darker);z-index:5;letter-spacing:.04em;text-transform:uppercase;line-height:1;pointer-events:none}
+.coming-soon-stamp{position:absolute;right:32px;top:96px;background:var(--peach-deep);color:var(--cream);padding:14px 24px;border:3px solid var(--cream);outline:3px solid var(--peach-deep);font-family:'Bungee',sans-serif;text-align:center;transform:rotate(-8deg);box-shadow:6px 6px 0 var(--olive-darker);z-index:5;letter-spacing:.04em;text-transform:uppercase;line-height:1;pointer-events:auto;cursor:pointer;text-decoration:none;transition:transform .15s,box-shadow .15s}
+.coming-soon-stamp,.coming-soon-stamp:visited{color:var(--cream)}
+.coming-soon-stamp:hover{transform:rotate(-8deg) translate(-2px,-2px);box-shadow:9px 9px 0 var(--olive-darker)}
 .coming-soon-stamp .l1,.coming-soon-stamp .l2{display:block;font-size:32px}
 .coming-soon-stamp .l3{display:block;font-size:11px;margin-top:8px;font-family:'VT323',monospace;letter-spacing:.16em}
 .cover .polaroid{position:absolute;background:var(--cream);padding:14px 14px 32px;box-shadow:6px 6px 0 var(--olive-darker);width:200px;border:2px solid var(--olive-darker)}

@@ -34,7 +34,7 @@ const labFillers = Math.max(0, labTileTarget - lab.length);
       <div class="meta-strip">
         <span>VOL.&nbsp;{site.issue.volume.toString().padStart(2, '0')} — ISSUE&nbsp;{String(site.issue.number).padStart(2, '0')}</span>
         <span>{site.issue.season}</span>
-        <span>UK · £FREE</span>
+        <span>SCO · £FREE</span>
       </div>
       <div>
         <h1>
@@ -59,11 +59,11 @@ const labFillers = Math.max(0, labTileTarget - lab.length);
           <div class="caption">Est. 2017</div>
         </div>
         {site.comingSoon && (
-          <div class="coming-soon-stamp" aria-label="Coming soon">
+          <a class="coming-soon-stamp" href="/soon" aria-label="Coming soon, see what's on the way">
             <span class="l1">Coming</span>
             <span class="l2">Soon</span>
-            <span class="l3">★ first issue tuning in ★</span>
-          </div>
+            <span class="l3">★ see what's coming ★</span>
+          </a>
         )}
       </div>
     </div>

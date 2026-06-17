@@ -63,6 +63,40 @@ export const site = {
     ],
   },
 
+  // Public roadmap shown at /soon (reached from the cover's COMING SOON sticker).
+  // Curated for an audience: keep private notes, file paths, and the NDA out.
+  roadmap: {
+    intro: "I build this one in the open, so here's the whole list, the glamorous bits and the housekeeping, roughly in the order it's likely to actually happen.",
+    upcoming: [
+      { title: 'Listen', status: 'IN THE STUDIO', blurb: "Every article narrated in my own voice, not a robot's. Press play on the tape and it reads to you, reels turning." },
+      { title: 'More writing', status: 'ONGOING', blurb: "Pieces on the things I build and break. Slowly, whenever I have something worth saying." },
+      { title: 'The lab', status: 'PLANNED', blurb: "Little interactive toys and experiments, playable right there in the arcade cabinet." },
+      { title: 'Dark mode', status: 'PLANNED', blurb: "A flat, gradient-free night palette, with your preference remembered." },
+      { title: 'Get in touch', status: 'PLANNED', blurb: "A way to reach me without plastering my email across the page for the bots to harvest." },
+      { title: 'Seasonal surprises', status: 'PLANNED', blurb: "A few small things that only show up on certain days. You'll know them when you see them." },
+      { title: 'Better cassettes', status: 'UNDER THE HOOD', blurb: "Each tape its own coloured shell, and proportions closer to a real cassette than a wee monitor." },
+      { title: 'Arcade cabinet polish', status: 'UNDER THE HOOD', blurb: "Fussing over the lab's CRT cabinet until the scanlines and the screen curve feel right." },
+      { title: 'The real logo', status: 'UNDER THE HOOD', blurb: "Swapping the rebuilt mark for a clean vector of the genuine article." },
+      { title: 'Typography lock', status: 'UNDER THE HOOD', blurb: "Settling the final set of typefaces and self-hosting them so the site loads leaner." },
+      { title: 'A proper visual editor', status: 'UNDER THE HOOD', blurb: "Upgrading my little design tool into something I can drag the shapes around in, not just nudge sliders." },
+      { title: 'Real-device testing', status: 'UNDER THE HOOD', blurb: "Checking the whole thing on actual phones, not just a resized browser window." },
+      { title: 'Accessibility pass', status: 'UNDER THE HOOD', blurb: "A full once-over for contrast, keyboard nav, screen readers, and reduced motion." },
+      { title: 'A bastard review', status: 'UNDER THE HOOD', blurb: "Running the whole site past the harshest, least forgiving reviewer I can muster before I call it launched. A proper bastard of a review." },
+    ],
+    // `href` optional; chips with one link out to the shipped thing. The 404's
+    // href is a deliberately dead URL so clicking it shows off the themed page.
+    shipped: [
+      { label: 'Now page', href: '/now' },
+      { label: 'You can be bad at this', href: '/writing/you-can-be-bad-at-this/' },
+      { label: 'Colophon', href: '/colophon' },
+      { label: 'Style guide', href: '/style-guide' },
+      { label: 'RSS feed', href: '/rss.xml' },
+      { label: 'Print-friendly articles' },
+      { label: 'Favicons, search + link previews' },
+      { label: 'Themed 404', href: '/definitely-not-a-hosted-page' },
+    ],
+  },
+
   // Issue framing — feeds the cover meta strip and nav badge.
   // Pre-launch is "issue 00 · pre-launch"; bump to a real issue once content lands.
   issue: { volume: 1, number: 0, season: 'PRE-LAUNCH 2026', version: 'v.0.0.1' },

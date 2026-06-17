@@ -1,0 +1,100 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../lib/site.ts';
+
+const { roadmap } = site;
+const slug = (s: string) => s.toLowerCase().replace(/\s+/g, '-');
+---
+<Layout
+  title="Coming Soon · Philip Wilson"
+  description="What's on the way for the site: narrated articles, more writing, the lab, dark mode, and more. Built in the open."
+>
+  <div class="soon-page">
+    <a class="back" href="/">← back to the cover</a>
+
+    <div class="soon-inner">
+      <header class="soon-head">
+        <span class="k">// COMING SOON<span class="cur"></span></span>
+        <h1>Coming Soon</h1>
+        <p class="lede">{roadmap.intro}</p>
+      </header>
+
+      <ol class="releases">
+        {roadmap.upcoming.map((r, i) => (
+          <li class="rel">
+            <span class="track-no">{String(i + 1).padStart(2, '0')}</span>
+            <div class="rel-body">
+              <div class="rel-head">
+                <h2>{r.title}</h2>
+                <span class={`status s-${slug(r.status)}`}>{r.status}</span>
+              </div>
+              <p>{r.blurb}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <div class="shipped">
+        <span class="ship-label">★ Just dropped ★</span>
+        <div class="ship-list">
+          {roadmap.shipped.map((s) => (
+            s.href ? <a class="chip" href={s.href}>{s.label}</a> : <span class="chip">{s.label}</span>
+          ))}
+        </div>
+      </div>
+
+      <p class="foot-note">
+        No release dates, because I'd only miss them. This list is honest, which
+        means it changes. <a href="/now">What I'm on right now ▸</a>
+      </p>
+    </div>
+
+    <Footer />
+  </div>
+
+  <style>
+    .soon-page{position:relative;background:var(--mustard);min-height:100vh;color:var(--olive-darker)}
+    .soon-inner{padding:48px 20px 56px;max-width:var(--read-max);margin:0 auto}
+    .back{position:fixed;top:60px;left:18px;z-index:95;transform:rotate(-3deg);display:inline-block;background:var(--cream);border:2px solid var(--olive-darker);box-shadow:3px 3px 0 var(--olive-darker);padding:7px 13px;font-family:'VT323',monospace;font-size:14px;color:var(--peach-deep);text-decoration:none;letter-spacing:.06em;text-transform:uppercase;transition:transform .15s,box-shadow .15s}
+    .back:hover{transform:translate(-1px,-1px) rotate(-3deg);box-shadow:5px 5px 0 var(--olive-darker);color:var(--olive-darker)}
+    @media (max-width:1040px){.back{top:50px;left:12px}}
+
+    .soon-head{margin:8px 0 32px}
+    .k{font-family:'VT323',monospace;font-size:15px;letter-spacing:.14em;color:var(--peach-deep);text-transform:uppercase}
+    .k .cur{display:inline-block;width:6px;height:12px;background:currentColor;vertical-align:-1px;animation:blink 1s steps(2) infinite;margin-left:4px}
+    .soon-head h1{font-family:'Bungee',sans-serif;font-size:clamp(40px,6.5vw,72px);margin:10px 0 14px;text-transform:uppercase;color:var(--olive-darker);letter-spacing:-.02em;line-height:.92}
+    .soon-head .lede{font-family:Caveat,cursive;font-weight:700;font-size:26px;line-height:1.25;color:var(--olive-darker);margin:0;max-width:42ch;transform:rotate(-.6deg)}
+
+    .releases{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px}
+    .rel{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start;background:var(--cream);border:3px solid var(--olive-darker);box-shadow:7px 7px 0 var(--olive-darker);padding:18px 20px;transition:transform .12s,box-shadow .12s}
+    .rel:hover{transform:translate(-2px,-2px);box-shadow:10px 10px 0 var(--olive-darker)}
+    .rel .track-no{font-family:'Bungee',sans-serif;font-size:30px;color:var(--peach-deep);line-height:1}
+    .rel-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:8px}
+    .rel-head h2{font-family:'Bungee',sans-serif;font-size:clamp(20px,3vw,26px);margin:0;text-transform:uppercase;color:var(--olive-darker);letter-spacing:-.01em;line-height:1}
+    .rel-body p{font-family:'Space Grotesk',sans-serif;font-size:17px;line-height:1.55;margin:0;color:var(--olive-darker)}
+
+    .status{flex-shrink:0;font-family:'Bungee',sans-serif;font-size:10px;letter-spacing:.04em;text-transform:uppercase;padding:6px 11px;border:2px solid var(--olive-darker);transform:rotate(-2deg);white-space:nowrap}
+    .status.s-in-the-studio{background:var(--peach);color:var(--olive-darker)}
+    .status.s-ongoing{background:var(--mint);color:var(--olive-darker)}
+    .status.s-planned{background:var(--olive-darker);color:var(--mustard)}
+    .status.s-under-the-hood{background:var(--blue);color:var(--olive-darker)}
+
+    .shipped{margin-top:34px;border-top:2px dashed var(--olive-darker);padding-top:22px}
+    .ship-label{font-family:'VT323',monospace;font-size:16px;letter-spacing:.12em;text-transform:uppercase;color:var(--peach-deep)}
+    .ship-list{display:flex;flex-wrap:wrap;gap:9px;margin-top:12px}
+    .ship-list .chip{font-family:'VT323',monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase;background:var(--olive-darker);color:var(--mint);border:1.5px solid var(--olive-darker);padding:4px 11px}
+    .ship-list a.chip,.ship-list a.chip:visited{color:var(--mint);text-decoration:none;transition:background .12s,color .12s}
+    .ship-list a.chip:hover{background:var(--mint);color:var(--olive-darker)}
+
+    .foot-note{margin-top:30px;font-family:'VT323',monospace;font-size:15px;letter-spacing:.04em;text-transform:uppercase;color:var(--olive-deep);line-height:1.5}
+    .foot-note a{color:var(--peach-deep);text-decoration:none;border-bottom:1.5px solid var(--peach-deep);white-space:nowrap}
+    .foot-note a:hover{color:var(--olive-darker);border-color:var(--olive-darker)}
+
+    @media (prefers-reduced-motion:reduce){.k .cur{animation:none}}
+    @media (max-width:540px){
+      .rel{grid-template-columns:1fr;gap:8px;padding:16px}
+      .rel .track-no{font-size:24px}
+    }
+  </style>
+</Layout>
