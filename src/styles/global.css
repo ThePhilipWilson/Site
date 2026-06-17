@@ -62,7 +62,8 @@ nav.site-nav .mark svg{width:22px;height:22px;color:var(--mustard)}
 nav.site-nav .links{display:flex;gap:20px}
 nav.site-nav .links a,nav.site-nav .links a:visited{color:var(--cream);text-decoration:none;opacity:.8;transition:color .2s}
 nav.site-nav .links a:hover{color:var(--mustard);opacity:1}
-nav.site-nav .badge{padding:4px 10px;background:var(--peach);color:var(--olive-darker);font-size:11px;font-family:'VT323',monospace;letter-spacing:.04em;text-transform:none}
+nav.site-nav .badge,nav.site-nav .badge:visited{padding:4px 10px;background:var(--peach);color:var(--olive-darker);font-size:11px;font-family:'VT323',monospace;letter-spacing:.04em;text-transform:none;text-decoration:none;cursor:pointer;transition:background .15s,color .15s}
+nav.site-nav a.badge:hover{background:var(--peach-deep);color:var(--cream)}
 
 /* COVER */
 .cover{position:relative;background:var(--mint);padding:64px 32px 80px;overflow:hidden}
@@ -404,7 +405,7 @@ footer.site-footer a,footer.site-footer a:visited{color:var(--mustard);text-deco
 /* PHONE */
 @media (max-width:640px){
   nav.site-nav{padding:10px 14px;font-size:11px}
-  nav.site-nav .badge{display:none}
+  nav.site-nav .badge{font-size:10px;padding:3px 8px}
   nav.site-nav .links{gap:14px}
   nav.site-nav .mark span{display:none}
 

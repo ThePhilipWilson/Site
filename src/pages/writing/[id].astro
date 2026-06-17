@@ -1,7 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import Footer from '../../components/Footer.astro';
 import SelfAuditingArticle from '../../components/SelfAuditingArticle.astro';
 import NineteenHomepages from '../../components/NineteenHomepages.astro';
 import { cAxis as cAxisFor, readTimeLabel } from '../../lib/minutes';
@@ -55,8 +54,6 @@ const readTime = readTimeLabel(entry.data.minutes);
       <Content />
     </div>
   </article>
-
-  <Footer />
   </div>
   )}
 

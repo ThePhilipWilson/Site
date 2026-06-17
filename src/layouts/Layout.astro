@@ -80,7 +80,7 @@ const isHome = Astro.url.pathname === '/';
         <a href="/now">Now</a>
       </div>
     )}
-    <span class="badge">{issueLabel}</span>
+    <a class="badge" href="/colophon" aria-label="Colophon, how this site was made">{issueLabel}</a>
   </nav>
 
   <slot />

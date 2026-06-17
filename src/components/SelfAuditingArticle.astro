@@ -3,7 +3,6 @@
 // Used by src/pages/writing/[id].astro when an entry has `interactive: true`.
 // The piece reviews its own claims in the margins (peer / bastard / meta) and
 // embeds the bastard-review animation; the markdown body of the entry is unused.
-import Footer from './Footer.astro';
 import SnapToggle from './SnapToggle.astro';
 
 // The generic, reusable "bastard review" prompt offered at the foot of the
@@ -189,8 +188,6 @@ Tip: for true independence, run Pass 2 in a fresh chat that never saw Pass 1.`;
   <SnapToggle />
 </div>
 
-<Footer />
-
 <script>
   // Copy / save for the take-home bastard-review prompt. Reads from the rendered
   // <pre> so there is a single source of truth.
@@ -231,9 +228,8 @@ Tip: for true independence, run Pass 2 in a fresh chat that never saw Pass 1.`;
   min-height:100vh;scroll-snap-align:start;scroll-snap-stop:always;
   display:flex;flex-direction:column;justify-content:safe center;
 }
-/* the footer trails the last snap section; align its end so mandatory snap can
-   rest on the very bottom of the page instead of stranding it. */
-body:has(.sa-root) .site-footer{scroll-snap-align:end}
+/* the takeaway is the last snap section and fills the view, so mandatory snap
+   rests cleanly on it at the bottom of the page. */
 
 /* ===== take-home: the reusable bastard-review prompt ===== */
 .takeaway{background:var(--blue);color:var(--olive-darker);padding:64px 8vw;border-top:3px solid var(--olive-darker)}

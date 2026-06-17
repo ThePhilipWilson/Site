@@ -1,7 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import Footer from '../../components/Footer.astro';
 
 export async function getStaticPaths() {
   // Entries with `demo:` link straight to that URL (often a static toy under
@@ -49,8 +48,6 @@ const stars = '★ '.repeat(Math.max(1, Math.min(5, entry.data.stars))).trim();
       <Content />
     </div>
   </article>
-
-  <Footer />
   </div>
 
   <style>
