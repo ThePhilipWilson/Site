@@ -1,0 +1,38 @@
+---
+// Shared floating control to switch scroll-snap on/off on any page that snaps
+// (home, the nineteen-homepages piece, the self-auditing article). It sets
+// html[data-snap="off"], which global.css honours; the choice persists across
+// pages via localStorage. Default is on (snap as designed).
+---
+<div class="snap-toggle" id="snap-toggle" role="group" aria-label="Page scroll snap">
+  <span class="lbl">snap</span>
+  <button type="button" data-snap="on">on</button>
+  <button type="button" data-snap="off">off</button>
+</div>
+
+<style>
+  .snap-toggle{position:fixed;left:16px;bottom:16px;z-index:300;background:var(--olive-darker);color:var(--cream);border:2px solid var(--mustard);box-shadow:4px 4px 0 var(--peach-deep);padding:8px 11px;display:flex;align-items:center;gap:7px;font-family:'VT323',monospace;font-size:14px}
+  .snap-toggle .lbl{color:var(--mustard);text-transform:uppercase;letter-spacing:.1em;margin-right:2px}
+  .snap-toggle button{font-family:'VT323',monospace;font-size:14px;text-transform:uppercase;letter-spacing:.06em;background:var(--olive-deep);color:var(--cream);border:1.5px solid var(--olive);padding:3px 10px;cursor:pointer}
+  .snap-toggle button.active{background:var(--mustard);color:var(--olive-darker);border-color:var(--olive-darker)}
+  @media print{.snap-toggle{display:none}}
+</style>
+
+<script>
+  (() => {
+    const root = document.documentElement;
+    const el = document.getElementById('snap-toggle');
+    if (!el) return;
+    const apply = (raw) => {
+      const mode = raw === 'off' ? 'off' : 'on';
+      if (mode === 'off') root.setAttribute('data-snap', 'off');
+      else root.removeAttribute('data-snap');
+      el.querySelectorAll('button').forEach((b) => b.classList.toggle('active', b.dataset.snap === mode));
+      try { localStorage.setItem('snap', mode); } catch (e) {}
+    };
+    el.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => apply(b.dataset.snap)));
+    let initial = 'on';
+    try { initial = localStorage.getItem('snap') || 'on'; } catch (e) {}
+    apply(initial);
+  })();
+</script>

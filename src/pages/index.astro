@@ -9,6 +9,7 @@ import NoSignal from '../components/NoSignal.astro';
 import Cassette from '../components/Cassette.astro';
 import BlankTape from '../components/BlankTape.astro';
 import Footer from '../components/Footer.astro';
+import SnapToggle from '../components/SnapToggle.astro';
 import { site } from '../lib/site.ts';
 
 // Collections (filter drafts, sort newest first)
@@ -227,6 +228,8 @@ const labFillers = Math.max(0, labTileTarget - lab.length);
     </div>
     <Footer />
   </section>
+
+  <SnapToggle />
 </Layout>
 
 <script>

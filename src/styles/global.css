@@ -34,6 +34,8 @@ a:visited{color:inherit}
    the browser animates the stop. Applied to both html AND body so whichever
    is the actual scroll container picks it up. Disabled for reduced-motion. */
 html,body{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+/* shared SnapToggle: force snap off site-wide when the control sets it */
+html[data-snap="off"],html[data-snap="off"] body{scroll-snap-type:none !important}
 .cover,.spread{scroll-snap-align:start;scroll-snap-stop:always;min-height:100vh;display:flex;flex-direction:column;justify-content:safe start}
 /* About is the last section AND contains the footer. Keep it 100vh like the
    others so it feels like a page, zero the bottom padding so the footer sits

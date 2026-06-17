@@ -4,6 +4,7 @@
 // The piece reviews its own claims in the margins (peer / bastard / meta) and
 // embeds the bastard-review animation; the markdown body of the entry is unused.
 import Footer from './Footer.astro';
+import SnapToggle from './SnapToggle.astro';
 
 // The generic, reusable "bastard review" prompt offered at the foot of the
 // article (expandable, with copy / save). Distilled from the bastard-review
@@ -185,11 +186,7 @@ Tip: for true independence, run Pass 2 in a fresh chat that never saw Pass 1.`;
     </div>
   </section>
 
-  <div class="snap-toggle" id="snap-toggle" role="group" aria-label="Page scroll mode">
-    <span class="lbl">snap</span>
-    <button type="button" data-mode="off">off</button>
-    <button type="button" data-mode="all">on</button>
-  </div>
+  <SnapToggle />
 </div>
 
 <Footer />
@@ -225,24 +222,18 @@ Tip: for true independence, run Pass 2 in a fresh chat that never saw Pass 1.`;
    selectors below are safe; is:global is needed so the JS-created note elements
    pick up these rules. Tokens, grain, nav, and ::selection come from global.css. */
 
-/* this page is a reading article, not the snap-scrolling home page */
-html:has(.sa-root), body:has(.sa-root){scroll-snap-type:none}
 /* the site body is olive-darker (to match the footer); the reading area needs paper */
 .sa-root{background:var(--cream)}
 
-/* ===== snap mode: reader can flip the article between free-scroll and a
-   page-per-beat snap (the home page's pageified feel). Default is off. ===== */
-html:has(.sa-root.snap-all), body:has(.sa-root.snap-all){scroll-snap-type:y mandatory}
-.sa-root.snap-all .hero, .sa-root.snap-all .beat, .sa-root.snap-all .close, .sa-root.snap-all .takeaway{
+/* page-per-beat snap, on by default. Uses the global scroll-snap; the shared
+   SnapToggle switches it off site-wide via html[data-snap="off"]. */
+.sa-root .hero, .sa-root .beat, .sa-root .close, .sa-root .takeaway{
   min-height:100vh;scroll-snap-align:start;scroll-snap-stop:always;
   display:flex;flex-direction:column;justify-content:safe center;
 }
 /* the footer trails the last snap section; align its end so mandatory snap can
    rest on the very bottom of the page instead of stranding it. */
-body:has(.sa-root.snap-all) .site-footer{scroll-snap-align:end}
-.snap-toggle{position:fixed;left:16px;bottom:16px;z-index:300;background:var(--olive-darker);color:var(--cream);border:2px solid var(--mustard);box-shadow:4px 4px 0 var(--peach-deep);padding:8px 11px;display:flex;align-items:center;gap:7px;font-family:'VT323',monospace;font-size:14px}
-.snap-toggle .lbl{color:var(--mustard);text-transform:uppercase;letter-spacing:.1em;margin-right:2px}
-.snap-toggle button{font-family:'VT323',monospace;font-size:14px;text-transform:uppercase;letter-spacing:.06em;background:var(--olive-deep);color:var(--cream);border:1.5px solid var(--olive);padding:3px 10px;cursor:pointer}
+body:has(.sa-root) .site-footer{scroll-snap-align:end}
 
 /* ===== take-home: the reusable bastard-review prompt ===== */
 .takeaway{background:var(--blue);color:var(--olive-darker);padding:64px 8vw;border-top:3px solid var(--olive-darker)}
@@ -264,7 +255,6 @@ body:has(.sa-root.snap-all) .site-footer{scroll-snap-align:end}
 .ta-prompt{margin:14px 18px 18px;background:var(--olive-darker);color:var(--phosphor);border:2px solid #0a0a0a;padding:18px 20px;font-family:'VT323',monospace;font-size:16px;line-height:1.5;white-space:pre-wrap;overflow:auto;max-height:440px;letter-spacing:.01em}
 .ta-foot{font-family:'VT323',monospace;font-size:15px;letter-spacing:.04em;text-transform:uppercase;color:var(--olive-deep);margin:20px 0 0}
 @media(max-width:640px){.takeaway{padding:48px 24px}.ta-prompt{font-size:15px}}
-.snap-toggle button.active{background:var(--mustard);color:var(--olive-darker);border-color:var(--olive-darker)}
 
 /* back link as a pinned rotated sticker (top-left of the view), not a top bar */
 .sa-back{position:fixed;top:60px;left:18px;z-index:95;transform:rotate(-3deg)}
@@ -574,20 +564,5 @@ body:has(.sa-root.snap-all) .site-footer{scroll-snap-align:end}
     brIo.observe(brBlock);
   }
 
-  // ===== TEMPORARY: snap-mode QA toggle (off / beats / all) =====
-  const saRoot = document.querySelector('.sa-root');
-  const snapToggle = document.getElementById('snap-toggle');
-  if (saRoot && snapToggle) {
-    const setMode = (mode) => {
-      saRoot.classList.remove('snap-beats', 'snap-all');
-      if (mode === 'beats') saRoot.classList.add('snap-beats');
-      else if (mode === 'all') saRoot.classList.add('snap-all');
-      snapToggle.querySelectorAll('button').forEach((b) => b.classList.toggle('active', b.dataset.mode === mode));
-      try { localStorage.setItem('sa-snap', mode); } catch (e) {}
-    };
-    snapToggle.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode)));
-    let initial = 'all';
-    try { initial = localStorage.getItem('sa-snap') || 'all'; } catch (e) {}
-    setMode(initial);
-  }
+  // snap on/off is now handled by the shared SnapToggle component.
 </script>
