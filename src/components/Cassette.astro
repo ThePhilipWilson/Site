@@ -16,67 +16,59 @@ interface Props {
 const { index, number, side, minutes, date, title, tape, excerpt, href, blank = false } = Astro.props;
 const minutesLabel = displayMinutes(minutes);
 
-const CASINGS = ['dark', 'cream', 'mint', 'peach', 'blue', 'mustard'] as const;
-const STRIPES = ['rainbow', 'solid', 'alt'] as const;
-const casing = blank ? 'dark' : CASINGS[index % CASINGS.length];
-const stripe = blank ? 'blank' : STRIPES[index % STRIPES.length];
+// Casing colour + paper-graphic style, assigned by a stable hash of the piece so
+// each tape keeps its identity regardless of publish order (not tied to `index`).
+const SHELLS = ['#575756', '#9F5F33', '#4E8F74', '#6E9CA6', '#B0862B', '#5B564A'] as const;
+const STYLES = ['rainbow', 'header', 'twotone', 'detail'] as const;
+function hash(s: string) { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return Math.abs(h); }
+function darken(hex: string, f = 0.5) {
+  const n = parseInt(hex.slice(1), 16);
+  return '#' + [16, 8, 0].map((s) => Math.round(((n >> s) & 255) * f).toString(16).padStart(2, '0')).join('');
+}
+const h = hash(title + number);
+const shell = blank ? '#3f3b33' : SHELLS[h % SHELLS.length];
+const style = blank ? 'blank' : STYLES[(h >> 5) % STYLES.length];
+const shadow = darken(shell);
 
-const TYPE_LABEL = {
-  NORMAL: 'Type I · Normal',
-  CHROME: 'Type II · Chrome',
-  METAL:  'Type IV · Metal',
-} as const;
+const TYPE_LABEL = { NORMAL: 'Type I', CHROME: 'Type II', METAL: 'Type IV' } as const;
 const typeLabel = TYPE_LABEL[tape];
 
 const Tag: 'a' | 'div' = href ? 'a' : 'div';
 ---
 <Tag
   class="cassette"
-  data-casing={casing}
-  data-stripe={stripe}
+  data-style={style}
   data-idx={index}
   draggable="false"
+  style={`--cas-shell:${shell};--cas-shadow:${shadow}`}
   {...(blank ? { 'data-blank': 'true' } : {})}
   href={href}
 >
-  <span class="screw tl"></span><span class="screw tr"></span>
-  <span class="screw bl"></span><span class="screw br"></span>
+  <svg class="cas-art" viewBox="0 0 469.7333 303.01333" preserveAspectRatio="none" aria-hidden="true"><use href="#cas-art" /></svg>
 
-  <div class="label">
-    <div class="label-top">
-      <span class="side-tab"><span class="word">side</span><span class="letter">{side}</span></span>
-      <h3 class="title">{title}</h3>
-      <span class="length" data-range={minutesLabel.includes('–')}>
-        <span class="length-num">{minutesLabel || '—'}</span>
-        {!blank && <span class="length-unit">min</span>}
-      </span>
-    </div>
-    <div class="stripe-band"><span></span><span></span><span></span><span></span></div>
-    <div class="reels-row">
-      <svg class="reel"><use href="#reel"/></svg>
-      <div class="tape-window"></div>
-      <svg class="reel"><use href="#reel"/></svg>
-    </div>
-    <div class="label-bottom">
-      {excerpt && !blank ? (
-        <p class="tracklist">{excerpt}</p>
-      ) : (
-        <div class="index-line"></div>
-      )}
-      <div class="brand-row">
-        <span class="brand">P.A.W. Sounds</span>
-        <span>★ {date} · No. {number} ★</span>
-        <span class="type">{typeLabel}</span>
-      </div>
-    </div>
+  <div class="cas-gfx">
+    {style === 'rainbow' && <span class="rb"></span>}
+    {style === 'header' && <><span class="hdr-bar"></span><span class="hdr-side"></span></>}
+    {style === 'twotone' && <span class="tt-bar"></span>}
+    {style === 'detail' && <>
+      <span class="tg-side">{side}</span>
+      <span class="tg-arrow"></span>
+      <span class="tg-type">{typeLabel} · Normal</span>
+      <span class="idx">INDEX</span>
+    </>}
   </div>
 
-  <div class="mechanism">
-    <span class="screw cb"></span>
-    <div class="drive-hole"></div>
-    <div class="guide"></div>
-    <div class="felt"></div>
-    <div class="guide"></div>
-    <div class="drive-hole"></div>
+  <div class="cas-title">{title}</div>
+  {style !== 'detail' && <div class="cas-side">{side}</div>}
+  <div class="cas-len">{minutesLabel || '—'}</div>
+  <div class="cas-band">
+    {excerpt && !blank
+      ? <span class="cas-tracks">{excerpt}</span>
+      : <span class="cas-tracks cas-tracks-blank" aria-hidden="true"></span>}
+    <span class="cas-brand">
+      <b>P.A.W. Sounds</b>
+      <span>★ {date} · No. {number} ★</span>
+      <span class="cas-type">{typeLabel}</span>
+    </span>
   </div>
 </Tag>

@@ -7,6 +7,7 @@ import Cabinet from '../components/Cabinet.astro';
 import LabCard from '../components/LabCard.astro';
 import NoSignal from '../components/NoSignal.astro';
 import Cassette from '../components/Cassette.astro';
+import CassetteArt from '../components/CassetteArt.astro';
 import BlankTape from '../components/BlankTape.astro';
 import SnapToggle from '../components/SnapToggle.astro';
 import { site } from '../lib/site.ts';
@@ -27,6 +28,7 @@ const labFillers = Math.max(0, labTileTarget - lab.length);
 ---
 <Layout>
   <ReelSymbol />
+  <CassetteArt />
 
   <!-- COVER -->
   <header class="cover">
