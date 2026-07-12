@@ -12,13 +12,17 @@ interface Props {
   excerpt?: string;
   href?: string;
   blank?: boolean;
+  casing?: 'grey' | 'rust' | 'teal' | 'blue' | 'mustard' | 'olive';
+  paper?: 'rainbow' | 'header' | 'twotone' | 'detail';
 }
-const { index, number, side, minutes, date, title, tape, excerpt, href, blank = false } = Astro.props;
+const { index, number, side, minutes, date, title, tape, excerpt, href, blank = false, casing, paper } = Astro.props;
 const minutesLabel = displayMinutes(minutes);
 
-// Casing colour + paper-graphic style, assigned by a stable hash of the piece so
-// each tape keeps its identity regardless of publish order (not tied to `index`).
-const SHELLS = ['#575756', '#9F5F33', '#4E8F74', '#6E9CA6', '#B0862B', '#5B564A'] as const;
+// Casing colour + paper-graphic style. Default to a stable hash of the piece so
+// each tape keeps its identity regardless of publish order; frontmatter
+// `casing` / `paper` override the hash to pin a specific look.
+const SHELL_MAP = { grey: '#575756', rust: '#9F5F33', teal: '#4E8F74', blue: '#6E9CA6', mustard: '#B0862B', olive: '#5B564A' } as const;
+const SHELLS = Object.values(SHELL_MAP);
 const STYLES = ['rainbow', 'header', 'twotone', 'detail'] as const;
 function hash(s: string) { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return Math.abs(h); }
 function darken(hex: string, f = 0.5) {
@@ -26,8 +30,8 @@ function darken(hex: string, f = 0.5) {
   return '#' + [16, 8, 0].map((s) => Math.round(((n >> s) & 255) * f).toString(16).padStart(2, '0')).join('');
 }
 const h = hash(title + number);
-const shell = blank ? '#3f3b33' : SHELLS[h % SHELLS.length];
-const style = blank ? 'blank' : STYLES[(h >> 5) % STYLES.length];
+const shell = blank ? '#3f3b33' : casing ? SHELL_MAP[casing] : SHELLS[h % SHELLS.length];
+const style = blank ? 'blank' : paper ?? STYLES[(h >> 5) % STYLES.length];
 const shadow = darken(shell);
 
 const TYPE_LABEL = { NORMAL: 'Type I', CHROME: 'Type II', METAL: 'Type IV' } as const;

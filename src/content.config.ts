@@ -29,6 +29,10 @@ const writing = defineCollection({
     ]),
     tape: z.enum(['NORMAL', 'CHROME', 'METAL']).default('NORMAL'),
     side: z.enum(['A', 'B']).default('A'),
+    // Optional cassette look overrides. When omitted, casing colour + paper
+    // style are picked by a stable hash of the piece. Set these to pin a tape.
+    casing: z.enum(['grey', 'rust', 'teal', 'blue', 'mustard', 'olive']).optional(),
+    paper: z.enum(['rainbow', 'header', 'twotone', 'detail']).optional(),
     excerpt: z.string().max(180).optional(),
     draft: z.boolean().default(false),
     // when true, /writing/[id] renders a bespoke interactive component instead

@@ -4,6 +4,8 @@ date: 2026-06-15
 minutes: 9
 tape: CHROME
 side: A
+casing: rust
+paper: detail
 excerpt: "An honest account of AI-assisted work, that reviews itself as you read it. Two reviewers in the margins, one of them a bastard."
 interactive: true
 draft: false

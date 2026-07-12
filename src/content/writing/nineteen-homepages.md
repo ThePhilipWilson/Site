@@ -4,6 +4,8 @@ date: 2026-05-11
 minutes: 5-7
 tape: NORMAL
 side: A
+casing: teal
+paper: rainbow
 excerpt: "Most of what AI built for this site is in the bin. That's the whole point."
 draft: false
 ---
